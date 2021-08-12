@@ -1,9 +1,9 @@
 package br.com.lunacom.portal.service;
 
+import br.com.lunacom.portal.converter.MovimentoCompraCsvRequestConverter;
 import br.com.lunacom.portal.domain.MovimentoCompra;
 import br.com.lunacom.portal.domain.dto.MovimentoCompraCsvRequest;
 import br.com.lunacom.portal.repository.MovimentoCompraRepository;
-import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +18,7 @@ import java.util.List;
 public class MovimentoCompraService {
 
     private final MovimentoCompraRepository repository;
+    private final MovimentoCompraCsvRequestConverter converter;
 
     public MovimentoCompra salvar(MovimentoCompra movimentoCompra) {
         return repository.save(movimentoCompra);
@@ -25,7 +26,6 @@ public class MovimentoCompraService {
 
     public void salvarCsv(String request) {
         final Reader reader = new StringReader(request);
-        new CSVReader(reader);
 
         CsvToBean<MovimentoCompraCsvRequest> csvToBean = new CsvToBeanBuilder(reader)
                 .withType(MovimentoCompraCsvRequest.class)
@@ -33,5 +33,7 @@ public class MovimentoCompraService {
                 .build();
 
         final List<MovimentoCompraCsvRequest> parse = csvToBean.parse();
+        final List<MovimentoCompra> movimentoCompraList = converter.encode(parse);
+        repository.saveAll(movimentoCompraList);
     }
 }
