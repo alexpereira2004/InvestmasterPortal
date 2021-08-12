@@ -1,4 +1,4 @@
-package br.com.lunacom.portal.resource;
+package br.com.lunacom.portal.resource.v1;
 
 import br.com.lunacom.portal.converter.MovimentoCompraRequestConverter;
 import br.com.lunacom.portal.domain.MovimentoCompra;

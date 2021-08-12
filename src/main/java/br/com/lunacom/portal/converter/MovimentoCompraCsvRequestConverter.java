@@ -9,6 +9,8 @@ import com.google.common.primitives.Doubles;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 import static br.com.lunacom.portal.util.StringParser.toInteger;
 
 @AllArgsConstructor
