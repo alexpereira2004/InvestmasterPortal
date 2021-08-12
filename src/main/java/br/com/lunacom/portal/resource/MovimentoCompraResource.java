@@ -32,4 +32,11 @@ public class MovimentoCompraResource {
                 .path("/{id}").buildAndExpand(movimento.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PostMapping(value = "/importa-texto-csv")
+    public ResponseEntity<Void> createFromCsvText(@RequestBody @Valid String request) {
+        service.salvarCsv(request);
+
+        return ResponseEntity.ok().build();
+    }
 }
