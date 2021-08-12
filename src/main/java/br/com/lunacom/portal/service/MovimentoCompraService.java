@@ -6,6 +6,7 @@ import br.com.lunacom.portal.domain.request.MovimentoCompraCsvRequest;
 import br.com.lunacom.portal.domain.request.MovimentoCompraRequest;
 import br.com.lunacom.portal.repository.MovimentoCompraRepository;
 import br.com.lunacom.portal.resource.v1.specification.MovimentoCompraSpecification;
+import br.com.lunacom.portal.util.DataUtil;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.List;
 @Service
 public class MovimentoCompraService {
 
+    private final DataUtil dataUtil;
     private final MovimentoCompraRepository repository;
     private final MovimentoCompraCsvRequestConverter converter;
 
@@ -44,6 +46,7 @@ public class MovimentoCompraService {
     public Page<MovimentoCompra> pesquisarComPaginacao(MovimentoCompraRequest request, Pageable pageable) {
         final MovimentoCompraSpecification specification = MovimentoCompraSpecification
                 .builder()
+                .dataUtil(dataUtil)
                 .request(request)
                 .build();
         return repository.findAll(specification, pageable);

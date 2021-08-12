@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 public class MovimentoCompraRequest {
     private String id;
     private String dataAquisicao;
+    private String dataAquisicaoInicio;
+    private String dataAquisicaoFinal;
     private String precoPago;
     private String quantidade;
     private String totalInvestido;
