@@ -1,8 +1,12 @@
-package br.com.lunacom.portal.domain.dto;
+package br.com.lunacom.portal.domain.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
 public class MovimentoCompraRequest {

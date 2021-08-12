@@ -3,7 +3,7 @@ package br.com.lunacom.portal.converter;
 
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.MovimentoCompra;
-import br.com.lunacom.portal.domain.dto.MovimentoCompraRequest;
+import br.com.lunacom.portal.domain.request.MovimentoCompraRequest;
 import br.com.lunacom.portal.service.AtivoService;
 import br.com.lunacom.portal.util.DataUtil;
 import com.google.common.primitives.Doubles;

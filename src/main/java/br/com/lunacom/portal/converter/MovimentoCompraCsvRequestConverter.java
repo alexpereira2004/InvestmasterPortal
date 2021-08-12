@@ -2,15 +2,13 @@ package br.com.lunacom.portal.converter;
 
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.MovimentoCompra;
-import br.com.lunacom.portal.domain.dto.MovimentoCompraCsvRequest;
+import br.com.lunacom.portal.domain.request.MovimentoCompraCsvRequest;
 import br.com.lunacom.portal.service.AtivoService;
 import br.com.lunacom.portal.util.DataUtil;
-import com.google.common.primitives.Doubles;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
+import static br.com.lunacom.portal.util.StringParser.toDouble;
 import static br.com.lunacom.portal.util.StringParser.toInteger;
 
 @AllArgsConstructor
@@ -23,7 +21,7 @@ public class MovimentoCompraCsvRequestConverter implements Converter <MovimentoC
     public MovimentoCompra encode(MovimentoCompraCsvRequest input) {
         final Ativo ativo = ativoService.pesquisarPorCodigo(input.getAtivoCodigo())
                 .orElse(null);
-        final Double precoPago = Doubles.tryParse(input.getPrecoPago());
+        final Double precoPago = toDouble(input.getPrecoPago());
         final Integer quantidade = toInteger(input.getQuantidade());
         final double totalInvestido = precoPago * quantidade;
         return MovimentoCompra.builder()

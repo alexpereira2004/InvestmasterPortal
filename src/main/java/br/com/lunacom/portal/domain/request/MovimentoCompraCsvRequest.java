@@ -1,4 +1,4 @@
-package br.com.lunacom.portal.domain.dto;
+package br.com.lunacom.portal.domain.request;
 
 import com.opencsv.bean.CsvBindByPosition;
 import lombok.Data;
