@@ -51,4 +51,8 @@ public class MovimentoCompraService {
                 .build();
         return repository.findAll(specification, pageable);
     }
+
+    public void removerTodos(List<Integer> list) {
+        repository.deleteAllById(list);
+    }
 }

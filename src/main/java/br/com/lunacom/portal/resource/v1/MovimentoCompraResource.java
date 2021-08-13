@@ -16,6 +16,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -35,17 +38,22 @@ public class MovimentoCompraResource {
         return ResponseEntity.created(uri).build();
     }
 
-    @PostMapping(value = "/importa-texto-csv")
-    public ResponseEntity<Void> createFromCsvText(@RequestBody @Valid String request) {
-        service.salvarCsv(request);
-
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping(value="/listagem-paginado")
     public ResponseEntity<Page<MovimentoCompraResponse>> pesquisar(MovimentoCompraRequest request, Pageable pageable) {
         final Page<MovimentoCompra> movimentoCompraPage = service.pesquisarComPaginacao(request, pageable);
         final Page<MovimentoCompraResponse> response = movimentoCompraPage.map(e -> responseConverter.decode(e));
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") List<Integer> input) {
+        service.removerTodos(input);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(value = "/importa-texto-csv")
+    public ResponseEntity<Void> createFromCsvText(@RequestBody @Valid String request) {
+        service.salvarCsv(request);
+        return ResponseEntity.ok().build();
     }
 }
