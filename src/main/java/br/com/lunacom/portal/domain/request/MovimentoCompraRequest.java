@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class MovimentoCompraRequest {
+public class MovimentoCompraRequest implements RequestDto{
     private String id;
     private String dataAquisicao;
     private String dataAquisicaoInicio;

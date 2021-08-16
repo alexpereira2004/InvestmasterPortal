@@ -1,4 +1,4 @@
-package br.com.lunacom.portal.resource.v1.exception;
+package br.com.lunacom.portal.resource.exception;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpInputMessage;

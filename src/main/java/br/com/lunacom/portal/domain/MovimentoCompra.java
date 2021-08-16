@@ -3,6 +3,7 @@ package br.com.lunacom.portal.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Builder
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovimentoCompra {
+public class MovimentoCompra implements Serializable, GenericEntity<MovimentoCompra> {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
