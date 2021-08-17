@@ -11,12 +11,15 @@ import br.com.lunacom.portal.util.DataUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+@Validated
 public abstract class GenericController<
         T extends GenericEntity<T>,
         R extends GenericRequest,
@@ -54,7 +57,7 @@ public abstract class GenericController<
     }
 
     @PostMapping("")
-    public ResponseEntity<T> createOne(@RequestBody R request){
+    public ResponseEntity<T> createOne(@Valid @RequestBody R request){
         final T created = service.save(requestConverter.encode(request));
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(created.getId()).toUri();

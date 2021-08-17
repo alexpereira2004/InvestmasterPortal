@@ -9,14 +9,18 @@ import br.com.lunacom.portal.resource.v2.specification.DividendoSpecification;
 import br.com.lunacom.portal.resource.v2.specification.GenericSpecification;
 import br.com.lunacom.portal.util.DataUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/v2/dividendo")
+@Validated
 public class DividendoResource extends
         GenericController<Dividendo,
-                          DividendoRequest,
+                          @Valid DividendoRequest,
                           DividendoResponse,
                           DividendoSpecification> {
     public DividendoResource(
