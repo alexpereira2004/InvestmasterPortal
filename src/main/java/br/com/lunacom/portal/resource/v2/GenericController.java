@@ -17,7 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-public class GenericController<
+public abstract class GenericController<
         T extends GenericEntity<T>,
         R extends GenericRequest,
         P extends GenericResponse,
@@ -42,14 +42,10 @@ public class GenericController<
         this.specification = specification;
     }
 
-//    @GetMapping("")
-//    public ResponseEntity<Page<T>> getPage(Pageable pageable){
-//        return ResponseEntity.ok(service.getPage(pageable));
-//    }
-
     @GetMapping("/{id}")
-    public ResponseEntity<T> getOne(@PathVariable Integer id){
-        return ResponseEntity.ok(service.get(id));
+    public ResponseEntity<P> getOne(@PathVariable Integer id){
+        final P response = responseConverter.decode(service.get(id));
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("")
