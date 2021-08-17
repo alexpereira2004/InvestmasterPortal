@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -16,6 +17,6 @@ public class DividendoResponse extends GenericResponse {
     private Double valorTotal;
     private String ativoNome;
     private String ativoCodigo;
-    private LocalDate dataCriacao;
-    private LocalDate dataAtualizacao;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime dataAtualizacao;
 }

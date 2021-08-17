@@ -37,17 +37,19 @@ public abstract class GenericService<
     @Transactional
     public T update(T updated){
         T dbDomain = get(updated.getId());
-
+        updated.setDataAtualizacao(dataUtil.dataHoraAora());
         return repository.save(dbDomain);
     }
 
     @Transactional
     public T save(T newDomain){
+        newDomain.setDataCriacao(dataUtil.dataHoraAora());
         return repository.save(newDomain);
     }
 
     @Transactional
     public List<T> saveAll(List<T> list){
+        list.stream().forEach(e -> e.setDataCriacao(dataUtil.dataHoraAora()));
         return repository.saveAll(list);
     }
 

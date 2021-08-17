@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Builder
 @Data
@@ -25,4 +26,24 @@ public class MovimentoCompra implements Serializable, GenericEntity<MovimentoCom
     @JoinColumn(name="ativo_id")
     @EqualsAndHashCode.Exclude
     private Ativo ativo;
+
+    @Override
+    public LocalDateTime getDataCriacao() {
+        return null;
+    }
+
+    @Override
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+
+    }
+
+    @Override
+    public LocalDateTime getDataAtualizacao() {
+        return null;
+    }
+
+    @Override
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+
+    }
 }

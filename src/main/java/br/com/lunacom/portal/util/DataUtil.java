@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
@@ -25,5 +26,13 @@ public class DataUtil {
     public LocalDate dataBrParaLocalDate(String origem) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DIA_MES_ANO_BARRA);
         return LocalDate.parse(origem, formatter);
+    }
+
+    public LocalDate dataAgora() {
+        return LocalDate.now();
+    }
+
+    public LocalDateTime dataHoraAora() {
+        return LocalDateTime.now();
     }
 }
