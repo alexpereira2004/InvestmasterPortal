@@ -54,11 +54,17 @@ public abstract class GenericController<
     }
 
     @PostMapping("")
-    public ResponseEntity<T> create(@RequestBody R request){
+    public ResponseEntity<T> createOne(@RequestBody R request){
         final T created = service.save(requestConverter.encode(request));
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @PostMapping("/lote")
+    public ResponseEntity<String> createMany(@RequestBody List<R> request){
+        service.saveAll(requestConverter.encode(request));
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value="/listagem-paginado")

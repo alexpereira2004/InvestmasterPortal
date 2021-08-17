@@ -47,6 +47,11 @@ public abstract class GenericService<
     }
 
     @Transactional
+    public List<T> saveAll(List<T> list){
+        return repository.saveAll(list);
+    }
+
+    @Transactional
     public Page<T> pesquisarComPaginacao(R request, Pageable pageable) {
         specification.setDataUtil(this.dataUtil);
         specification.setRequest(request);
