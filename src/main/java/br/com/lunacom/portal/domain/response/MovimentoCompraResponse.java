@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-public class MovimentoCompraResponse {
+public class MovimentoCompraResponse extends GenericResponse {
     private Integer id;
     private LocalDate dataAquisicao;
     private Double precoPago;

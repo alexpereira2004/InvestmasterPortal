@@ -16,7 +16,7 @@ import static br.com.lunacom.portal.util.StringParser.toInteger;
 
 @AllArgsConstructor
 @Component
-public class MovimentoCompraRequestConverter implements Converter<MovimentoCompraRequest, MovimentoCompra> {
+public class MovimentoCompraRequestConverter extends GenericConverter<MovimentoCompraRequest, MovimentoCompra> {
 
     DataUtil dataUtil;
     AtivoService ativoService;
