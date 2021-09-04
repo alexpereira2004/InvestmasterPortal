@@ -6,6 +6,7 @@ import br.com.lunacom.portal.domain.MovimentoVenda;
 import br.com.lunacom.portal.domain.request.MovimentoVendaRequest;
 import br.com.lunacom.portal.domain.response.MovimentoVendaResponse;
 import br.com.lunacom.portal.service.MovimentoVendaService;
+import br.com.lunacom.portal.util.StringParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.List;
 
@@ -49,8 +51,9 @@ public class MovimentoVendaResource {
     }
 
     @PostMapping(value = "/importa-texto-csv")
-    public ResponseEntity<Void> createFromCsvText(@RequestBody @Valid String request) {
-        service.salvarCsv(request);
+    public ResponseEntity<Void> createFromCsvText(@RequestBody @Valid String request)
+            throws UnsupportedEncodingException {
+        service.salvarCsv(StringParser.prepareCsvFromRequest(request));
         return ResponseEntity.ok().build();
     }
 }
