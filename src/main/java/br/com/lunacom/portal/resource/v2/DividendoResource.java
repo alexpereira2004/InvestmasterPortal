@@ -7,13 +7,18 @@ import br.com.lunacom.portal.domain.response.DividendoResponse;
 import br.com.lunacom.portal.repository.GenericRepository;
 import br.com.lunacom.portal.resource.v2.specification.DividendoSpecification;
 import br.com.lunacom.portal.resource.v2.specification.GenericSpecification;
+import br.com.lunacom.portal.service.DividendoService;
 import br.com.lunacom.portal.util.DataUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/v2/dividendo")
@@ -23,12 +28,23 @@ public class DividendoResource extends
                           @Valid DividendoRequest,
                           DividendoResponse,
                           DividendoSpecification> {
+    DividendoService service;
+
     public DividendoResource(
             GenericRepository<Dividendo> repository,
             DataUtil dataUtil,
             Converter<DividendoRequest, Dividendo> requestConverter,
             Converter<DividendoResponse, Dividendo> responseConverter,
-            @Qualifier("dividendoSpecification") GenericSpecification specification) {
+            @Qualifier("dividendoSpecification") GenericSpecification specification,
+            DividendoService service) {
         super(repository, dataUtil, requestConverter, responseConverter, specification);
+        this.service = service;
+    }
+
+
+    @PostMapping(value = "/importacao-html")
+    public ResponseEntity<Void> createFromCsvText(@RequestBody @Valid @NotNull String request) {
+        service.salvarHtml(request);
+        return ResponseEntity.ok().build();
     }
 }
