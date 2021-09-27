@@ -1,9 +1,6 @@
 package br.com.lunacom.portal.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,6 +9,7 @@ import java.time.LocalDate;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Dividendo extends BasicEntity<Dividendo>  {

@@ -14,9 +14,11 @@ public class StringParser {
     }
 
     public static Double toDouble(String input) {
+        input = input.replace(",",".");
         return Optional.ofNullable(input).map(Double::valueOf).orElse(null);
     }
     public static Double toDouble(String input, Double defaultValue) {
+        input = input.replace(",",".");
         return Optional.ofNullable(input).map(Double::valueOf).orElse(defaultValue);
     }
 

@@ -1,10 +1,14 @@
 package br.com.lunacom.portal.service;
 
+import br.com.lunacom.portal.domain.Ativo;
+import br.com.lunacom.portal.domain.Dividendo;
 import br.com.lunacom.portal.repository.DividendoRepository;
 import br.com.lunacom.portal.util.DataUtil;
+import br.com.lunacom.portal.util.StringParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,16 +17,37 @@ import java.util.regex.Pattern;
 public class DividendoService {
     private final DataUtil dataUtil;
     private final DividendoRepository repository;
+    private final AtivoService ativoService;
+    private Set<Ativo> ativoSet = new HashSet<>();
 
     public void salvarHtml(String request) {
-        String regex = "<div class=\"cont-date settlement\">(.*)<\\/div>\\n\\s*<div class=\"cont-description\">(.*)<\\/div>\\n\\s*<div class=\"cont-value\">\\n\\s*<span>(.*)<\\/span>";
+        List<Dividendo> dividendoList = new ArrayList<>();
+        String regex = "<div class=\\\"cont-date settlement\\\">(.*)<\\/div>\\r\\n\\s*<div class=\\\"cont-description\\\">(JUROS S\\/CAPITAL|DIVIDENDOS|RENDIMENTO) (\\d*)(?:\\s*|\\s*\\w*\\s)(\\w*)\\s*<\\/div>\\r\\n\\s*<div class=\\\"cont-value\\\">\\r\\n\\s*<span>(.*)<\\/span>";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(request);
         while (matcher.find()) {
-            System.out.println("group 1: " + matcher.group(1));
-            System.out.println("group 2: " + matcher.group(2));
-            System.out.println("group 3: " + matcher.group(3));
+            final Integer quantidade = Integer.valueOf(matcher.group(3));
+            final Double valorTotal = StringParser.toDouble(matcher.group(5));
+            final Dividendo dividendo = Dividendo.builder()
+                    .dividendo(valorTotal / quantidade)
+                    .dataRecebimento(dataUtil.dataBrParaLocalDate(matcher.group(1)))
+                    .tipo(matcher.group(2))
+                    .quantidade(quantidade)
+                    .ativo(getAtivo(matcher.group(4)))
+                    .valorTotal(valorTotal)
+                    .build();
+            dividendoList.add(dividendo);
         }
+        repository.saveAll(dividendoList);
+    }
+
+    private Ativo getAtivo(String ativoCodigo) {
+        final Optional<Ativo> optional = ativoSet.stream().filter(e -> e.getCodigo().equals(ativoCodigo)).findFirst();
+        return optional.orElse(pesquisarNoBanco(ativoCodigo));
+    }
+
+    private Ativo pesquisarNoBanco(String ativoCodigo) {
+        return ativoService.pesquisarPorCodigo(ativoCodigo).orElse(null);
     }
 
 }
