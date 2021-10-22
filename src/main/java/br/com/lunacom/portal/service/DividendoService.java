@@ -5,6 +5,7 @@ import br.com.lunacom.portal.domain.Dividendo;
 import br.com.lunacom.portal.repository.DividendoRepository;
 import br.com.lunacom.portal.util.DataUtil;
 import br.com.lunacom.portal.util.StringParser;
+import com.google.common.collect.Iterables;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class DividendoService {
 
     public void salvarHtml(String request) {
         List<Dividendo> dividendoList = new ArrayList<>();
-        String regex = "<div class=\\\"cont-date settlement\\\">(.*)<\\/div>\\r\\n\\s*<div class=\\\"cont-description\\\">(JUROS S\\/CAPITAL|DIVIDENDOS|RENDIMENTO) (\\d*)(?:\\s*|\\s*\\w*\\s)(\\w*)\\s*<\\/div>\\r\\n\\s*<div class=\\\"cont-value\\\">\\r\\n\\s*<span>(.*)<\\/span>";
+        String regex = "<div class=\\\"cont-date settlement\\\">(.*)<\\/div>\\r\\n\\s*<div class=\\\"cont-description\\\">(JUROS S\\/CAPITAL|DIVIDENDOS|RENDIMENTO|\\* PROV \\* RENDIMENTO) (\\d*)(?:\\s*|\\s*\\w*\\s)(\\w*)\\s*<\\/div>\\r\\n\\s*<div class=\\\"cont-value\\\">\\r\\n\\s*<span>(.*)<\\/span>";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(request);
         while (matcher.find()) {
@@ -38,7 +39,20 @@ public class DividendoService {
                     .build();
             dividendoList.add(dividendo);
         }
+        removerDividendosExistentes(dividendoList);
+
         repository.saveAll(dividendoList);
+    }
+
+    private void removerDividendosExistentes(List<Dividendo> dividendoList) {
+        dividendoList.sort(Comparator.comparing(o -> o.getDataRecebimento()));
+        final Dividendo first = Iterables.getFirst(dividendoList, null);
+        final Dividendo last = Iterables.getLast(dividendoList);
+        final List<Dividendo> byDataRecebimentoBetween = repository
+                .findByDataRecebimentoBetween(
+                        first.getDataRecebimento(),
+                        last.getDataRecebimento());
+        repository.deleteAll(byDataRecebimentoBetween);
     }
 
     private Ativo getAtivo(String ativoCodigo) {
