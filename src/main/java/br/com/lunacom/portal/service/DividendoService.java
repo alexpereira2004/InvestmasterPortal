@@ -45,6 +45,9 @@ public class DividendoService {
     }
 
     private void removerDividendosExistentes(List<Dividendo> dividendoList) {
+        if (dividendoList.isEmpty()) {
+            return;
+        }
         dividendoList.sort(Comparator.comparing(o -> o.getDataRecebimento()));
         final Dividendo first = Iterables.getFirst(dividendoList, null);
         final Dividendo last = Iterables.getLast(dividendoList);
