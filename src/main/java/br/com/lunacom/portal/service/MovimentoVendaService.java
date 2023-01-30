@@ -53,6 +53,6 @@ public class MovimentoVendaService {
     }
 
     public void removerTodos(List<Integer> list) {
-        repository.deleteAllById(list);
+        list.stream().forEach(e -> repository.deleteById(e));
     }
 }

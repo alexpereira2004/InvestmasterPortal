@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
+import java.util.function.Function;
 
 @RequiredArgsConstructor
 @Service
@@ -53,6 +54,6 @@ public class MovimentoCompraService {
     }
 
     public void removerTodos(List<Integer> list) {
-        repository.deleteAllById(list);
+        list.stream().forEach(e -> repository.deleteById(e));
     }
 }

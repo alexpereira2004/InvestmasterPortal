@@ -62,7 +62,7 @@ public abstract class GenericService<
 
     @Transactional
     public void deleteAll(List<Integer> list){
-        repository.deleteAllById(list);
+        list.stream().forEach(e -> repository.deleteById(e));
     }
 
 }
