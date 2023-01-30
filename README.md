@@ -18,3 +18,8 @@ Para iniciar o container:
 
 `$ docker run -p 13001:12001 investmaster/portal`
 
+<h3>Swagger</h3>
+
+http://localhost:12001/swagger-ui/index.html#/
+
+
