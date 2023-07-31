@@ -9,7 +9,7 @@ ENV DB_USERNAME root
 ENV DB_PASSWORD 123456
 
 # Add the application's jar to the container
-COPY target/Portal-0.0.1-SNAPSHOT.jar Portal-0.0.1-SNAPSHOT.jar
+COPY target/portal-0.0.1-SNAPSHOT.jar app.jar
 
 #execute the application
-ENTRYPOINT ["java","-jar","/Portal-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","/app.jar"]

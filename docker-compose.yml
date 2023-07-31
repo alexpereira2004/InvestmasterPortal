@@ -1,0 +1,38 @@
+version: "3.2"
+services:
+
+  ivm_mysql:
+    image: mysql:5.7
+    container_name: 'ivm_mysql'
+    ports:
+      - "3320:3306"
+    volumes:
+      - ./volumes/lib:/var/lib/mysql
+      - ./volumes/log:/var/log/mysql
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD=mylunacom
+      - MYSQL_ROOT_HOST=%
+
+  ivm_java:
+    image: openjdk:11-jre-slim
+    container_name: 'ivm_java'
+    restart: always
+    command: ["java", "-jar", "/app.jar"]
+    volumes:
+      - ./target/portal-0.0.1-SNAPSHOT.jar:/app.jar
+    depends_on:
+      - ivm_mysql
+    environment:
+      DB_URL: jdbc:mysql://ivm_mysql:3320/invest_master_dev?useTimezone=true&serverTimezone=UTC
+      DB_USERNAME: root
+      DB_PASSWORD: mylunacom
+    ports:
+      - "8001:80"
+      - "4001:443"
+    networks:
+      - backend
+
+networks:
+  backend:
