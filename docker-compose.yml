@@ -14,6 +14,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=mylunacom
       - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE= invest_master_dev
 
   ivm_java:
     image: openjdk:11-jre-slim
@@ -25,7 +26,7 @@ services:
     depends_on:
       - ivm_mysql
     environment:
-      DB_URL: jdbc:mysql://ivm_mysql:3320/invest_master_dev?useTimezone=true&serverTimezone=UTC
+      DB_URL: jdbc:mysql://ivm_mysql:3306/invest_master_dev?useTimezone=true&serverTimezone=UTC
       DB_USERNAME: root
       DB_PASSWORD: mylunacom
     ports:
@@ -36,3 +37,4 @@ services:
 
 networks:
   backend:
+    driver: bridge
