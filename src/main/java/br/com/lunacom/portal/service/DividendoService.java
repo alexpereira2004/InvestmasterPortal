@@ -7,6 +7,7 @@ import br.com.lunacom.portal.util.DataUtil;
 import br.com.lunacom.portal.util.StringParser;
 import com.google.common.collect.Iterables;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,33 +17,42 @@ import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class DividendoService {
     private final DataUtil dataUtil;
     private final DividendoRepository repository;
     private final AtivoService ativoService;
     private Set<Ativo> ativoSet = new HashSet<>();
-    public static final String REGEX = "<div class=\"table-content__item pointer\" role=\"button\" tabindex=\"0\">.+<soma-caption class=\"date soma-caption hydrated\">(.*)<\\/soma-caption>(?:.*\\s\\n){4}.*<soma-caption class=\"value soma-caption hydrated\">R\\$&nbsp;([\\.|\\d{1,3}]+,\\d{2}).*(CRÉDITO FRAÇÕES|JUROS S\\/CAPITAL|DIVIDENDOS|RENDIMENTO|\\* PROV \\* RENDIMENTO)\\s+([\\d*,]*\\d*)(?:\\s*PAPEL\\s|\\s*|)(\\w*)";
+//    public static final String REGEX = "<div class=\"table-content__item pointer\" role=\"button\" tabindex=\"0\">.+<soma-caption class=\"date soma-caption hydrated\">(.*)<\\/soma-caption>(?:.*\\s\\n){4}.*<soma-caption class=\"value soma-caption hydrated\">R\\$&nbsp;([\\.|\\d{1,3}]+,\\d{2}).*(CRÉDITO FRAÇÕES|JUROS S\\/CAPITAL|DIVIDENDOS|RENDIMENTO|\\* PROV \\* RENDIMENTO)\\s+([\\d*,]*\\d*)(?:\\s*PAPEL\\s|\\s*|)(\\w*)";
+    public static final String REGEX = "(\\d{1,2} DE \\w+ DE \\d{4})|(?:ENTRADA)\\t(Juros Sobre Capital Próprio|Dividendo|Rendimento)\\t(\\w{4}\\d{1,2}).*\\s\\n.*\\s\\n((\\d\\.*\\d+))\\tR\\$ ([\\.|\\d{1,3}]+,\\d{2})\\tR\\$ ([\\.|\\d{1,3}]+,\\d{2})";
 
     public void salvarHtml(String request) {
         List<Dividendo> dividendoList = new ArrayList<>();
+        LocalDate dataRecebimento = null;
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(request);
+
         while (matcher.find()) {
-            final LocalDate dataRecebimento = dataUtil.dataBrParaLocalDate(matcher.group(1));
-            final Double valorTotal = StringParser.toDouble(matcher.group(2));
-            String tipo = matcher.group(3);
-            final Integer quantidade = matcher.group(4).isEmpty() ? 1 : getInteger(matcher);
-            Ativo ativo = getAtivo(matcher.group(5));
-            final Double dividendoCalculado = calcularDividendo(valorTotal, quantidade);
-            final Dividendo dividendo = Dividendo.builder()
-                    .dividendo(dividendoCalculado)
-                    .dataRecebimento(dataRecebimento)
-                    .tipo(tipo)
-                    .quantidade(quantidade)
-                    .ativo(ativo)
-                    .valorTotal(valorTotal)
-                    .build();
-            dividendoList.add(dividendo);
+            if (Objects.nonNull(matcher.group(1))) {
+                dataRecebimento = dataUtil.dataEmExtensoParaLocalDate(matcher.group(1));
+            } else {
+                String tipo = matcher.group(2);
+                Ativo ativo = getAtivo(matcher.group(3));
+                final Integer quantidade = matcher.group(4).isEmpty() ? 1 : getInteger(matcher);
+                final Double dividendoCalculado = StringParser.toDouble(matcher.group(6));
+                final Double valorTotal = StringParser.toDouble(matcher.group(7));
+
+                final Dividendo dividendo = Dividendo.builder()
+                        .dividendo(dividendoCalculado)
+                        .dataRecebimento(dataRecebimento)
+                        .tipo(tipo)
+                        .quantidade(quantidade)
+                        .ativo(ativo)
+                        .valorTotal(valorTotal)
+                        .build();
+                dividendoList.add(dividendo);
+            }
+
         }
         removerDividendosExistentes(dividendoList);
 
@@ -50,7 +60,7 @@ public class DividendoService {
     }
 
     private Integer getInteger(Matcher matcher) {
-        final String replace = matcher.group(4).replace(",", "");
+        final String replace = matcher.group(4).replace(".", "");
         return Integer.valueOf(replace);
     }
 

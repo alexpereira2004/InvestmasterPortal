@@ -28,6 +28,16 @@ public class DataUtil {
         return LocalDate.parse(origem, formatter);
     }
 
+    public LocalDate dataEmExtensoParaLocalDate(String origem) {
+        String[] split = origem.split("DE ");
+        final Integer dia = Integer.valueOf(split[0].trim());
+        final Integer mes = Integer.valueOf(Meses.fromDescricao(split[1].trim().substring(0, 1).toUpperCase() + split[1].toLowerCase().trim().substring(1)).getCodigo());
+        final Integer ano = Integer.valueOf(split[2].trim());
+        return LocalDate.of(ano, mes, dia);
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DIA_MES_ANO_BARRA);
+//        return LocalDate.parse(origem, formatter);
+    }
+
     public LocalDate dataAgora() {
         return LocalDate.now();
     }
