@@ -1,19 +1,21 @@
 package br.com.lunacom.portal.domain;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
+@Data
 @Entity
-@Getter
-@Setter
+@Builder
 @NoArgsConstructor
-public class Ativo implements Serializable {
+@AllArgsConstructor
+public class Ativo extends BasicEntity<Ativo> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

@@ -1,14 +1,13 @@
 package br.com.lunacom.portal.repository;
 
 import br.com.lunacom.portal.domain.Ativo;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AtivoRepository extends JpaRepository<Ativo, Integer> {
+public interface AtivoRepository extends GenericRepository<Ativo> {
 
     public Optional<Ativo> findByNome(String nome);
     public Optional<Ativo> findByCodigo(String codigo);
