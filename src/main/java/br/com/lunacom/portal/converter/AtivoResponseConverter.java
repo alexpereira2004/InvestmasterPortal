@@ -16,6 +16,15 @@ public class AtivoResponseConverter implements Converter<AtivoResponse, Ativo> {
 
     @Override
     public AtivoResponse decode(Ativo input) {
-        return null;
+        return AtivoResponse.builder()
+                .id(input.getId())
+                .nome(input.getNome())
+                .nomeCompleto(input.getNomeCompleto())
+                .codigo(input.getCodigo())
+                .tipo(input.getTipo())
+                .pais(input.getPais())
+                .caminho(input.getCaminho())
+                .seguindo(input.getSeguindo())
+                .build();
     }
 }

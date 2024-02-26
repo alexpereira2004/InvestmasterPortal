@@ -7,11 +7,20 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-public class AtivoRequestConverter implements Converter <AtivoRequest, Ativo> {
+public class AtivoRequestConverter extends GenericConverter <AtivoRequest, Ativo> {
 
     @Override
     public Ativo encode(AtivoRequest input) {
-        return null;
+        return Ativo.builder()
+                .id(input.getId())
+                .nome(input.getNome())
+                .nomeCompleto(input.getNomeCompleto())
+                .codigo(input.getCodigo())
+                .tipo(input.getTipo())
+                .pais(input.getPais())
+                .caminho(input.getCaminho())
+                .seguindo(input.getSeguindo())
+                .build();
     }
 
     @Override

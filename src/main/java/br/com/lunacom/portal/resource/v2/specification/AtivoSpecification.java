@@ -1,6 +1,7 @@
 package br.com.lunacom.portal.resource.v2.specification;
 
 import br.com.lunacom.portal.domain.Ativo;
+import br.com.lunacom.portal.domain.request.AtivoRequest;
 import br.com.lunacom.portal.domain.request.GenericRequest;
 import br.com.lunacom.portal.util.DataUtil;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,14 +16,17 @@ import javax.persistence.criteria.Root;
 public class AtivoSpecification extends GenericSpecification
         implements Specification<Ativo> {
 
+    DataUtil dataUtil;
+    AtivoRequest request;
+
     @Override
     public void setRequest(GenericRequest request) {
-
+        this.request = (AtivoRequest)request;
     }
 
     @Override
     public void setDataUtil(DataUtil dataUtil) {
-
+        this.dataUtil = dataUtil;
     }
 
 

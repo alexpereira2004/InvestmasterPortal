@@ -8,9 +8,10 @@ import lombok.Data;
 public class AtivoResponse extends GenericResponse {
     private Integer id;
     private String nome;
-    private String nome_completo;
+    private String nomeCompleto;
     private String codigo;
     private String tipo;
     private String pais;
     private String caminho;
+    private String seguindo;
 }

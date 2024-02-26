@@ -23,11 +23,12 @@ public class Ativo extends BasicEntity<Ativo> implements Serializable {
     private Integer id;
 
     private String nome;
-    private String nome_completo;
+    private String nomeCompleto;
     private String codigo;
     private String tipo;
     private String pais;
     private String caminho;
+    private String seguindo;
 
     @OneToMany(mappedBy = "ativo")
     private List<Cotacao> cotacoes;
