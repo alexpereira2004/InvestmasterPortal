@@ -30,7 +30,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: mylunacom
     ports:
-      - "8001:80"
+      - "8001:12001"
       - "4001:443"
     networks:
       - backend
