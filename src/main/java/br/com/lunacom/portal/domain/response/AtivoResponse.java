@@ -10,8 +10,11 @@ public class AtivoResponse extends GenericResponse {
     private String nome;
     private String nomeCompleto;
     private String codigo;
+    private String cnpj;
     private String tipo;
+    private String tipoDescricao;
     private String pais;
     private String caminho;
     private String seguindo;
+    private String seguindoDescricao;
 }
