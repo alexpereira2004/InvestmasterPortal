@@ -1,4 +1,4 @@
-package br.com.lunacom.portal.util;
+package br.com.lunacom.portal.domain.enumeration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
