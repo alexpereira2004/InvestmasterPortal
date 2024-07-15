@@ -20,4 +20,5 @@ public class ProjecaoRequest extends GenericRequest {
     private Double valorAlcancado;
     private Boolean efetivado;
     private String observacao;
+    private Boolean totalizador;
 }

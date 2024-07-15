@@ -30,5 +30,6 @@ public class Projecao extends BasicEntity<Projecao> implements Serializable {
     private Double valorAlcancado;
     private Boolean efetivado;
     private String observacao;
+    private Boolean totalizador;
 
 }
