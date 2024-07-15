@@ -10,7 +10,8 @@ import java.util.EnumSet;
 public enum AcaoTipo {
     ACAO("A", "Ação"),
     BDR("B", "BDR"),
-    FII("F", "Fundo Imobiliário");
+    FII("F", "Fundo Imobiliário"),
+    TOD("T", "Todos");
 
     String codigo;
     String Descricao;
