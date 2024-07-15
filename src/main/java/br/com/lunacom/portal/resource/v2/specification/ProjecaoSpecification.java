@@ -57,6 +57,12 @@ public class ProjecaoSpecification extends GenericSpecification implements Speci
             );
         }
 
+        if (Objects.nonNull(request.getTipo())) {
+            predicates.add(
+                    criteriaBuilder.and(criteriaBuilder.equal(root.get("tipo"), request.getTipo()))
+            );
+        }
+
         return criteriaBuilder.and(predicates.stream().toArray(Predicate[]::new));
     }
 
