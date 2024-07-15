@@ -11,6 +11,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Component
 public class ProjecaoSpecification extends GenericSpecification implements Specification<Projecao> {
@@ -40,7 +43,15 @@ public class ProjecaoSpecification extends GenericSpecification implements Speci
 
     @Override
     public Predicate toPredicate(Root<Projecao> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        return null;
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (Objects.nonNull(request.getAno())) {
+            predicates.add(
+                    criteriaBuilder.and(criteriaBuilder.equal(root.get("ano"), request.getAno()))
+            );
+        }
+
+        return criteriaBuilder.and(predicates.stream().toArray(Predicate[]::new));
     }
 
 }
