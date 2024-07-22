@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -16,6 +18,7 @@ public class ProjecaoRequest extends GenericRequest {
     private Integer ano;
     private Integer mes;
     private String tipo;
+    private List<String> tipoLista;
     private Double valor;
     private Double valorAlcancado;
     private Boolean efetivado;

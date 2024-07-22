@@ -57,9 +57,11 @@ public class ProjecaoSpecification extends GenericSpecification implements Speci
             );
         }
 
-        if (Objects.nonNull(request.getTipo())) {
+        if (Objects.nonNull(request.getTipoLista())) {
+            final CriteriaBuilder.In<Object> inTipo = criteriaBuilder.in(root.get("tipo"));
+            request.getTipoLista().forEach(p -> inTipo.value(p));
             predicates.add(
-                    criteriaBuilder.and(criteriaBuilder.equal(root.get("tipo"), request.getTipo()))
+                    criteriaBuilder.and(inTipo)
             );
         }
 
