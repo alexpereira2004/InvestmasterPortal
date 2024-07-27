@@ -16,6 +16,7 @@ import java.util.List;
 public class ProjecaoRequest extends GenericRequest {
     private Integer id;
     private Integer ano;
+    private List<Integer> anoLista;
     private Integer mes;
     private String tipo;
     private List<String> tipoLista;

@@ -51,6 +51,14 @@ public class ProjecaoSpecification extends GenericSpecification implements Speci
             );
         }
 
+        if (Objects.nonNull(request.getAnoLista())) {
+            final CriteriaBuilder.In<Object> inAno = criteriaBuilder.in(root.get("ano"));
+            request.getAnoLista().forEach(p -> inAno.value(p));
+            predicates.add(
+                    criteriaBuilder.and(inAno)
+            );
+        }
+
         if (Objects.nonNull(request.getTotalizador())) {
             predicates.add(
                     criteriaBuilder.and(criteriaBuilder.equal(root.get("totalizador"), request.getTotalizador()))
