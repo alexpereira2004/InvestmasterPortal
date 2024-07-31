@@ -10,11 +10,14 @@ import br.com.lunacom.portal.resource.v2.specification.ProjecaoSpecification;
 import br.com.lunacom.portal.service.ProjecaoService;
 import br.com.lunacom.portal.util.DataUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Validated
 @RestController
@@ -32,5 +35,11 @@ public class ProjecaoResource extends GenericController
             ProjecaoService service) {
         super(repository, dataUtil, requestConverter, responseConverter, specification);
         this.service = service;
+    }
+
+    @GetMapping(value = "/anos")
+    public ResponseEntity<List<Integer>> anos() {
+        final List<Integer> anos = service.buscarTodosAnosComProjecao();
+        return ResponseEntity.ok(anos);
     }
 }
