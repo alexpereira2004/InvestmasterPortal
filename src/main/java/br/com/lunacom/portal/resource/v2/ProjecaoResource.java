@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,5 +42,12 @@ public class ProjecaoResource extends GenericController
     public ResponseEntity<List<Integer>> anos() {
         final List<Integer> anos = service.buscarTodosAnosComProjecao();
         return ResponseEntity.ok(anos);
+    }
+
+    @PostMapping(value = "/atualizar-indices")
+    public ResponseEntity<List<Projecao>> atualizarIndices() {
+        final List<Projecao> projecaoList = service
+                .buscarResultadosDividendos();
+        return ResponseEntity.ok(projecaoList);
     }
 }
