@@ -2,6 +2,7 @@ package br.com.lunacom.portal.service;
 
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Dividendo;
+import br.com.lunacom.portal.domain.dto.MediaDividendosDto;
 import br.com.lunacom.portal.repository.DividendoRepository;
 import br.com.lunacom.portal.util.DataUtil;
 import br.com.lunacom.portal.util.StringParser;
@@ -92,14 +93,12 @@ public class DividendoService {
     }
 
     public MediaDividendosDto getMediaDividendos() {
-        final MediaDividendosDto mediaList = new MediaDividendosDto(
-                repository.getMediaDividendosTotal(),
-                repository.getMediaDividendosAcoes(),
-                repository.getMediaDividendosFundos(),
-                repository.getMediaDividendosOutros()
-        );
-
-        return mediaList;
+        return MediaDividendosDto.builder()
+                .total(repository.getMediaDividendosTotal())
+                .acoes(repository.getMediaDividendosAcoes())
+                .fundos(repository.getMediaDividendosFundos())
+                .outros(repository.getMediaDividendosOutros())
+                .build();
     }
 
 }
