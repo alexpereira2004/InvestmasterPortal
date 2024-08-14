@@ -2,6 +2,7 @@ package br.com.lunacom.portal.resource.v2;
 
 import br.com.lunacom.portal.converter.Converter;
 import br.com.lunacom.portal.domain.Dividendo;
+import br.com.lunacom.portal.domain.dto.MediaDividendosDto;
 import br.com.lunacom.portal.domain.request.DividendoRequest;
 import br.com.lunacom.portal.domain.response.DividendoResponse;
 import br.com.lunacom.portal.repository.GenericRepository;
@@ -12,10 +13,7 @@ import br.com.lunacom.portal.util.DataUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -46,5 +44,11 @@ public class DividendoResource extends
     public ResponseEntity<Void> createFromCsvText(@RequestBody @Valid @NotNull String request) {
         service.salvarHtml(request);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/media")
+    public ResponseEntity<MediaDividendosDto> media(@RequestParam(defaultValue = "T") String tipo) {
+        final MediaDividendosDto mediaDividendos = service.getMediaDividendos();
+        return ResponseEntity.ok(mediaDividendos);
     }
 }

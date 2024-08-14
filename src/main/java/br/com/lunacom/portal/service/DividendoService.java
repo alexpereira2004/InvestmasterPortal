@@ -91,4 +91,15 @@ public class DividendoService {
         return ativoService.pesquisarPorCodigo(ativoCodigo).orElse(null);
     }
 
+    public MediaDividendosDto getMediaDividendos() {
+        final MediaDividendosDto mediaList = new MediaDividendosDto(
+                repository.getMediaDividendosTotal(),
+                repository.getMediaDividendosAcoes(),
+                repository.getMediaDividendosFundos(),
+                repository.getMediaDividendosOutros()
+        );
+
+        return mediaList;
+    }
+
 }
