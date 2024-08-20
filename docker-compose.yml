@@ -19,7 +19,6 @@ services:
   ivm_java:
     image: openjdk:11-jre-slim
     container_name: 'ivm_java'
-    restart: always
     command: ["java", "-jar", "/app.jar"]
     volumes:
       - ./target/portal-0.0.1-SNAPSHOT.jar:/app.jar
@@ -30,7 +29,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: mylunacom
     ports:
-      - "8001:12001"
+      - "8501:12001"
       - "4001:443"
     networks:
       - backend
