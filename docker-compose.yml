@@ -17,7 +17,7 @@ services:
       - MYSQL_DATABASE= invest_master_dev
 
   ivm_java:
-    image: openjdk:11-jre-slim
+    image: alexpereira2004/ivm_java:v1.1
     container_name: 'ivm_java'
     command: ["java", "-jar", "/app.jar"]
     volumes:

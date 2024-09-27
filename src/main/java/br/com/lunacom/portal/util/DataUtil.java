@@ -35,8 +35,6 @@ public class DataUtil {
         final Integer mes = Integer.valueOf(Meses.fromDescricao(split[1].trim().substring(0, 1).toUpperCase() + split[1].toLowerCase().trim().substring(1)).getCodigo());
         final Integer ano = Integer.valueOf(split[2].trim());
         return LocalDate.of(ano, mes, dia);
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DIA_MES_ANO_BARRA);
-//        return LocalDate.parse(origem, formatter);
     }
 
     public LocalDate dataAgora() {
