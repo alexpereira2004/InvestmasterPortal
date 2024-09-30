@@ -14,7 +14,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=mylunacom
       - MYSQL_ROOT_HOST=%
-      - MYSQL_DATABASE= invest_master_dev
+      - MYSQL_DATABASE=invest_master_docker
 
   ivm_java:
     image: alexpereira2004/ivm_java:v1.1
@@ -25,12 +25,26 @@ services:
     depends_on:
       - ivm_mysql
     environment:
-      DB_URL: jdbc:mysql://ivm_mysql:3306/invest_master_dev?useTimezone=true&serverTimezone=UTC
+      DB_URL: jdbc:mysql://ivm_mysql:3306/invest_master_docker?useTimezone=true&serverTimezone=UTC
       DB_USERNAME: root
       DB_PASSWORD: mylunacom
     ports:
       - "8501:12001"
-      - "4001:443"
+      - "8543:443"
+    networks:
+      - backend
+
+  ivm_frontend:
+    image: nginx:latest
+    container_name: 'ivm_frontend'
+    volumes:
+      - D:/Desenv/Angular/InvestMasterFE/dist/invest-master-fe:/usr/share/nginx/html
+    ports:
+      - "4501:80"  # Porta padrão onde o Angular roda
+    depends_on:
+      - ivm_java  # Define que o frontend depende do backend estar em funcionamento
+    environment:
+      - BACKEND_URL=http://ivm_java:8501  # Defina a URL do backend
     networks:
       - backend
 
