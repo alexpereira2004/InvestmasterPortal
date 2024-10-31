@@ -14,9 +14,12 @@ public class StringParser {
     }
 
     public static Double toDouble(String input) {
-        input = input.replace(",",".");
-        return Optional.ofNullable(input).map(Double::valueOf).orElse(null);
+        int ultimoPonto = input.lastIndexOf('.');
+        String parteMilhar = input.substring(0, ultimoPonto).replace(".", "");
+        String valorFormatado = parteMilhar + input.substring(ultimoPonto);
+        return Double.parseDouble(valorFormatado);
     }
+
     public static Double toDouble(String input, Double defaultValue) {
         input = input.replace(",",".");
         return Optional.ofNullable(input).map(Double::valueOf).orElse(defaultValue);
