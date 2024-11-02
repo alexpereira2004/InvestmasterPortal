@@ -7,7 +7,7 @@ CREATE TABLE pessoa (
 	documento varchar(40) DEFAULT NULL,
 	genero varchar(1) DEFAULT NULL,
 	status  varchar(1) DEFAULT NULL COMMENT 'A: Ativo | I: Inativo',
-	data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
@@ -26,7 +26,7 @@ CREATE TABLE endereco (
     tipo_endereco VARCHAR(10) COMMENT 'C: Comercial | R: Residencial',
     observacao VARCHAR(100),
     pessoa_id INT,
-    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (pessoa_id) REFERENCES pessoa(id) ON DELETE CASCADE
@@ -39,7 +39,7 @@ CREATE TABLE contato (
     tipo_contato VARCHAR(2) NOT NULL COMMENT 'W: Whats | T: Telefone | E: Email',
     valor VARCHAR(50),
     descricao VARCHAR(100) COMMENT 'Campo opcional para observações, como "Celular pessoal"',
-	data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (pessoa_id) REFERENCES pessoa(id) ON DELETE CASCADE
 );
@@ -52,7 +52,7 @@ CREATE TABLE usuario (
     senha VARCHAR(255) NOT NULL,
     status  varchar(1) DEFAULT NULL COMMENT 'A: Ativo | I: Inativo',
     pessoa_id INT UNIQUE,
-    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (pessoa_id) REFERENCES pessoa(id) ON DELETE CASCADE
 );
