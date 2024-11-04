@@ -14,9 +14,7 @@ public class StringParser {
     }
 
     public static Double toDouble(String input) {
-        int ultimoPonto = input.lastIndexOf('.');
-        String parteMilhar = input.substring(0, ultimoPonto).replace(".", "");
-        String valorFormatado = parteMilhar + input.substring(ultimoPonto);
+        final String valorFormatado = input.replace(".", "").replace(",", ".");
         return Double.parseDouble(valorFormatado);
     }
 
