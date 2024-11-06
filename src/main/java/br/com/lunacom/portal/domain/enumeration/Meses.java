@@ -21,11 +21,11 @@ public enum Meses {
     NOV("11","Nov","Novembro", "",""),
     DEZ("12","Dez","Dezembro", "","");
 
-    String codigo;
-    String SiglaPt;
-    String DescricaoPt;
-    String SiglaEn;
-    String DescricaoEn;
+    private final String codigo;
+    private final String SiglaPt;
+    private final String DescricaoPt;
+    private final String SiglaEn;
+    private final String DescricaoEn;
 
     public static Meses fromSiglaPt(String value) {
         return EnumSet.allOf(Meses.class)

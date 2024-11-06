@@ -11,8 +11,8 @@ public enum TipoEndereco {
     COMERCIAL("C", "Comercial"),
     RESIDENCIAL("R","Residencial");
 
-    String codigo;
-    String Descricao;
+    private final String codigo;
+    private final String Descricao;
 
     public static TipoEndereco fromCodigo(String value) {
         return EnumSet.allOf(TipoEndereco.class)

@@ -11,8 +11,8 @@ public enum Boleano {
     SIM("S", "Sim"),
     NAO("N","Não");
 
-    String codigo;
-    String Descricao;
+    private final String codigo;
+    private final String Descricao;
 
     public static Boleano fromCodigo(String value) {
         return EnumSet.allOf(Boleano.class)

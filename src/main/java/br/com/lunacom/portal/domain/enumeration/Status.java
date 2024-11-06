@@ -11,8 +11,8 @@ public enum Status {
     INATIVO("I","Inativo"),
     ATIVO("A", "Ativo");
 
-    String codigo;
-    String Descricao;
+    private final String codigo;
+    private final String Descricao;
 
     public static Status fromCodigo(String value) {
         return EnumSet.allOf(Status.class)

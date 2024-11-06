@@ -9,12 +9,13 @@ import java.util.EnumSet;
 @Getter
 public enum TipoContato {
 
-    WHATS("A", "Whatsapp"),
+    WHATS("W", "Whatsapp"),
     TELEFONE("T","Telefone"),
-    EMAIL("T","Email");
+    EMAIL("E","Email"),
+    OUTRO("O","Telefone");
 
-    String codigo;
-    String Descricao;
+    private final String codigo;
+    private final String Descricao;
 
     public static TipoContato fromCodigo(String value) {
         return EnumSet.allOf(TipoContato.class)
