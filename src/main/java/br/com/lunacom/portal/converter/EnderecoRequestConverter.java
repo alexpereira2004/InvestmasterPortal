@@ -1,7 +1,6 @@
 package br.com.lunacom.portal.converter;
 
 import br.com.lunacom.portal.domain.Endereco;
-import br.com.lunacom.portal.domain.enumeration.TipoEndereco;
 import br.com.lunacom.portal.domain.request.EnderecoRequest;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +19,7 @@ public class EnderecoRequestConverter
                 .cidade(input.getCidade())
                 .estado(input.getEstado())
                 .cep(input.getCep())
-                .tipoEndereco(TipoEndereco.fromCodigo(input.getTipoEndereco()).getCodigo())
+                .tipoEndereco(input.getTipoEndereco().getCodigo())
                 .observacao(input.getObservacao())
                 .build();
     }

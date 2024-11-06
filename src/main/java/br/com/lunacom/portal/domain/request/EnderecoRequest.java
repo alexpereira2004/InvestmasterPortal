@@ -1,6 +1,7 @@
 package br.com.lunacom.portal.domain.request;
 
 import br.com.lunacom.portal.domain.enumeration.Boleano;
+import br.com.lunacom.portal.domain.enumeration.TipoEndereco;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,6 @@ public class EnderecoRequest extends GenericRequest {
     private String cidade;
     private String estado;
     private String cep;
-    private String tipoEndereco;
+    private TipoEndereco tipoEndereco;
     private String observacao;
 }

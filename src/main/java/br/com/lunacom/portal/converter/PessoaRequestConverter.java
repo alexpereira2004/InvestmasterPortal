@@ -3,7 +3,6 @@ package br.com.lunacom.portal.converter;
 import br.com.lunacom.portal.domain.Contato;
 import br.com.lunacom.portal.domain.Endereco;
 import br.com.lunacom.portal.domain.Pessoa;
-import br.com.lunacom.portal.domain.enumeration.Status;
 import br.com.lunacom.portal.domain.request.PessoaRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -25,8 +24,8 @@ public class PessoaRequestConverter
                 .nascimento(input.getNascimento())
                 .nacionalidade(input.getNacionalidade())
                 .documento(input.getDocumento())
-                .genero(input.getGenero())
-                .status(Status.fromCodigo(input.getStatus()).getCodigo())
+                .genero(input.getGenero().getCodigo())
+                .status(input.getStatus().getCodigo())
                 .build();
 
         final List<Endereco> enderecoList = enderecoRequestConverter
