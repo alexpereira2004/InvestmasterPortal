@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -39,7 +40,12 @@ public class ControllerExceptionHandler {
                 "Verifique os seguintes itens antes de avançar",
                 request.getRequestURI());
         for (ObjectError x : e.getBindingResult().getAllErrors()) {
-            list.add(String.format("%s", x.getDefaultMessage()));
+            if (x instanceof FieldError) {
+                FieldError fieldError = (FieldError) x;
+                list.add(String.format("Campo %s: %s", fieldError.getField(), fieldError.getDefaultMessage()));
+            } else {
+                list.add(String.format("Erro: %s", x.getDefaultMessage()));
+            }
         }
         err.setDetalhe(list);
         return err;
