@@ -15,6 +15,8 @@ import org.springframework.web.client.ResourceAccessException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -77,15 +79,19 @@ public class ControllerExceptionHandler {
                 detail = String.format("Valor inválido para o campo '%s'. Os valores permitidos são: %s",
                         invalidEx.getPath().get(0).getFieldName(),
                         Arrays.toString(targetType.getEnumConstants()));
+            } else if (targetType.equals(LocalDate.class)) {
+                detail = String.format("Valor inválido para o campo '%s'. O formato esperado para datas é 'yyyy-MM-dd'.",
+                        invalidEx.getPath().get(0).getFieldName());
+            } else if (targetType.equals(LocalDateTime.class)) {
+                detail = String.format("Valor inválido para o campo '%s'. O formato esperado para data e hora é 'yyyy-MM-dd'T'HH:mm:ss'.",
+                        invalidEx.getPath().get(0).getFieldName());
             } else {
-                detail = "Erro de formatação: valor não reconhecido.";
+                detail = String.format("Erro de formatação: %s", ex.getMessage());
             }
         } else {
             detail = String.format("É necessário revisar a requisição: %s", ex.getMessage());
+
         }
-
-
-
         return new ValidationError(detail, request.getRequestURI());
     }
 
