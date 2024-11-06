@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,9 +21,12 @@ import java.util.List;
 public class PessoaRequest extends GenericRequest {
     private Integer id;
     @NotBlank
+    @Size(max = 255)
     private String nome;
     private LocalDate nascimento;
+    @Size(max = 40)
     private String nacionalidade;
+    @Size(max = 40)
     private String documento;
     private Genero genero;
     private Status status;
