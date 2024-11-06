@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @Component
 public class PessoaRequest extends GenericRequest {
     private Integer id;
+    @NotBlank
     private String nome;
     private LocalDate nascimento;
     private String nacionalidade;
