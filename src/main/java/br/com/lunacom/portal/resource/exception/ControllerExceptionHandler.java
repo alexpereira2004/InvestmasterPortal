@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.resource.exception;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
@@ -15,6 +15,7 @@ import org.springframework.web.client.ResourceAccessException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,8 +60,26 @@ public class ControllerExceptionHandler {
     @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
     @ResponseBody
     public final ValidationError handleConstraintViolation(HttpMessageNotReadableException ex, HttpServletRequest request) {
-        final HttpInputMessage httpInputMessage = ex.getHttpInputMessage();
-        final String detail = String.format("É necessário revisar a requisição: %s", ex.getMessage());
+
+        String detail;
+
+        if (ex.getCause() instanceof InvalidFormatException) {
+            InvalidFormatException invalidEx = (InvalidFormatException) ex.getCause();
+            Class<?> targetType = invalidEx.getTargetType();
+
+            if (targetType.isEnum()) {
+                detail = String.format("Valor inválido para o campo '%s'. Os valores permitidos são: %s",
+                        invalidEx.getPath().get(0).getFieldName(),
+                        Arrays.toString(targetType.getEnumConstants()));
+            } else {
+                detail = "Erro de formatação: valor não reconhecido.";
+            }
+        } else {
+            detail = String.format("É necessário revisar a requisição: %s", ex.getMessage());
+        }
+
+
+
         return new ValidationError(detail, request.getRequestURI());
     }
 
