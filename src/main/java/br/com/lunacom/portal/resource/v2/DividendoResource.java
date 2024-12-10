@@ -4,6 +4,7 @@ import br.com.lunacom.portal.converter.Converter;
 import br.com.lunacom.portal.domain.Dividendo;
 import br.com.lunacom.portal.domain.dto.MediaDividendosDto;
 import br.com.lunacom.portal.domain.request.DividendoRequest;
+import br.com.lunacom.portal.domain.response.AtivoDividendoResponse;
 import br.com.lunacom.portal.domain.response.DividendoResponse;
 import br.com.lunacom.portal.repository.GenericRepository;
 import br.com.lunacom.portal.resource.v2.specification.DividendoSpecification;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v2/dividendo")
@@ -50,5 +52,15 @@ public class DividendoResource extends
     public ResponseEntity<MediaDividendosDto> media(@RequestParam(defaultValue = "T") String tipo) {
         final MediaDividendosDto mediaDividendos = service.getMediaDividendos();
         return ResponseEntity.ok(mediaDividendos);
+    }
+
+    @GetMapping(value = "/extrato-dividendos")
+    public ResponseEntity<List<AtivoDividendoResponse>> getExtratoDividendos(
+            @RequestParam List<String> codigos,
+            @RequestParam String periodicidade
+    ) {
+        final List<AtivoDividendoResponse> responseList = service
+                .pesquisarExtratoDividendos(codigos, periodicidade);
+        return ResponseEntity.ok(responseList);
     }
 }

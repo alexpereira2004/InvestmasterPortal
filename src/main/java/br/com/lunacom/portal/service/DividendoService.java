@@ -3,9 +3,11 @@ package br.com.lunacom.portal.service;
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Dividendo;
 import br.com.lunacom.portal.domain.dto.MediaDividendosDto;
+import br.com.lunacom.portal.domain.response.AtivoDividendoResponse;
 import br.com.lunacom.portal.repository.DividendoRepository;
 import br.com.lunacom.portal.util.DataUtil;
 import br.com.lunacom.portal.util.StringParser;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -99,6 +101,16 @@ public class DividendoService {
                 .fundos(repository.getMediaDividendosFundos())
                 .outros(repository.getMediaDividendosOutros())
                 .build();
+    }
+
+    public List<AtivoDividendoResponse> pesquisarExtratoDividendos(List<String> codigos, String periodicidade) {
+
+        Map<String,String> periodicidades = ImmutableMap.of(
+                "diario", "%d%m%Y",
+                "mensal", "%m%Y",
+                "anual", "%Y"
+        );
+        return repository.getExtrato(codigos, periodicidades.get(periodicidade));
     }
 
 }
