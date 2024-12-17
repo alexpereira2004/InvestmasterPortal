@@ -136,7 +136,9 @@ public class DividendoService {
         final LocalDate primeiroDividendo = extrato.get(0).getPrimeiroDividendo();
         final LocalDate ultimoDividendo = extrato.get(extrato.size() - 1).getPrimeiroDividendo();
 
-        final List<String> strings = gerarListaMeses(primeiroDividendo, ultimoDividendo);
+        final List<String> strings = periodicidade.equals("anual")
+                ? gerarListaAnos(primeiroDividendo, ultimoDividendo)
+                : gerarListaMeses(primeiroDividendo, ultimoDividendo);
         return strings;
 
     }
@@ -152,6 +154,19 @@ public class DividendoService {
         }
 
         return meses;
+    }
+
+    public static List<String> gerarListaAnos(LocalDate inicio, LocalDate fim) {
+        List<String> anos = new ArrayList<>();
+        int anoAtual = inicio.getYear();
+        int anoFim = fim.getYear();
+
+        while (anoAtual <= anoFim) {
+            anos.add(String.valueOf(anoAtual));
+            anoAtual++;
+        }
+
+        return anos;
     }
 
 }
