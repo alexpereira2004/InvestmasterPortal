@@ -2,6 +2,7 @@ package br.com.lunacom.portal.service;
 
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Dividendo;
+import br.com.lunacom.portal.domain.dto.AtivoDividendoDto;
 import br.com.lunacom.portal.domain.dto.MediaDividendosDto;
 import br.com.lunacom.portal.domain.response.ExtratoDividendoResponse;
 import br.com.lunacom.portal.repository.DividendoRepository;
@@ -123,6 +124,28 @@ public class DividendoService {
 
 
         return response;
+    }
+
+    private List<String> gerarMetaDadosDividendos(List<AtivoDividendoDto> extrato, String periodicidade) {
+        final LocalDate primeiroDividendo = extrato.get(0).getPrimeiroDividendo();
+        final LocalDate ultimoDividendo = extrato.get(extrato.size() - 1).getPrimeiroDividendo();
+
+        final List<String> strings = gerarListaMeses(primeiroDividendo, ultimoDividendo);
+        return strings;
+
+    }
+
+    public static List<String> gerarListaMeses(LocalDate inicio, LocalDate fim) {
+        List<String> meses = new ArrayList<>();
+        YearMonth anoMes = YearMonth.from(inicio);
+        YearMonth anoMesFim = YearMonth.from(fim);
+
+        while (anoMes.compareTo(anoMesFim) <= 0) {
+            meses.add(anoMes.toString());
+            anoMes = anoMes.plusMonths(1);
+        }
+
+        return meses;
     }
 
 }

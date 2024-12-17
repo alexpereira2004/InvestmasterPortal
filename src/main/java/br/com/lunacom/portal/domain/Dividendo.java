@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.domain;
 
+import br.com.lunacom.portal.domain.dto.AtivoDividendoDto;
 import br.com.lunacom.portal.domain.dto.MediaDividendosValoresDto;
-import br.com.lunacom.portal.domain.response.AtivoDividendoResponse;
 import lombok.*;
 
 import javax.persistence.*;
@@ -50,7 +50,7 @@ import java.time.LocalDate;
 @SqlResultSetMapping(
         name = "AtivoDividendoMapping",
         classes = @ConstructorResult(
-                targetClass = AtivoDividendoResponse.class,
+                targetClass = AtivoDividendoDto.class,
                 columns = {
                         @ColumnResult(name = "codigo", type = String.class),
                         @ColumnResult(name = "valorTotal", type = Double.class),
@@ -73,7 +73,7 @@ import java.time.LocalDate;
                 "LEFT JOIN ativo a ON a.id = d.ativo_id " +
                 "    WHERE a.codigo IN (:codigos) " +
                 " GROUP BY a.codigo, DATE_FORMAT(data_recebimento, :periodicidade) " +
-                " ORDER BY d.data_recebimento DESC, d.tipo ",
+                " ORDER BY d.data_recebimento, d.tipo ",
         resultSetMapping = "AtivoDividendoMapping"
 )
 

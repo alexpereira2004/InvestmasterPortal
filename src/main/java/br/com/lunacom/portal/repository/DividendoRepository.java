@@ -2,8 +2,8 @@ package br.com.lunacom.portal.repository;
 
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Dividendo;
+import br.com.lunacom.portal.domain.dto.AtivoDividendoDto;
 import br.com.lunacom.portal.domain.dto.MediaDividendosValoresDto;
-import br.com.lunacom.portal.domain.response.AtivoDividendoResponse;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -29,7 +29,7 @@ public interface DividendoRepository extends GenericRepository<Dividendo> {
     List<Ativo> findDistinctAtivos();
 
     @Query(nativeQuery = true)
-    List<AtivoDividendoResponse> getExtrato(
+    List<AtivoDividendoDto> getExtrato(
             @Param("codigos") List<String> codigos,
             @Param("periodicidade") String periodicidade);
 }
