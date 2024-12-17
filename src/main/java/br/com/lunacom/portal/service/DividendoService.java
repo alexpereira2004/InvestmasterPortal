@@ -3,7 +3,7 @@ package br.com.lunacom.portal.service;
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Dividendo;
 import br.com.lunacom.portal.domain.dto.MediaDividendosDto;
-import br.com.lunacom.portal.domain.response.AtivoDividendoResponse;
+import br.com.lunacom.portal.domain.response.ExtratoDividendoResponse;
 import br.com.lunacom.portal.repository.DividendoRepository;
 import br.com.lunacom.portal.util.DataUtil;
 import br.com.lunacom.portal.util.StringParser;
@@ -14,6 +14,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -103,14 +104,25 @@ public class DividendoService {
                 .build();
     }
 
-    public List<AtivoDividendoResponse> pesquisarExtratoDividendos(List<String> codigos, String periodicidade) {
+    public ExtratoDividendoResponse pesquisarExtratoDividendos(List<String> codigos, String periodicidade) {
 
         Map<String,String> periodicidades = ImmutableMap.of(
                 "diario", "%d%m%Y",
                 "mensal", "%m%Y",
                 "anual", "%Y"
         );
-        return repository.getExtrato(codigos, periodicidades.get(periodicidade));
+        final List<AtivoDividendoDto> extrato = repository.getExtrato(codigos, periodicidades.get(periodicidade));
+
+        final ExtratoDividendoResponse response = ExtratoDividendoResponse
+                .builder().dividendos(extrato).build();
+
+        if (!extrato.isEmpty()) {
+            final List<String> labels = gerarMetaDadosDividendos(extrato, periodicidade);
+            response.setLabel(labels);
+        }
+
+
+        return response;
     }
 
 }
