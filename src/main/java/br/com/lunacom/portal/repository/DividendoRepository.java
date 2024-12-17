@@ -31,5 +31,7 @@ public interface DividendoRepository extends GenericRepository<Dividendo> {
     @Query(nativeQuery = true)
     List<AtivoDividendoDto> getExtrato(
             @Param("codigos") List<String> codigos,
-            @Param("periodicidade") String periodicidade);
+            @Param("periodicidade") String periodicidade,
+            @Param("dataInicial") LocalDate dataInicial,
+            @Param("dataFinal") LocalDate dataFinal);
 }

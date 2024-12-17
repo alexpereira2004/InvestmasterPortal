@@ -72,6 +72,8 @@ import java.time.LocalDate;
                 "     FROM dividendo d " +
                 "LEFT JOIN ativo a ON a.id = d.ativo_id " +
                 "    WHERE a.codigo IN (:codigos) " +
+                "      AND (:dataInicial IS NULL OR d.data_recebimento >= :dataInicial) " +
+                "      AND (:dataFinal IS NULL OR d.data_recebimento <= :dataFinal) " +
                 " GROUP BY a.codigo, DATE_FORMAT(data_recebimento, :periodicidade) " +
                 " ORDER BY d.data_recebimento, d.tipo ",
         resultSetMapping = "AtivoDividendoMapping"
