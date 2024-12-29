@@ -34,4 +34,7 @@ public interface DividendoRepository extends GenericRepository<Dividendo> {
             @Param("periodicidade") String periodicidade,
             @Param("dataInicial") LocalDate dataInicial,
             @Param("dataFinal") LocalDate dataFinal);
+
+    Dividendo findFirstByOrderByDataRecebimentoDesc();
+
 }

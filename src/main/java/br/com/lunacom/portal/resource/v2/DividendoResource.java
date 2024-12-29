@@ -6,6 +6,7 @@ import br.com.lunacom.portal.domain.dto.MediaDividendosDto;
 import br.com.lunacom.portal.domain.request.DividendoRequest;
 import br.com.lunacom.portal.domain.request.ExtratoDividendosRequest;
 import br.com.lunacom.portal.domain.response.DividendoResponse;
+import br.com.lunacom.portal.domain.response.DividendosImportadosResumoResponse;
 import br.com.lunacom.portal.domain.response.ExtratoDividendoResponse;
 import br.com.lunacom.portal.repository.GenericRepository;
 import br.com.lunacom.portal.resource.v2.specification.DividendoSpecification;
@@ -61,5 +62,11 @@ public class DividendoResource extends
         final ExtratoDividendoResponse responseList = service
                 .pesquisarExtratoDividendos(request);
         return ResponseEntity.ok(responseList);
+    }
+
+    @GetMapping(value = "/informacoes-dividendos-importados")
+    public ResponseEntity<DividendosImportadosResumoResponse> getInformacoesDividendosImportados() {
+        final DividendosImportadosResumoResponse response = service.getInformacoesDividendosImportados();
+        return ResponseEntity.ok(response);
     }
 }

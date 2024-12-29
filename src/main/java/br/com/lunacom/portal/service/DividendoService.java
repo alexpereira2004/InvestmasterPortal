@@ -5,6 +5,7 @@ import br.com.lunacom.portal.domain.Dividendo;
 import br.com.lunacom.portal.domain.dto.AtivoDividendoDto;
 import br.com.lunacom.portal.domain.dto.MediaDividendosDto;
 import br.com.lunacom.portal.domain.request.ExtratoDividendosRequest;
+import br.com.lunacom.portal.domain.response.DividendosImportadosResumoResponse;
 import br.com.lunacom.portal.domain.response.ExtratoDividendoResponse;
 import br.com.lunacom.portal.repository.DividendoRepository;
 import br.com.lunacom.portal.util.DataUtil;
@@ -167,6 +168,22 @@ public class DividendoService {
         }
 
         return anos;
+    }
+
+    public DividendosImportadosResumoResponse getInformacoesDividendosImportados() {
+        final Dividendo ultimoDividendo = repository.findFirstByOrderByDataRecebimentoDesc();
+        final DividendosImportadosResumoResponse response = new DividendosImportadosResumoResponse();
+        response.setDataRecebimento(ultimoDividendo.getDataRecebimento());
+        response.setTipo(ultimoDividendo.getTipo());
+        response.setQuantidade(ultimoDividendo.getQuantidade());
+        response.setDividendo(ultimoDividendo.getDividendo());
+        response.setValorTotal(ultimoDividendo.getValorTotal());
+        response.setAtivoNome(ultimoDividendo.getAtivo().getNome());
+        response.setAtivoCodigo(ultimoDividendo.getAtivo().getCodigo());
+        response.setDataCriacao(ultimoDividendo.getDataCriacao());
+        response.setDataAtualizacao(ultimoDividendo.getDataAtualizacao());
+        response.setTotalDividendosImportados(repository.count());
+        return response;
     }
 
 }
