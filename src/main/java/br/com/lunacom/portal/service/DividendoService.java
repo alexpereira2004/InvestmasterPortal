@@ -2,16 +2,22 @@ package br.com.lunacom.portal.service;
 
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Dividendo;
+import br.com.lunacom.portal.domain.dto.AtivoDividendoDto;
 import br.com.lunacom.portal.domain.dto.MediaDividendosDto;
+import br.com.lunacom.portal.domain.request.ExtratoDividendosRequest;
+import br.com.lunacom.portal.domain.response.DividendosImportadosResumoResponse;
+import br.com.lunacom.portal.domain.response.ExtratoDividendoResponse;
 import br.com.lunacom.portal.repository.DividendoRepository;
 import br.com.lunacom.portal.util.DataUtil;
 import br.com.lunacom.portal.util.StringParser;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -99,6 +105,85 @@ public class DividendoService {
                 .fundos(repository.getMediaDividendosFundos())
                 .outros(repository.getMediaDividendosOutros())
                 .build();
+    }
+
+    public ExtratoDividendoResponse pesquisarExtratoDividendos(ExtratoDividendosRequest request) {
+
+        Map<String,String> periodicidades = ImmutableMap.of(
+                "diario", "%d%m%Y",
+                "mensal", "%m%Y",
+                "anual", "%Y"
+        );
+        final List<AtivoDividendoDto> extrato = repository.getExtrato(
+                request.getCodigos(),
+                periodicidades.get(request.getPeriodicidade()),
+                request.getDataInicio(),
+                request.getDataFim()
+        );
+
+        final ExtratoDividendoResponse response = ExtratoDividendoResponse
+                .builder().dividendos(extrato).build();
+
+        if (!extrato.isEmpty()) {
+            final List<String> labels = gerarMetaDadosDividendos(extrato, request.getPeriodicidade());
+            response.setLabel(labels);
+        }
+
+
+        return response;
+    }
+
+    private List<String> gerarMetaDadosDividendos(List<AtivoDividendoDto> extrato, String periodicidade) {
+        final LocalDate primeiroDividendo = extrato.get(0).getPrimeiroDividendo();
+        final LocalDate ultimoDividendo = extrato.get(extrato.size() - 1).getPrimeiroDividendo();
+
+        final List<String> strings = periodicidade.equals("anual")
+                ? gerarListaAnos(primeiroDividendo, ultimoDividendo)
+                : gerarListaMeses(primeiroDividendo, ultimoDividendo);
+        return strings;
+
+    }
+
+    public static List<String> gerarListaMeses(LocalDate inicio, LocalDate fim) {
+        List<String> meses = new ArrayList<>();
+        YearMonth anoMes = YearMonth.from(inicio);
+        YearMonth anoMesFim = YearMonth.from(fim);
+
+        while (anoMes.compareTo(anoMesFim) <= 0) {
+            meses.add(anoMes.toString());
+            anoMes = anoMes.plusMonths(1);
+        }
+
+        return meses;
+    }
+
+    public static List<String> gerarListaAnos(LocalDate inicio, LocalDate fim) {
+        List<String> anos = new ArrayList<>();
+        int anoAtual = inicio.getYear();
+        int anoFim = fim.getYear();
+
+        while (anoAtual <= anoFim) {
+            anos.add(String.valueOf(anoAtual));
+            anoAtual++;
+        }
+
+        return anos;
+    }
+
+    public DividendosImportadosResumoResponse getInformacoesDividendosImportados() {
+        final Dividendo ultimoDividendo = repository.findFirstByOrderByDataRecebimentoDesc();
+        final DividendosImportadosResumoResponse response = new DividendosImportadosResumoResponse();
+        response.setDataRecebimento(ultimoDividendo.getDataRecebimento());
+        response.setTipo(ultimoDividendo.getTipo());
+        response.setQuantidade(ultimoDividendo.getQuantidade());
+        response.setDividendo(ultimoDividendo.getDividendo());
+        response.setValorTotal(ultimoDividendo.getValorTotal());
+        response.setAtivoNome(ultimoDividendo.getAtivo().getNome());
+        response.setAtivoCodigo(ultimoDividendo.getAtivo().getCodigo());
+        response.setDataCriacao(ultimoDividendo.getDataCriacao());
+        response.setDataAtualizacao(ultimoDividendo.getDataAtualizacao());
+        response.setTotalDividendosImportados(repository.count());
+        return response;
     }
 
 }

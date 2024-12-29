@@ -13,8 +13,8 @@ public enum AcaoTipo {
     FII("F", "Fundo Imobiliário"),
     TOD("T", "Todos");
 
-    String codigo;
-    String Descricao;
+    private final String codigo;
+    private final String descricao;
 
     public static AcaoTipo fromCodigo(String value) {
         return EnumSet.allOf(AcaoTipo.class)

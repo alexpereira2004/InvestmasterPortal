@@ -7,18 +7,18 @@ import java.util.EnumSet;
 
 @AllArgsConstructor
 @Getter
-public enum Boleano {
-    SIM("S", "Sim"),
-    NAO("N","Não");
+public enum Genero {
+    MASCULINO("M", "Masculino"),
+    FEMININO("F", "Feminino");
 
     private final String codigo;
-    private final String Descricao;
+    private final String descricao;
 
-    public static Boleano fromCodigo(String value) {
-        return EnumSet.allOf(Boleano.class)
+    public static Genero fromCodigo(String value) {
+        return EnumSet.allOf(Genero.class)
                 .stream()
                 .filter(it -> it.getCodigo().equals(value))
                 .findFirst()
-                .orElse(SIM);
+                .orElse(MASCULINO);
     }
 }

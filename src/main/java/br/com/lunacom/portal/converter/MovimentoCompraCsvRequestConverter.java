@@ -8,7 +8,6 @@ import br.com.lunacom.portal.util.DataUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import static br.com.lunacom.portal.util.StringParser.toDouble;
 import static br.com.lunacom.portal.util.StringParser.toInteger;
 
 @AllArgsConstructor
@@ -21,7 +20,7 @@ public class MovimentoCompraCsvRequestConverter implements Converter <MovimentoC
     public MovimentoCompra encode(MovimentoCompraCsvRequest input) {
         final Ativo ativo = ativoService.pesquisarPorCodigo(input.getAtivoCodigo())
                 .orElse(null);
-        final Double precoPago = toDouble(input.getPrecoPago());
+        final Double precoPago = Double.parseDouble(input.getPrecoPago());
         final Integer quantidade = toInteger(input.getQuantidade());
         final double totalInvestido = precoPago * quantidade;
 

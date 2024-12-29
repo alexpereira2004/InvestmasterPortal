@@ -7,18 +7,21 @@ import java.util.EnumSet;
 
 @AllArgsConstructor
 @Getter
-public enum Boleano {
-    SIM("S", "Sim"),
-    NAO("N","Não");
+public enum TipoContato {
+
+    WHATS("W", "Whatsapp"),
+    TELEFONE("T","Telefone"),
+    EMAIL("E","Email"),
+    OUTRO("O","Telefone");
 
     private final String codigo;
     private final String Descricao;
 
-    public static Boleano fromCodigo(String value) {
-        return EnumSet.allOf(Boleano.class)
+    public static TipoContato fromCodigo(String value) {
+        return EnumSet.allOf(TipoContato.class)
                 .stream()
                 .filter(it -> it.getCodigo().equals(value))
                 .findFirst()
-                .orElse(SIM);
+                .orElse(WHATS);
     }
 }

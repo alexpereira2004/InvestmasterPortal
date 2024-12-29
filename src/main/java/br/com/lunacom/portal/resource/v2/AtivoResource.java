@@ -10,11 +10,14 @@ import br.com.lunacom.portal.resource.v2.specification.GenericSpecification;
 import br.com.lunacom.portal.service.AtivoService;
 import br.com.lunacom.portal.util.DataUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Validated
 @RestController
@@ -22,6 +25,7 @@ import javax.validation.Valid;
 public class AtivoResource extends GenericController
         <Ativo, @Valid AtivoRequest, AtivoResponse, AtivoSpecification> {
     AtivoService service;
+    final Converter<AtivoResponse, Ativo> responseConverter;
 
     public AtivoResource(
             GenericRepository<Ativo> repository,
@@ -32,6 +36,13 @@ public class AtivoResource extends GenericController
             AtivoService service) {
         super(repository, dataUtil, requestConverter, responseConverter, specification);
         this.service = service;
+        this.responseConverter = responseConverter;
+    }
+
+    @GetMapping(value = "/com-dividendos")
+    public ResponseEntity<List<AtivoResponse>> getAtivosComDividendos() {
+        final List<AtivoResponse> response = responseConverter.decode(service.pesquisarAtivosComDividendos());
+        return ResponseEntity.ok(response);
     }
 
 }

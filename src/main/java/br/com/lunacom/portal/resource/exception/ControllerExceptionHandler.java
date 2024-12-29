@@ -1,9 +1,10 @@
 package br.com.lunacom.portal.resource.exception;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,7 +15,10 @@ import org.springframework.web.client.ResourceAccessException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +42,12 @@ public class ControllerExceptionHandler {
                 "Verifique os seguintes itens antes de avançar",
                 request.getRequestURI());
         for (ObjectError x : e.getBindingResult().getAllErrors()) {
-            list.add(String.format("%s", x.getDefaultMessage()));
+            if (x instanceof FieldError) {
+                FieldError fieldError = (FieldError) x;
+                list.add(String.format("Campo %s: %s", fieldError.getField(), fieldError.getDefaultMessage()));
+            } else {
+                list.add(String.format("Erro: %s", x.getDefaultMessage()));
+            }
         }
         err.setDetalhe(list);
         return err;
@@ -59,8 +68,30 @@ public class ControllerExceptionHandler {
     @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
     @ResponseBody
     public final ValidationError handleConstraintViolation(HttpMessageNotReadableException ex, HttpServletRequest request) {
-        final HttpInputMessage httpInputMessage = ex.getHttpInputMessage();
-        final String detail = String.format("É necessário revisar a requisição: %s", ex.getMessage());
+
+        String detail;
+
+        if (ex.getCause() instanceof InvalidFormatException) {
+            InvalidFormatException invalidEx = (InvalidFormatException) ex.getCause();
+            Class<?> targetType = invalidEx.getTargetType();
+
+            if (targetType.isEnum()) {
+                detail = String.format("Valor inválido para o campo '%s'. Os valores permitidos são: %s",
+                        invalidEx.getPath().get(0).getFieldName(),
+                        Arrays.toString(targetType.getEnumConstants()));
+            } else if (targetType.equals(LocalDate.class)) {
+                detail = String.format("Valor inválido para o campo '%s'. O formato esperado para datas é 'yyyy-MM-dd'.",
+                        invalidEx.getPath().get(0).getFieldName());
+            } else if (targetType.equals(LocalDateTime.class)) {
+                detail = String.format("Valor inválido para o campo '%s'. O formato esperado para data e hora é 'yyyy-MM-dd'T'HH:mm:ss'.",
+                        invalidEx.getPath().get(0).getFieldName());
+            } else {
+                detail = String.format("Erro de formatação: %s", ex.getMessage());
+            }
+        } else {
+            detail = String.format("É necessário revisar a requisição: %s", ex.getMessage());
+
+        }
         return new ValidationError(detail, request.getRequestURI());
     }
 
