@@ -5,60 +5,95 @@ import br.com.lunacom.portal.domain.Cotacao;
 import br.com.lunacom.portal.domain.dto.GoogleSpreadsheetCotacaoDto;
 import br.com.lunacom.portal.repository.CotacaoRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static br.com.lunacom.portal.util.StringParser.toDouble;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class CotacaoService {
 
-
     private final CotacaoRepository repo;
     private final AtivoService ativoService;
+    private final GoogleSheetsDataService googleSheetsDataService;
 
-    public void salvarCotacoesGoogleSpreadsheet
+    @Value("${app.googleSheet.spreadsheetId}")
+    private String spreadsheetId;
+
+    @Value("${app.googleSheet.range}")
+    private String range;
+
+    public void importarDadosGoogle() throws IOException {
+        final List<GoogleSpreadsheetCotacaoDto> lists = googleSheetsDataService
+                .lerPlanilha(spreadsheetId,range);
+        log.info(String.format("A leitura da planilha foi realizada e encontrou %s diferentes cotações", String.valueOf(lists.size())));
+        this.salvarCotacoesGoogleSpreadsheet(lists);
+    }
+
+    private void salvarCotacoesGoogleSpreadsheet
             (List<GoogleSpreadsheetCotacaoDto> googleCotacoes) {
 
-        final String cotacao = googleCotacoes.get(0).getCotacao();
-        final String codigo = googleCotacoes.get(0).getCodigo();
+        final List<Cotacao> cotacaoList = googleCotacoes.stream()
+                .map(a -> montarObjetoCotacao(a.getCotacao(), a.getCodigo()))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
 
-        final Ativo ativo = ativoService.pesquisarPorCodigo(codigo)
-                .orElseThrow(() -> new NoSuchElementException("Ativo pesquisado não existe " + codigo));
+        insertAll(cotacaoList);
+    }
 
-        final List<Cotacao> listaCotacaoExistente = repo.findAllByReferenciaEquals(LocalDate.now());
+    private Cotacao montarObjetoCotacao(String cotacaoLida, String codigoLida) {
 
+        final Ativo ativo = ativoService.pesquisarPorCodigo(codigoLida).orElse(null);
+        if (Objects.isNull(ativo)) {
+            log.warn(String.format("O código %s precisa ser adicionado ao banco de dados", codigoLida));
+            return null;
+        }
 
-        final Cotacao cotacao2 = listaCotacaoExistente.stream()
-                .filter(c -> c.getAtivo().getCodigo().equals(codigo))
+        final List<Cotacao> listaCotacaoExistente = repo
+                .findAllByReferenciaEquals(LocalDate.now());
+
+        final Cotacao cotacao = listaCotacaoExistente.stream()
+                .filter(c -> c.getAtivo().getCodigo().equals(codigoLida))
                 .findFirst()
                 .orElse(new Cotacao());
 
-        cotacao2.setImportacao(LocalDateTime.now());
-        cotacao2.setPreco(toDouble(cotacao));
+        cotacao.setImportacao(LocalDateTime.now());
+        cotacao.setPreco(toDouble(cotacaoLida));
 
-        if (Objects.isNull(cotacao2.getId())) {
-            cotacao2.setReferencia(LocalDate.now());
-            cotacao2.setAtivo(ativo);
-            cotacao2.setAbertura(toDouble(cotacao));
-            cotacao2.setMaxima(toDouble(cotacao));
-            cotacao2.setMinima(toDouble(cotacao));
-            cotacao2.setOrigem("GoogleSpreadsheet");
+        if (Objects.isNull(cotacao.getId())) {
+            aplicarRegrasParaNovaCotacao(cotacaoLida, ativo, cotacao);
         } else {
-            final Double novaCotacao = toDouble(cotacao);
-            final Double maxima = cotacao2.getMaxima().compareTo(novaCotacao) > 1 ? cotacao2.getMaxima() : novaCotacao;
-            cotacao2.setMaxima(maxima);
-            final Double minima = cotacao2.getMinima().compareTo(novaCotacao) > 1 ? novaCotacao : cotacao2.getMinima();
-            cotacao2.setMinima(minima);
+            aplicarRegrasParaAtualizarCotacaoExistente(cotacaoLida, cotacao);
         }
+        return cotacao;
+    }
 
-        insertAll(Arrays.asList(cotacao2));
+    private void aplicarRegrasParaNovaCotacao(String cotacaoLida, Ativo ativo, Cotacao cotacao) {
+        cotacao.setReferencia(LocalDate.now());
+        cotacao.setAtivo(ativo);
+        cotacao.setVariacao(0D);
+        cotacao.setAbertura(toDouble(cotacaoLida));
+        cotacao.setMaxima(toDouble(cotacaoLida));
+        cotacao.setMinima(toDouble(cotacaoLida));
+        cotacao.setOrigem("GoogleSpreadsheet");
+    }
 
-
+    private void aplicarRegrasParaAtualizarCotacaoExistente(String cotacaoLida, Cotacao cotacao) {
+        final Double novaCotacao = toDouble(cotacaoLida);
+        final Double maxima = cotacao.getMaxima().compareTo(novaCotacao) > 1 ? cotacao.getMaxima() : novaCotacao;
+        cotacao.setMaxima(maxima);
+        final Double minima = cotacao.getMinima().compareTo(novaCotacao) > 1 ? novaCotacao : cotacao.getMinima();
+        cotacao.setMinima(minima);
+        cotacao.setVariacao(toDouble(cotacaoLida) - cotacao.getAbertura());
     }
 
     public void insertAll(List<Cotacao> cotacoes) {
