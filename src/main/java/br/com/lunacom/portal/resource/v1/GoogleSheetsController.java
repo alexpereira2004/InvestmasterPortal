@@ -1,5 +1,6 @@
 package br.com.lunacom.portal.resource.v1;
 
+import br.com.lunacom.portal.domain.dto.GoogleSpreadsheetCotacaoDto;
 import br.com.lunacom.portal.service.GoogleSheetsDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +19,9 @@ public class GoogleSheetsController {
     private GoogleSheetsDataService googleSheetsDataService;
 
     @GetMapping("/read-sheet")
-    public List<List<Object>> readSheet(
+    public List<GoogleSpreadsheetCotacaoDto> readSheet(
             @RequestParam String spreadsheetId,
             @RequestParam String range) throws IOException {
-        return googleSheetsDataService.readSpreadsheet(spreadsheetId, range);
+        return googleSheetsDataService.lerPlanilha(spreadsheetId, range);
     }
 }

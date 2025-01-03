@@ -2,16 +2,19 @@ package br.com.lunacom.portal.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @EqualsAndHashCode
+@NoArgsConstructor
 public class Cotacao implements Serializable, Comparable<Cotacao> {
     private static final long serialVersionUID = 1L;
 
@@ -27,8 +30,8 @@ public class Cotacao implements Serializable, Comparable<Cotacao> {
     private Double minima;
 
     @EqualsAndHashCode.Exclude
-    private Date importacao;
-    private Date referencia;
+    private LocalDateTime importacao;
+    private LocalDate referencia;
     private String volume;
 
     @EqualsAndHashCode.Exclude
