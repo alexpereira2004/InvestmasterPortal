@@ -43,7 +43,10 @@ public class CotacaoService {
     private void salvarCotacoesGoogleSpreadsheet
             (List<GoogleSpreadsheetCotacaoDto> googleCotacoes) {
 
+        String padraoReais = "^\\d{1,3}(\\.?\\d{3})*(,\\d{1,2})?$";
+
         final List<Cotacao> cotacaoList = googleCotacoes.stream()
+                .filter(c -> c.getCotacao().matches(padraoReais))
                 .map(a -> montarObjetoCotacao(a.getCotacao(), a.getCodigo()))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
