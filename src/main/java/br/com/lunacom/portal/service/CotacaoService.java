@@ -37,6 +37,7 @@ public class CotacaoService {
                 .lerPlanilha(spreadsheetId,range);
         log.info(String.format("A leitura da planilha foi realizada e encontrou %s diferentes cotações", String.valueOf(lists.size())));
         this.salvarCotacoesGoogleSpreadsheet(lists);
+        log.info("Leitura e inclusão concluídas");
     }
 
     private void salvarCotacoesGoogleSpreadsheet
