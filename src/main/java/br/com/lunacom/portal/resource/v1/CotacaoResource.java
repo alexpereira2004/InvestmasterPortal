@@ -3,10 +3,10 @@ package br.com.lunacom.portal.resource.v1;
 import br.com.lunacom.portal.service.CotacaoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 @Slf4j
@@ -20,5 +20,12 @@ public class CotacaoResource {
     @GetMapping("/importacao-google")
     public void importarDadosGoogle() throws IOException {
         cotacaoService.importarDadosGoogle();
+    }
+
+    @PostMapping("/importacao-lote-site-investing-com/{ativo}")
+    public void importacaoLoteSiteInvestingCom
+            (@RequestBody @Valid @NotNull String request,
+             @PathVariable @NotNull String ativo) throws IOException {
+        cotacaoService.importarLoteSiteInvestingCom(ativo, request);
     }
 }
