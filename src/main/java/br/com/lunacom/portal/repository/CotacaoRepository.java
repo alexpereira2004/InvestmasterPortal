@@ -25,5 +25,5 @@ public interface CotacaoRepository extends JpaRepository<Cotacao, Integer> {
     Optional<Cotacao> findTopByAtivoOrderByReferenciaDesc(Ativo integer);
 
     @Query(nativeQuery = true)
-    List<ExtratoCotacaoDto> extrato();
+    List<ExtratoCotacaoDto> extrato(List<String> codigoLista, LocalDate dataInicio, LocalDate dataFim);
 }

@@ -39,8 +39,8 @@ import java.time.LocalDateTime;
                 "       FROM cotacao AS c\n" +
                 " INNER JOIN ativo a ON a.id = c.ativo_id\n" +
                 "      WHERE 1=1\n" +
-                "\t        AND a.codigo IN ('MXRF11')\n" +
-                "        AND c.referencia BETWEEN '2025-01-06' AND '2025-01-30'\n" +
+                "\t        AND a.codigo IN (:codigoLista)\n" +
+                "        AND c.referencia BETWEEN :dataInicio AND :dataFim\n" +
                 "\t   ORDER BY a.codigo, c.referencia DESC ",
         resultSetMapping = "ExtratoCotacaoDtoMapping"
 )

@@ -6,6 +6,8 @@ import br.com.lunacom.portal.domain.Cotacao;
 import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
 import br.com.lunacom.portal.domain.dto.GoogleSpreadsheetCotacaoDto;
 import br.com.lunacom.portal.domain.request.CotacaoLoteSiteInvestingComRequest;
+import br.com.lunacom.portal.domain.request.ExtratoCotacaoRequest;
+import br.com.lunacom.portal.domain.wrapper.ExtratoCotacaoWrapper;
 import br.com.lunacom.portal.repository.CotacaoRepository;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -48,8 +50,16 @@ public class CotacaoService {
         log.info("Leitura e inclusão concluídas");
     }
 
-    public List<ExtratoCotacaoDto> gerarExtratoDeUmAtivo() {
-        return repo.extrato();
+    public ExtratoCotacaoWrapper gerarExtratoDeUmAtivo(ExtratoCotacaoRequest request) {
+        final List<ExtratoCotacaoDto> extratoLista = repo.extrato(
+                request.getCodigos(),
+                request.getDataInicio(),
+                request.getDataFim());
+
+        Map<String, List<ExtratoCotacaoDto>> cotacoes = extratoLista.stream()
+                .collect(Collectors.groupingBy(ExtratoCotacaoDto::getCodigo));
+
+        return new ExtratoCotacaoWrapper(cotacoes);
     }
 
     private void salvarCotacoesGoogleSpreadsheet

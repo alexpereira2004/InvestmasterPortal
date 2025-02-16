@@ -1,6 +1,7 @@
 package br.com.lunacom.portal.resource.v1;
 
-import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
+import br.com.lunacom.portal.domain.request.ExtratoCotacaoRequest;
+import br.com.lunacom.portal.domain.wrapper.ExtratoCotacaoWrapper;
 import br.com.lunacom.portal.service.CotacaoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,8 +25,10 @@ public class CotacaoResource {
     }
 
     @GetMapping("/extrato")
-    public List<ExtratoCotacaoDto> extrato() throws IOException {
-        return cotacaoService.gerarExtratoDeUmAtivo();
+    public ExtratoCotacaoWrapper extrato(
+            @ModelAttribute ExtratoCotacaoRequest request
+    ) {
+        return cotacaoService.gerarExtratoDeUmAtivo(request);
     }
 
     @PostMapping("/importacao-lote-site-investing-com/{ativo}")
