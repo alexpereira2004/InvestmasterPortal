@@ -3,6 +3,7 @@ package br.com.lunacom.portal.service;
 import br.com.lunacom.portal.converter.CotacaoLoteSiteInvestingComRequestConverter;
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Cotacao;
+import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
 import br.com.lunacom.portal.domain.dto.GoogleSpreadsheetCotacaoDto;
 import br.com.lunacom.portal.domain.request.CotacaoLoteSiteInvestingComRequest;
 import br.com.lunacom.portal.repository.CotacaoRepository;
@@ -45,6 +46,10 @@ public class CotacaoService {
         log.info(String.format("A leitura da planilha foi realizada e encontrou %s diferentes cotações", String.valueOf(lists.size())));
         this.salvarCotacoesGoogleSpreadsheet(lists);
         log.info("Leitura e inclusão concluídas");
+    }
+
+    public List<ExtratoCotacaoDto> gerarExtratoDeUmAtivo() {
+        return repo.extrato();
     }
 
     private void salvarCotacoesGoogleSpreadsheet

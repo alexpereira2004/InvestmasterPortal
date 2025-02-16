@@ -1,20 +1,50 @@
 package br.com.lunacom.portal.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
-@Getter
-@Setter
+@Builder
 @EqualsAndHashCode
 @NoArgsConstructor
+@AllArgsConstructor
+@SqlResultSetMapping(
+        name = "ExtratoCotacaoDtoMapping",
+        classes = @ConstructorResult(
+                targetClass = ExtratoCotacaoDto.class,
+                columns = {
+                        @ColumnResult(name = "codigo ", type = String.class),
+                        @ColumnResult(name = "nome", type = String.class),
+                        @ColumnResult(name = "preco", type = Double.class),
+                        @ColumnResult(name = "variacao", type = Double.class),
+                        @ColumnResult(name = "referencia", type = LocalDate.class),
+                        @ColumnResult(name = "importacao", type = LocalDateTime.class)
+                }
+        )
+)
+@NamedNativeQuery(
+        name = "Cotacao.extrato",
+        query = "SELECT a.codigo, \n" +
+                "\t        a.nome, \n" +
+                "\t        c.preco, \n" +
+                "\t        c.variacao, \n" +
+                "\t        c.referencia,\n" +
+                "\t        c.importacao \n" +
+                "       FROM cotacao AS c\n" +
+                " INNER JOIN ativo a ON a.id = c.ativo_id\n" +
+                "      WHERE 1=1\n" +
+                "\t        AND a.codigo IN ('MXRF11')\n" +
+                "        AND c.referencia BETWEEN '2025-01-06' AND '2025-01-30'\n" +
+                "\t   ORDER BY a.codigo, c.referencia DESC ",
+        resultSetMapping = "ExtratoCotacaoDtoMapping"
+)
+
 public class Cotacao implements Serializable, Comparable<Cotacao> {
     private static final long serialVersionUID = 1L;
 

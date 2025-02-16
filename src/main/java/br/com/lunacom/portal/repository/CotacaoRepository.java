@@ -3,7 +3,9 @@ package br.com.lunacom.portal.repository;
 
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Cotacao;
+import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -21,4 +23,7 @@ public interface CotacaoRepository extends JpaRepository<Cotacao, Integer> {
     List<Cotacao> findAllByAtivoAndReferenciaBetween(Ativo a, Date inicio, Date fim);
 
     Optional<Cotacao> findTopByAtivoOrderByReferenciaDesc(Ativo integer);
+
+    @Query(nativeQuery = true)
+    List<ExtratoCotacaoDto> extrato();
 }
