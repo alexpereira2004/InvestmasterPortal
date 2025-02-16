@@ -40,7 +40,8 @@ import java.time.LocalDateTime;
                 " INNER JOIN ativo a ON a.id = c.ativo_id\n" +
                 "      WHERE 1=1\n" +
                 "\t        AND a.codigo IN (:codigoLista)\n" +
-                "        AND c.referencia BETWEEN :dataInicio AND :dataFim\n" +
+                "\t      AND (:dataInicio IS NULL OR c.referencia >= :dataInicio) " +
+                "\t      AND (:dataFim IS NULL OR c.referencia <= :dataFim) " +
                 "\t   ORDER BY a.codigo, c.referencia DESC ",
         resultSetMapping = "ExtratoCotacaoDtoMapping"
 )
