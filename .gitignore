@@ -34,3 +34,4 @@ build/
 
 /volumes/**
 /volumes/lib/
+/src/main/resources/credenciais
