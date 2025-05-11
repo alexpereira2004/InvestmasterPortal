@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.resource.v1;
 
-import br.com.lunacom.portal.domain.dto.GoogleSpreadsheetCotacaoDto;
+import br.com.lunacom.portal.domain.dto.googlesheets.CotacaoDto;
 import br.com.lunacom.portal.service.googlesheets.GoogleSheetsDataServiceInterface;
 import br.com.lunacom.portal.service.googlesheets.ServiceFactory;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +17,11 @@ public class GoogleSheetsResource {
     private final ServiceFactory factory;
 
     @GetMapping("/read-sheet")
-    public List<GoogleSpreadsheetCotacaoDto> readSheet(
+    public List<CotacaoDto> readSheet(
             @RequestParam String spreadsheetId,
             @RequestParam String range) throws IOException {
 
-        final GoogleSheetsDataServiceInterface<GoogleSpreadsheetCotacaoDto>
+        final GoogleSheetsDataServiceInterface<CotacaoDto>
                 cotacaoService = factory.getService("cotacaoService");
         return cotacaoService.lerPlanilha(spreadsheetId, range);
     }

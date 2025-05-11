@@ -12,8 +12,6 @@ public interface GoogleSheetsDataServiceInterface <T> {
 
     GoogleSheetsRowConverter<T> getConverter();
 
-    Sheets getSheetsService() throws IOException;
-
     List<T> lerPlanilha(String spreadsheetId, String range) throws IOException;
 
     default ValueRange obterDados(String spreadsheetId, String range) throws IOException {
@@ -27,5 +25,9 @@ public interface GoogleSheetsDataServiceInterface <T> {
         return data.stream()
                 .map(getConverter()::convert)
                 .collect(Collectors.toList());
+    }
+
+    default Sheets getSheetsService() throws IOException {
+        return GoogleSheetsFactory.getSheetsService();
     }
 }

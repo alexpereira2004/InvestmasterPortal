@@ -4,7 +4,7 @@ import br.com.lunacom.portal.converter.CotacaoLoteSiteInvestingComRequestConvert
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Cotacao;
 import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
-import br.com.lunacom.portal.domain.dto.GoogleSpreadsheetCotacaoDto;
+import br.com.lunacom.portal.domain.dto.googlesheets.CotacaoDto;
 import br.com.lunacom.portal.domain.request.CotacaoLoteSiteInvestingComRequest;
 import br.com.lunacom.portal.domain.request.ExtratoCotacaoRequest;
 import br.com.lunacom.portal.domain.wrapper.ExtratoCotacaoWrapper;
@@ -44,9 +44,9 @@ public class CotacaoService {
 
     public void importarDadosGoogle() throws IOException {
 
-        final GoogleSheetsDataServiceInterface<GoogleSpreadsheetCotacaoDto> service = factory
-                .getService("google-sheets-cotacao");
-        final List<GoogleSpreadsheetCotacaoDto> lists = service.lerPlanilha(spreadsheetId, RANGE);
+        final GoogleSheetsDataServiceInterface<CotacaoDto> service = factory
+                .getService("googlesheets-cotacao");
+        final List<CotacaoDto> lists = service.lerPlanilha(spreadsheetId, RANGE);
         log.info(String.format("A leitura da planilha foi realizada e encontrou %s diferentes cotações", String.valueOf(lists.size())));
         this.salvarCotacoesGoogleSpreadsheet(lists);
         log.info("Leitura e inclusão concluídas");
@@ -65,7 +65,7 @@ public class CotacaoService {
     }
 
     public void salvarCotacoesGoogleSpreadsheet
-            (List<GoogleSpreadsheetCotacaoDto> googleCotacoes) {
+            (List<CotacaoDto> googleCotacoes) {
 
         String padraoReais = "^\\d{1,3}(\\.?\\d{3})*(,\\d{1,2})?$";
 
