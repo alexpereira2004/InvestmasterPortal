@@ -15,8 +15,8 @@ public class ScheduledService {
 
     private final CotacaoService cotacaoService;
 
-    //    @Scheduled(fixedRate = 5000) // Executa a cada 5 segundos
-    @Scheduled(cron = "${app.schedule.googleSheet}")
+        @Scheduled(fixedRate = 15000) // Executa a cada 5 segundos
+//    @Scheduled(cron = "${app.schedule.googleSheet}")
     public void executeTask() throws IOException {
         log.info("Executando tarefa agendada...");
         cotacaoService.importarDadosGoogle();
