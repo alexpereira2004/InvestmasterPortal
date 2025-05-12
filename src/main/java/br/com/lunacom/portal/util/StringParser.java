@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.Optional;
 
 public class StringParser {
@@ -23,7 +24,16 @@ public class StringParser {
     }
 
     public static Double toDouble(String input) {
-        final String valorFormatado = input.replace(".", "").replace(",", ".");
+        if (Objects.isNull(input) || input.isEmpty()) {
+            return 0D;
+        }
+        final String valorFormatado = input
+                .replaceAll("[^\\d,\\.]", "")
+                .replace(".", "")
+                .replace(",", ".");
+        if (valorFormatado.isEmpty()) {
+            return 0D;
+        }
         return Double.parseDouble(valorFormatado);
     }
 
