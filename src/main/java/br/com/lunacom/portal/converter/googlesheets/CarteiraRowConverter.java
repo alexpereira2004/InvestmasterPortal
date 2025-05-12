@@ -32,7 +32,7 @@ public class CarteiraRowConverter implements GoogleSheetsRowConverter<CarteiraDt
                     .build();
         }
 
-        Set<Integer> tamanhosValidos = new HashSet<>(Arrays.asList(10, 12));
+        Set<Integer> tamanhosValidos = new HashSet<>(Arrays.asList(10, 12, 14));
 
         if (tamanhosValidos.contains(row.size())) {
             return CarteiraDto.builder()
