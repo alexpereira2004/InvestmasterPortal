@@ -9,7 +9,14 @@ import java.util.Optional;
 public class StringParser {
 
     public static Integer toInteger(String input) {
-        return Optional.ofNullable(input).map(Integer::valueOf).orElse(null);
+        try {
+            return Optional.ofNullable(input)
+                    .map(String::trim)
+                    .map(Integer::valueOf)
+                    .orElse(null);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
     public static Integer toInteger(String input, Integer defaultValue) {
         return Optional.ofNullable(input).map(Integer::valueOf).orElse(defaultValue);
