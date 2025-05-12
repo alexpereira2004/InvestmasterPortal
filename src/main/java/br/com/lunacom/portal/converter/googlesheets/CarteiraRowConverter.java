@@ -7,7 +7,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Component
@@ -29,7 +32,9 @@ public class CarteiraRowConverter implements GoogleSheetsRowConverter<CarteiraDt
                     .build();
         }
 
-        if (row.size() == 10) {
+        Set<Integer> tamanhosValidos = new HashSet<>(Arrays.asList(10, 12));
+
+        if (tamanhosValidos.contains(row.size())) {
             return CarteiraDto.builder()
                     .codigoAtivo(check(row, 0))
                     .estrategia(check(row, 1))
