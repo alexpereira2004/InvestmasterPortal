@@ -1,27 +1,56 @@
 package br.com.lunacom.portal.converter.googlesheets;
 
 import br.com.lunacom.portal.domain.dto.googlesheets.CarteiraDto;
+import br.com.lunacom.portal.util.DataUtil;
+import br.com.lunacom.portal.util.StringParser;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Slf4j
 @Component
+@RequiredArgsConstructor
 public class CarteiraRowConverter implements GoogleSheetsRowConverter<CarteiraDto> {
+
+    private final DataUtil dataUtil;
 
     @Override
     public CarteiraDto convert(List<Object> row) {
 
-        return CarteiraDto.builder()
-            .codigoAtivo(row.get(0).toString())
-//            .estrategia()
-//            .precoPago()
-//            .precoAtual()
-//            .valorizacao()
-//            .quantidade()
-//            .totalInvestido()
-//            .atualizacao()
-//            .resultado()
-//            .dataCompra()
-            .build();
+        if (row == null || row.isEmpty() || row.size() < 1) {
+            log.warn("Linha ignorada por estar vazia ou incompleta na conversão de dados da Carteira: {}", row);
+            return null;
+        }
+        if (row.size() == 1) {
+            return CarteiraDto.builder()
+                    .header(check(row, 0))
+                    .build();
+        }
+
+        if (row.size() == 10) {
+            return CarteiraDto.builder()
+                    .codigoAtivo(check(row, 0))
+                    .estrategia(check(row, 1))
+                    .precoPago(StringParser.toDouble(row.get(2).toString()))
+                    .precoAtual(StringParser.toDouble(row.get(3).toString()))
+                    .valorizacao(StringParser.toDouble(row.get(4).toString()))
+                    .quantidade(StringParser.toInteger(row.get(5).toString()))
+                    .totalInvestido(StringParser.toDouble(row.get(6).toString()))
+                    .atualizacao(StringParser.toDouble(row.get(7).toString()))
+                    .resultado(StringParser.toDouble(row.get(8).toString()))
+                    .dataCompra(dataUtil.dataBrParaLocalDate(row.get(9).toString()))
+                    .build();
+        }
+
+        return null;
+    }
+
+    private String check(List<Object> o, int pos) {
+        if (o == null || pos >= o.size() || o.get(pos) == null) {
+            return "";
+        }
+        return o.get(pos).toString();
     }
 }
