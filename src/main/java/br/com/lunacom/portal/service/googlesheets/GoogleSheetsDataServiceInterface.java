@@ -6,6 +6,7 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public interface GoogleSheetsDataServiceInterface <T> {
@@ -24,6 +25,7 @@ public interface GoogleSheetsDataServiceInterface <T> {
     default List<T> convertAll(List<List<Object>> data) {
         return data.stream()
                 .map(getConverter()::convert)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
