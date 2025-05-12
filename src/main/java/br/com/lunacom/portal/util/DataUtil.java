@@ -2,6 +2,7 @@ package br.com.lunacom.portal.util;
 
 import br.com.lunacom.portal.domain.enumeration.Meses;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+@Slf4j
 @Component
 @NoArgsConstructor
 public class DataUtil {
@@ -26,7 +28,12 @@ public class DataUtil {
 
     public LocalDate dataBrParaLocalDate(String origem) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DIA_MES_ANO_BARRA);
-        return LocalDate.parse(origem, formatter);
+        try {
+            return LocalDate.parse(origem, formatter);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return null;
     }
 
     public LocalDate dataEmExtensoParaLocalDate(String origem) {
