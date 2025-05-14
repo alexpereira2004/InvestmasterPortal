@@ -29,6 +29,7 @@ public class GoogleSheetsResource {
     @GetMapping("/{tipo}")
     public List<?> lerAtivosCarteira(@RequestParam String spreadsheetId,
                                      @RequestParam String range,
+                                     @RequestParam Boolean save,
                                      @PathVariable String tipo) throws IOException {
 
         GoogleSheetsDataServiceInterface<?> service =  factory.getService(tipo);
