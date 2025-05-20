@@ -3,6 +3,7 @@ package br.com.lunacom.portal.service.googlesheets;
 import br.com.lunacom.portal.converter.googlesheets.CarteiraRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
 import br.com.lunacom.portal.domain.dto.googlesheets.CarteiraDto;
+import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import br.com.lunacom.portal.service.CarteiraService;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,8 @@ public class GoogleSheetsCarteiraService
     }
 
     @Override
-    public List<CarteiraDto> lerPlanilha(String spreadsheetId, String range) throws IOException {
-        final ValueRange valueRange = this.obterDados(spreadsheetId, range);
+    public List<CarteiraDto> lerPlanilha(LeituraPlanilhaRequestDto dto) throws IOException {
+        final ValueRange valueRange = this.obterDados(dto);
 
         final List<CarteiraDto> carteiraDtos = convertAll(valueRange.getValues());
 

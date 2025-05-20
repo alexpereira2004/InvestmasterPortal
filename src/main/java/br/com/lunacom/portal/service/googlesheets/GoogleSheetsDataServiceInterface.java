@@ -1,6 +1,7 @@
 package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
+import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
@@ -13,12 +14,12 @@ public interface GoogleSheetsDataServiceInterface <T> {
 
     GoogleSheetsRowConverter<T> getConverter();
 
-    List<T> lerPlanilha(String spreadsheetId, String range) throws IOException;
+    List<T> lerPlanilha(LeituraPlanilhaRequestDto dto) throws IOException;
 
-    default ValueRange obterDados(String spreadsheetId, String range) throws IOException {
+    default ValueRange obterDados(LeituraPlanilhaRequestDto dto) throws IOException {
         Sheets sheetsService = getSheetsService();
         return sheetsService.spreadsheets().values()
-                .get(spreadsheetId, range)
+                .get(dto.getSpreadsheetId(), dto.getRange())
                 .execute();
     }
 

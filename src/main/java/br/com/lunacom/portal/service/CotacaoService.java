@@ -5,6 +5,7 @@ import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Cotacao;
 import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.CotacaoDto;
+import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import br.com.lunacom.portal.domain.request.CotacaoLoteSiteInvestingComRequest;
 import br.com.lunacom.portal.domain.request.ExtratoCotacaoRequest;
 import br.com.lunacom.portal.domain.wrapper.ExtratoCotacaoWrapper;
@@ -46,7 +47,11 @@ public class CotacaoService {
 
         final GoogleSheetsDataServiceInterface<CotacaoDto> service = factory
                 .getService("googlesheets-cotacao");
-        final List<CotacaoDto> lists = service.lerPlanilha(spreadsheetId, RANGE);
+        final LeituraPlanilhaRequestDto dto = LeituraPlanilhaRequestDto.builder()
+                 .spreadsheetId(spreadsheetId)
+                 .range(RANGE)
+                .build();
+        final List<CotacaoDto> lists = service.lerPlanilha(dto);
         log.info(String.format("A leitura da planilha foi realizada e encontrou %s diferentes cotações", String.valueOf(lists.size())));
         this.salvarCotacoesGoogleSpreadsheet(lists);
         log.info("Leitura e inclusão concluídas");

@@ -3,6 +3,7 @@ package br.com.lunacom.portal.service.googlesheets;
 import br.com.lunacom.portal.converter.googlesheets.CotacaoRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
 import br.com.lunacom.portal.domain.dto.googlesheets.CotacaoDto;
+import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,8 @@ public class GoogleSheetsCotacaoService
     private final CotacaoRowConverter converter;
 
     @Override
-    public List<CotacaoDto> lerPlanilha(String spreadsheetId, String range) throws IOException {
-        final ValueRange valueRange = this.obterDados(spreadsheetId, range);
+    public List<CotacaoDto> lerPlanilha(LeituraPlanilhaRequestDto dto) throws IOException {
+        final ValueRange valueRange = this.obterDados(dto);
 
         final List<CotacaoDto> response = convertAll(valueRange.getValues());
         return response;
