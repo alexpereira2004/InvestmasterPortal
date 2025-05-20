@@ -7,6 +7,7 @@ CREATE TABLE carteira (
   quantidade int(11) NOT NULL,
   total_investido double DEFAULT NULL,
   total_atualizado double DEFAULT NULL,
+  data_compra TIMESTAMP,
   data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
