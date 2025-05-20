@@ -6,6 +6,7 @@ import br.com.lunacom.portal.domain.dto.googlesheets.CarteiraDto;
 import br.com.lunacom.portal.service.CarteiraService;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service("googlesheets-carteira")
 public class GoogleSheetsCarteiraService
@@ -63,6 +65,7 @@ public class GoogleSheetsCarteiraService
             return lista.subList(inicio, fim);
         }
 
+        log.error("A leitura não vai resultar nenhum item novo pois algum dos marcadores não foi encontrado (\"{}\" ou \"{}\")", INICIO, FINAL);
         return Collections.emptyList();
     }
 }
