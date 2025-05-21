@@ -8,7 +8,6 @@ import br.com.lunacom.portal.service.CarteiraService;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -17,14 +16,15 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
-@Service("googlesheets-carteira")
-public class GoogleSheetsCarteiraService
+public abstract class GoogleSheetsCarteiraService
         implements GoogleSheetsDataServiceInterface<CarteiraDto> {
 
+    public static final String MSG_ERRO = "A leitura não vai resultar nenhum item novo pois algum dos marcadores não foi encontrado (\"{}\" ou \"{}\")";
     private final CarteiraRowConverter converter;
     private final CarteiraService carteiraService;
-    private static String INICIO = "Total Movimentações Ações";
-    private static String FINAL = "Total Consolidado Ações";
+
+    protected abstract String getInicio();
+    protected abstract String getFinal();
 
     @Override
     public GoogleSheetsRowConverter<CarteiraDto> getConverter() {
@@ -55,10 +55,10 @@ public class GoogleSheetsCarteiraService
 
         for (int i = 0; i < lista.size(); i++) {
             String codigo = lista.get(i).getCodigoAtivo();
-            if (INICIO.equals(codigo)) {
+            if (getInicio().equals(codigo)) {
                 inicio = i + 1;
             }
-            if (FINAL.equals(codigo) && inicio != -1) {
+            if (getFinal().equals(codigo) && inicio != -1) {
                 fim = i;
                 break;
             }
@@ -68,7 +68,7 @@ public class GoogleSheetsCarteiraService
             return lista.subList(inicio, fim);
         }
 
-        log.error("A leitura não vai resultar nenhum item novo pois algum dos marcadores não foi encontrado (\"{}\" ou \"{}\")", INICIO, FINAL);
+        log.error(MSG_ERRO, getInicio(), getFinal());
         return Collections.emptyList();
     }
 }
