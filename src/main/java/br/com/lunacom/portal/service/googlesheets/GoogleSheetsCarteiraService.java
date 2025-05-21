@@ -42,7 +42,9 @@ public class GoogleSheetsCarteiraService
                 .filter(e -> !e.getQuantidade().equals(0))
                 .collect(Collectors.toList());
 
-        carteiraService.salvarLista(carteiraDtoLimpa);
+        if (dto.getSave()) {
+            carteiraService.salvarLista(carteiraDtoLimpa);
+        }
 
         return carteiraDtoLimpa;
     }
