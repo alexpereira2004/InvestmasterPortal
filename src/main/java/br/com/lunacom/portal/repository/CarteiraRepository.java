@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface CarteiraRepository extends JpaRepository<Carteira, Integer> {
 
     Optional<Carteira> findByAtivoCodigo(String nome);
+
+    void deleteByAtivoCodigo(String codigo);
 }

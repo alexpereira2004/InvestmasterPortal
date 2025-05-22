@@ -2,6 +2,7 @@ package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.CarteiraRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
+import br.com.lunacom.portal.domain.Carteira;
 import br.com.lunacom.portal.domain.dto.googlesheets.CarteiraDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import br.com.lunacom.portal.service.CarteiraService;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -42,11 +44,31 @@ public abstract class GoogleSheetsCarteiraService
                 .filter(e -> !e.getQuantidade().equals(0))
                 .collect(Collectors.toList());
 
+        final List<Carteira> carteiraList;
         if (dto.getSave()) {
             carteiraService.salvarLista(carteiraDtoLimpa);
+            carteiraService.removerPorCodigoAtivo(identificarAtivosDescontinuados(carteiraDtoLimpa));
         }
 
         return carteiraDtoLimpa;
+    }
+
+    private List<String> identificarAtivosDescontinuados(List<CarteiraDto> listaA) {
+
+        Set<String> conjuntoA = listaA.stream().map(i -> i.getCodigoAtivo()).collect(Collectors.toSet());
+
+        final List<Carteira> carteiraList = carteiraService.pesquisar();
+
+        Set<String> conjuntoB = carteiraList.stream()
+                .filter(c -> c.getAtivo().getTipo().equals("A"))
+                .map(c -> c.getAtivo().getCodigo())
+                .collect(Collectors.toSet());
+
+        final List<String> diferenca = conjuntoB.stream()
+                .filter(a -> !conjuntoA.contains(a))
+                .collect(Collectors.toList());
+
+        return diferenca;
     }
 
     private List<CarteiraDto> filtrarPorMarcadores(List<CarteiraDto> lista) {

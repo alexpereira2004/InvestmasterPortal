@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -27,6 +28,15 @@ public class CarteiraService {
 
     public void salvarLista(List<CarteiraDto> carteiraDtos) {
         carteiraDtos.forEach(this::salvar);
+    }
+
+    public List<Carteira> pesquisar() {
+        return carteiraRepository.findAll();
+    }
+
+    @Transactional
+    public void removerPorCodigoAtivo(List<String> codigoAtivoLista) {
+        codigoAtivoLista.stream().forEach(carteiraRepository::deleteByAtivoCodigo);
     }
 
     private Carteira salvar(CarteiraDto item) {
