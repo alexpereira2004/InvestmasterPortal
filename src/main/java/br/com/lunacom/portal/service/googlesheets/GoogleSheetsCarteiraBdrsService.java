@@ -1,6 +1,7 @@
 package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.CarteiraRowConverter;
+import br.com.lunacom.portal.domain.enumeration.AcaoTipo;
 import br.com.lunacom.portal.service.CarteiraService;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,11 @@ public class GoogleSheetsCarteiraBdrsService extends GoogleSheetsCarteiraService
 
     public GoogleSheetsCarteiraBdrsService(CarteiraRowConverter converter, CarteiraService carteiraService) {
         super(converter, carteiraService);
+    }
+
+    @Override
+    protected AcaoTipo getTipo() {
+        return AcaoTipo.BDR;
     }
 
     @Override
