@@ -20,7 +20,7 @@ import java.util.Set;
 @Service
 public class CarteiraService {
 
-    public static final String MSG_ATIVO_NAO_ENCONTRADO = "Ativo não encontrado então esse registro de carteira não poderá ser salvo";
+    public static final String MSG_ATIVO_NAO_ENCONTRADO = "Ativo \"%s\" não encontrado então esse registro de carteira não poderá ser salvo";
     private final CarteiraRepository carteiraRepository;
     private final TagRepository tagRepository;
     private final AtivoRepository ativoRepository;
@@ -67,7 +67,8 @@ public class CarteiraService {
         if (Objects.isNull(carteiraExistente.getAtivo())) {
             return ativoRepository
                     .findByCodigo(item.getCodigoAtivo())
-                    .orElseThrow(() -> new RuntimeException(MSG_ATIVO_NAO_ENCONTRADO));
+                    .orElseThrow(()-> new RuntimeException
+                            (String.format(MSG_ATIVO_NAO_ENCONTRADO, item.getCodigoAtivo())));
         }
         return carteiraExistente.getAtivo();
     }
