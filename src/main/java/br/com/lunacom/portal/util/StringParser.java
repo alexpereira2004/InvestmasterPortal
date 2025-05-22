@@ -4,19 +4,36 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.Optional;
 
 public class StringParser {
 
     public static Integer toInteger(String input) {
-        return Optional.ofNullable(input).map(Integer::valueOf).orElse(null);
+        try {
+            return Optional.ofNullable(input)
+                    .map(String::trim)
+                    .map(Integer::valueOf)
+                    .orElse(null);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
     public static Integer toInteger(String input, Integer defaultValue) {
         return Optional.ofNullable(input).map(Integer::valueOf).orElse(defaultValue);
     }
 
     public static Double toDouble(String input) {
-        final String valorFormatado = input.replace(".", "").replace(",", ".");
+        if (Objects.isNull(input) || input.isEmpty()) {
+            return 0D;
+        }
+        final String valorFormatado = input
+                .replaceAll("[^\\d,\\.]", "")
+                .replace(".", "")
+                .replace(",", ".");
+        if (valorFormatado.isEmpty()) {
+            return 0D;
+        }
         return Double.parseDouble(valorFormatado);
     }
 

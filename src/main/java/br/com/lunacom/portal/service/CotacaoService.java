@@ -4,11 +4,14 @@ import br.com.lunacom.portal.converter.CotacaoLoteSiteInvestingComRequestConvert
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Cotacao;
 import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
-import br.com.lunacom.portal.domain.dto.GoogleSpreadsheetCotacaoDto;
+import br.com.lunacom.portal.domain.dto.googlesheets.CotacaoDto;
+import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import br.com.lunacom.portal.domain.request.CotacaoLoteSiteInvestingComRequest;
 import br.com.lunacom.portal.domain.request.ExtratoCotacaoRequest;
 import br.com.lunacom.portal.domain.wrapper.ExtratoCotacaoWrapper;
 import br.com.lunacom.portal.repository.CotacaoRepository;
+import br.com.lunacom.portal.service.googlesheets.GoogleSheetsDataServiceInterface;
+import br.com.lunacom.portal.service.googlesheets.ServiceFactory;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.RequiredArgsConstructor;
@@ -33,18 +36,22 @@ public class CotacaoService {
 
     private final CotacaoRepository repo;
     private final AtivoService ativoService;
-    private final GoogleSheetsDataService googleSheetsDataService;
     private final CotacaoLoteSiteInvestingComRequestConverter cotacaoLoteSiteInvestingComRequestConverter;
+    private final ServiceFactory factory;
 
     @Value("${app.googleSheet.spreadsheetId}")
     private String spreadsheetId;
-
-    @Value("${app.googleSheet.range}")
-    private String range;
+    private String RANGE = "Cotacoes!A2:B77";
 
     public void importarDadosGoogle() throws IOException {
-        final List<GoogleSpreadsheetCotacaoDto> lists = googleSheetsDataService
-                .lerPlanilha(spreadsheetId,range);
+
+        final GoogleSheetsDataServiceInterface<CotacaoDto> service = factory
+                .getService("googlesheets-cotacao");
+        final LeituraPlanilhaRequestDto dto = LeituraPlanilhaRequestDto.builder()
+                 .spreadsheetId(spreadsheetId)
+                 .range(RANGE)
+                .build();
+        final List<CotacaoDto> lists = service.lerPlanilha(dto);
         log.info(String.format("A leitura da planilha foi realizada e encontrou %s diferentes cotações", String.valueOf(lists.size())));
         this.salvarCotacoesGoogleSpreadsheet(lists);
         log.info("Leitura e inclusão concluídas");
@@ -62,8 +69,8 @@ public class CotacaoService {
         return new ExtratoCotacaoWrapper(cotacoes);
     }
 
-    private void salvarCotacoesGoogleSpreadsheet
-            (List<GoogleSpreadsheetCotacaoDto> googleCotacoes) {
+    public void salvarCotacoesGoogleSpreadsheet
+            (List<CotacaoDto> googleCotacoes) {
 
         String padraoReais = "^\\d{1,3}(\\.?\\d{3})*(,\\d{1,2})?$";
 

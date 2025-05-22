@@ -1,4 +1,4 @@
-package br.com.lunacom.portal.service;
+package br.com.lunacom.portal.service.googlesheets;
 
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
@@ -11,13 +11,14 @@ import java.io.IOException;
 import java.util.Collections;
 
 @Service
-public class GoogleSheetsService {
+public class GoogleSheetsFactory {
 
     private static final String APPLICATION_NAME = "Investmaster";
     private static final String CREDENTIALS_FILE_PATH = "src/main/resources/credenciais/google-sheets-credentials.json";
 
-    public Sheets getSheetsService() throws IOException {
-        GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(CREDENTIALS_FILE_PATH))
+    public static Sheets getSheetsService() throws IOException {
+        GoogleCredentials credentials = GoogleCredentials
+                .fromStream(new FileInputStream(CREDENTIALS_FILE_PATH))
                 .createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS));
         return new Sheets.Builder(
                 new com.google.api.client.http.javanet.NetHttpTransport(),
