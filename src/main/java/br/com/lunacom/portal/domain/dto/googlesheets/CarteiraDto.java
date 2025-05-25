@@ -12,15 +12,15 @@ import java.time.LocalDate;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CarteiraDto {
-    String header;
-    String codigoAtivo;
-    String estrategia;
-    Double precoPago;
-    Double precoAtual;
-    Double valorizacao;
-    Integer quantidade;
-    Double totalInvestido;
-    Double atualizacao;
-    Double resultado;
-    LocalDate dataCompra;
+    private String header;
+    private String codigoAtivo;
+    private String estrategia;
+    private Double precoPago;
+    private Double precoAtual;
+    private Double valorizacao;
+    private Integer quantidade;
+    private Double totalInvestido;
+    private Double atualizacao;
+    private Double resultado;
+    private LocalDate dataCompra;
 }
