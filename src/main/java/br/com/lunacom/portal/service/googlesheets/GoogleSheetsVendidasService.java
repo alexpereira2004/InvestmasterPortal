@@ -68,8 +68,8 @@ public class GoogleSheetsVendidasService implements GoogleSheetsDataServiceInter
                 .totalInvestido(item.getTotalInvestido())
                 .dataVenda(item.getDataVenda())
                 .precoVenda(item.getPrecoFinal())
-                .totalFinal(item.getTotalInvestido())
-                .rendimento(item.getRendimento())
+                .totalFinal(item.getAtualizacao())
+                .rendimento(item.getDiferenca())
                 .ativo(ativo)
                 .build();
     }
