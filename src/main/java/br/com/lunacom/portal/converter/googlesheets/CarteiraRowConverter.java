@@ -52,10 +52,4 @@ public class CarteiraRowConverter implements GoogleSheetsRowConverter<CarteiraDt
         return null;
     }
 
-    private String check(List<Object> o, int pos) {
-        if (o == null || pos >= o.size() || o.get(pos) == null) {
-            return "";
-        }
-        return o.get(pos).toString();
-    }
 }

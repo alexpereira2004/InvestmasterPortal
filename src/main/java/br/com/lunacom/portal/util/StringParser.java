@@ -28,7 +28,7 @@ public class StringParser {
             return 0D;
         }
         final String valorFormatado = input
-                .replaceAll("[^\\d,\\.]", "")
+                .replaceAll("[^\\d,\\.\\-]", "")
                 .replace(".", "")
                 .replace(",", ".");
         if (valorFormatado.isEmpty()) {

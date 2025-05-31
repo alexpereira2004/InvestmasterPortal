@@ -11,16 +11,17 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CarteiraDto {
+public class VendidasDto {
     private String header;
     private String codigoAtivo;
-    private String estrategia;
     private Double precoPago;
-    private Double precoAtual;
-    private Double valorizacao;
+    private Double precoFinal;
+    private Double rendimento;
     private Integer quantidade;
     private Double totalInvestido;
     private Double atualizacao;
-    private Double resultado;
+    private Double diferenca;
     private LocalDate dataCompra;
+    private LocalDate dataVenda;
+    private Integer dias;
 }
