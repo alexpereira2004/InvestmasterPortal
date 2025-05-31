@@ -34,7 +34,7 @@ public class VendidasRowConverter implements GoogleSheetsRowConverter<VendidasDt
                     .build();
         }
 
-        Set<Integer> tamanhosValidos = new HashSet<>(Arrays.asList(12, 14));
+        Set<Integer> tamanhosValidos = new HashSet<>(Arrays.asList(12,13, 14));
 
         if (tamanhosValidos.contains(row.size())) {
             return VendidasDto.builder()

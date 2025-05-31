@@ -10,6 +10,7 @@ import br.com.lunacom.portal.util.DataUtil;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,11 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.Reader;
 import java.io.StringReader;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class MovimentoVendaService {
@@ -54,7 +58,18 @@ public class MovimentoVendaService {
         return repository.findAll(specification, pageable);
     }
 
+    public Optional<LocalDate> pesquisarUltimaDataCompra() {
+        return repository.findFirstByOrderByDataVendaDesc()
+                .map(MovimentoVenda::getDataVenda);
+
+    }
+
     public void removerTodos(List<Integer> list) {
         list.stream().forEach(e -> repository.deleteById(e));
+    }
+
+    @Transactional
+    public void removerUltimasVendas(Optional<LocalDate> dataUltimaVenda) {
+        dataUltimaVenda.ifPresent(repository::deleteByDataVendaGreaterThanEqual);
     }
 }

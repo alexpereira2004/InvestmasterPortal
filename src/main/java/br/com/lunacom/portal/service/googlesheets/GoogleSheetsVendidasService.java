@@ -14,8 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -40,16 +43,28 @@ public class GoogleSheetsVendidasService implements GoogleSheetsDataServiceInter
         final List<VendidasDto> vendidasDtoList = convertAll(valueRange.getValues());
 
         if (dto.getSave()) {
-//            @TODO - Aplicar lógica para não salvar de forma duplicada
-            vendidasDtoList.stream()
+
+            Optional<LocalDate> dataUltimaVenda = movimentoVendaService.pesquisarUltimaDataCompra();
+
+            final List<MovimentoVenda> result = vendidasDtoList.stream()
                     .map(i -> this.converter(i))
                     .filter(i -> Objects.nonNull(i.getAtivo().getCodigo()))
-                    .collect(Collectors.toList())
-                    .forEach(i -> movimentoVendaService.salvar(i));
-//            carteiraService.removerPorCodigoAtivo(identificarAtivosDescontinuados(carteiraDtoLimpa));
+                    .filter(aplicarFiltroPorMaiorData(dataUltimaVenda))
+                    .collect(Collectors.toList());
+            movimentoVendaService.removerUltimasVendas(dataUltimaVenda);
+            result.forEach(i -> movimentoVendaService.salvar(i));
         }
 
         return vendidasDtoList;
+    }
+
+    private Predicate<MovimentoVenda> aplicarFiltroPorMaiorData(Optional<LocalDate> maiorData) {
+        return i -> {
+            if (!maiorData.isPresent()) return true;
+
+            return maiorData.isPresent() && Objects.nonNull(i.getDataVenda()) &&
+                    (i.getDataVenda().isAfter(maiorData.get()) || i.getDataVenda().equals(maiorData.get()));
+        };
     }
 
     private MovimentoVenda converter(VendidasDto item) {
