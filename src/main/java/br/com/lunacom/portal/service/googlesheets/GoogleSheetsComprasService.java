@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.service.googlesheets;
 
-import br.com.lunacom.portal.converter.googlesheets.CarteiraRowConverter;
+import br.com.lunacom.portal.converter.googlesheets.ComprasRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
 import br.com.lunacom.portal.domain.dto.googlesheets.CarteiraDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
@@ -22,7 +22,7 @@ public abstract class GoogleSheetsComprasService
     protected abstract String getMarcadorDeInicio();
     protected abstract String getMarcadorDeFinal();
 
-    private final CarteiraRowConverter converter;
+    private final ComprasRowConverter converter;
 
     @Override
     public GoogleSheetsRowConverter<CarteiraDto> getConverter() {
