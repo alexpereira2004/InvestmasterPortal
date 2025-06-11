@@ -9,7 +9,8 @@ import java.util.EnumSet;
 @Getter
 public enum Status {
     INATIVO("I","Inativo"),
-    ATIVO("A", "Ativo");
+    ATIVO("A", "Ativo"),
+    RESTRICAO("R", "Restrição");
 
     private final String codigo;
     private final String Descricao;
