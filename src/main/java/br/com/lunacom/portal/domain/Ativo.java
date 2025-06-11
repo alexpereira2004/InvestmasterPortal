@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +31,9 @@ public class Ativo extends BasicEntity<Ativo> implements Serializable {
     private String caminho;
     private String seguindo;
     private String cnpj;
+    private LocalDateTime dataCriacao;
+    private String status;
+    private String observacao;
 
     @OneToMany(mappedBy = "ativo")
     private List<Cotacao> cotacoes;

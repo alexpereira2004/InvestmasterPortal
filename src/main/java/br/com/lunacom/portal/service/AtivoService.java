@@ -6,6 +6,7 @@ import br.com.lunacom.portal.repository.DividendoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,5 +23,10 @@ public class AtivoService {
 
     public List<Ativo> pesquisarAtivosComDividendos() {
         return dividendoRepository.findDistinctAtivos();
+    }
+
+    @Transactional
+    public Ativo salvar(Ativo ativo) {
+        return repository.save(ativo);
     }
 }

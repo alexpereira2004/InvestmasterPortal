@@ -14,10 +14,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
-import java.util.function.Function;
 
 @RequiredArgsConstructor
 @Service
@@ -27,6 +27,7 @@ public class MovimentoCompraService {
     private final MovimentoCompraRepository repository;
     private final MovimentoCompraCsvRequestConverter converter;
 
+    @Transactional
     public MovimentoCompra salvar(MovimentoCompra movimentoCompra) {
         return repository.save(movimentoCompra);
     }
