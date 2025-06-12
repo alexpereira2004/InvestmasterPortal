@@ -2,7 +2,6 @@ package br.com.lunacom.portal.converter;
 
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.enumeration.AcaoTipo;
-import br.com.lunacom.portal.domain.enumeration.Boleano;
 import br.com.lunacom.portal.domain.response.AtivoResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -28,8 +27,8 @@ public class AtivoResponseConverter implements Converter<AtivoResponse, Ativo> {
                 .tipoDescricao(AcaoTipo.fromCodigo(input.getTipo()).getDescricao())
                 .pais(input.getPais())
                 .caminho(input.getCaminho())
-                .seguindo(input.getSeguindo())
-                .seguindoDescricao(Boleano.fromCodigo(input.getSeguindo()).getDescricao())
+                .seguindo(input.getSeguindo().getCodigo())
+                .seguindoDescricao(input.getSeguindo().getDescricao())
                 .build();
     }
 }

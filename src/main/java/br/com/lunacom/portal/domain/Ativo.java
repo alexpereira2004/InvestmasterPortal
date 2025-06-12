@@ -1,6 +1,8 @@
 package br.com.lunacom.portal.domain;
 
+import br.com.lunacom.portal.converter.attribute.SeguindoConverter;
 import br.com.lunacom.portal.converter.attribute.StatusConverter;
+import br.com.lunacom.portal.domain.enumeration.Seguindo;
 import br.com.lunacom.portal.domain.enumeration.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +33,8 @@ public class Ativo extends BasicEntity<Ativo> implements Serializable {
     private String tipo;
     private String pais;
     private String caminho;
-    private String seguindo;
+    @Convert(converter = SeguindoConverter.class)
+    private Seguindo seguindo;
     private String cnpj;
     private LocalDateTime dataCriacao;
     @Convert(converter = StatusConverter.class)

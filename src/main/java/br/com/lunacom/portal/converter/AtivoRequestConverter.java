@@ -5,6 +5,8 @@ import br.com.lunacom.portal.domain.request.AtivoRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import static br.com.lunacom.portal.domain.enumeration.Seguindo.fromCodigo;
+
 @AllArgsConstructor
 @Component
 public class AtivoRequestConverter extends GenericConverter <AtivoRequest, Ativo> {
@@ -19,7 +21,7 @@ public class AtivoRequestConverter extends GenericConverter <AtivoRequest, Ativo
                 .tipo(input.getTipo())
                 .pais(input.getPais())
                 .caminho(input.getCaminho())
-                .seguindo(input.getSeguindo())
+                .seguindo(fromCodigo(input.getSeguindo()))
                 .build();
     }
 
