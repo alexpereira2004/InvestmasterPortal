@@ -1,5 +1,7 @@
 package br.com.lunacom.portal.domain;
 
+import br.com.lunacom.portal.converter.attribute.StatusConverter;
+import br.com.lunacom.portal.domain.enumeration.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,7 +34,8 @@ public class Ativo extends BasicEntity<Ativo> implements Serializable {
     private String seguindo;
     private String cnpj;
     private LocalDateTime dataCriacao;
-    private String status;
+    @Convert(converter = StatusConverter.class)
+    private Status status;
     private String observacao;
 
     @OneToMany(mappedBy = "ativo")
