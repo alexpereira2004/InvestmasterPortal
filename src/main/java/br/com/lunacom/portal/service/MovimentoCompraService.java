@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.Reader;
 import java.io.StringReader;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -56,5 +58,15 @@ public class MovimentoCompraService {
 
     public void removerTodos(List<Integer> list) {
         list.stream().forEach(e -> repository.deleteById(e));
+    }
+
+    public Optional<LocalDate> pesquisarUltimaDataCompra() {
+        return repository.findFirstByOrderByDataAquisicaoDesc()
+                .map(MovimentoCompra::getDataAquisicao);
+    }
+
+    @Transactional
+    public void removerUltimaAquisicao(Optional<LocalDate> dataUltimaAquisicao) {
+        dataUltimaAquisicao.ifPresent(repository::deleteByDataAquisicaoGreaterThanEqual);
     }
 }

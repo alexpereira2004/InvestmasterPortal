@@ -13,6 +13,6 @@ public class SeguindoConverter implements AttributeConverter<Seguindo, String> {
 
     @Override
     public Seguindo convertToEntityAttribute(String dbData) {
-        return dbData != null ? Seguindo.fromCodigo(dbData) : null;
+        return Seguindo.fromCodigo(dbData);
     }
 }

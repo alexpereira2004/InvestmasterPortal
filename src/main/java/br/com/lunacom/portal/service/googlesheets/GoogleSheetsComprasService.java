@@ -7,6 +7,7 @@ import br.com.lunacom.portal.domain.MovimentoCompra;
 import br.com.lunacom.portal.domain.TipoAtivoInterface;
 import br.com.lunacom.portal.domain.dto.googlesheets.CarteiraDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
+import br.com.lunacom.portal.domain.enumeration.Seguindo;
 import br.com.lunacom.portal.domain.enumeration.Status;
 import br.com.lunacom.portal.service.AtivoService;
 import br.com.lunacom.portal.service.MovimentoCompraService;
@@ -15,10 +16,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -45,21 +49,35 @@ public abstract class GoogleSheetsComprasService
     @Override
     public List<CarteiraDto> lerPlanilha(LeituraPlanilhaRequestDto dto) throws IOException {
         final ValueRange valueRange = this.obterDados(dto);
-        final List<CarteiraDto> compras = convertAll(valueRange.getValues());
+        final List<CarteiraDto> comprasDtoList = convertAll(valueRange.getValues());
 
-        List<CarteiraDto> comprasEfetivasList = filtrarPorMarcadores(compras);
+        List<CarteiraDto> comprasEfetivasList = filtrarPorMarcadores(comprasDtoList);
         comprasEfetivasList = comprasEfetivasList.stream()
                 .filter(e -> !e.getQuantidade().equals(0))
                 .collect(Collectors.toList());
 
         if (dto.getSave()) {
+
+            Optional<LocalDate> dataUltimaAquisicao = movimentoCompraService.pesquisarUltimaDataCompra();
+
             final List<MovimentoCompra> entityList = comprasEfetivasList.stream()
                     .map(i -> this.converter(i))
+                    .filter(aplicarFiltroPorMaiorData(dataUltimaAquisicao))
                     .collect(Collectors.toList());
+            movimentoCompraService.removerUltimaAquisicao(dataUltimaAquisicao);
             entityList.forEach(i -> movimentoCompraService.salvar(i));
         }
 
         return comprasEfetivasList;
+    }
+
+    private Predicate<MovimentoCompra> aplicarFiltroPorMaiorData(Optional<LocalDate> maiorData) {
+        return i -> {
+            if (!maiorData.isPresent()) return true;
+
+            return maiorData.isPresent() && Objects.nonNull(i.getDataAquisicao()) &&
+                    (i.getDataAquisicao().isAfter(maiorData.get()) || i.getDataAquisicao().equals(maiorData.get()));
+        };
     }
 
     private List<CarteiraDto> filtrarPorMarcadores(List<CarteiraDto> lista) {
@@ -109,10 +127,10 @@ public abstract class GoogleSheetsComprasService
     private Ativo salvarAtivo(String codigo) {
         final Ativo a = Ativo.builder()
                 .codigo(codigo)
-                .seguindo("5")
+                .seguindo(Seguindo.DIARIAMENTE)
                 .dataCriacao(LocalDateTime.now())
                 .tipo(getTipoAtivo())
-                .status(Status.RESTRICAO.getCodigo())
+                .status(Status.RESTRICAO)
                 .observacao(NOVO_ATIVO_AUTOMATICO)
                 .build();
         return ativoService.salvar(a);
