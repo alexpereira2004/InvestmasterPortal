@@ -11,6 +11,7 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -60,13 +61,32 @@ public class MovimentoCompraService {
         list.stream().forEach(e -> repository.deleteById(e));
     }
 
-    public Optional<LocalDate> pesquisarUltimaDataCompra() {
-        return repository.findFirstByOrderByDataAquisicaoDesc()
-                .map(MovimentoCompra::getDataAquisicao);
+    public Optional<LocalDate> pesquisarDataUltimaCompra(String tipoAtivo) {
+
+        Pageable pageable = PageRequest.of(0, 1);
+        LocalDate dataAquisicao = repository
+                .findUltimaCompraPorTipo(tipoAtivo, pageable)
+                .stream()
+                .findFirst()
+                .map(MovimentoCompra::getDataAquisicao)
+                .orElse(null);
+
+        return Optional.ofNullable(dataAquisicao);
     }
 
+    public List<MovimentoCompra> pesquisarUltimasCompras
+            (LocalDate dataUltimaAquisicao, String tipo) {
+        return repository.findUltimasComprasPorTipoEData(dataUltimaAquisicao, tipo);
+    }
+
+
     @Transactional
-    public void removerUltimaAquisicao(Optional<LocalDate> dataUltimaAquisicao) {
-        dataUltimaAquisicao.ifPresent(repository::deleteByDataAquisicaoGreaterThanEqual);
+    public void removerUltimaAquisicao(Optional<LocalDate> dataUltimaAquisicao, String tipo) {
+
+        if (dataUltimaAquisicao.isPresent()) {
+            pesquisarUltimasCompras(dataUltimaAquisicao.get(), tipo)
+                    .forEach(repository::delete);
+        }
+
     }
 }

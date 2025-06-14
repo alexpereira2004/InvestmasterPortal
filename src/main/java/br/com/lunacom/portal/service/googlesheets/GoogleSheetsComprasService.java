@@ -58,13 +58,14 @@ public abstract class GoogleSheetsComprasService
 
         if (dto.getSave()) {
 
-            Optional<LocalDate> dataUltimaAquisicao = movimentoCompraService.pesquisarUltimaDataCompra();
+            Optional<LocalDate> dataUltimaAquisicao = movimentoCompraService
+                    .pesquisarDataUltimaCompra(this.getTipoAtivo());
 
             final List<MovimentoCompra> entityList = comprasEfetivasList.stream()
                     .map(i -> this.converter(i))
                     .filter(aplicarFiltroPorMaiorData(dataUltimaAquisicao))
                     .collect(Collectors.toList());
-            movimentoCompraService.removerUltimaAquisicao(dataUltimaAquisicao);
+            movimentoCompraService.removerUltimaAquisicao(dataUltimaAquisicao, this.getTipoAtivo());
             entityList.forEach(i -> movimentoCompraService.salvar(i));
         }
 
