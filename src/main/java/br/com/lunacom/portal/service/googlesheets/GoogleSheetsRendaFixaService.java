@@ -31,6 +31,11 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
 
         ajustesColunasMescladas(rowList);
 
+        if (dto.getSave()) {
+
+
+        }
+
         return rowList;
     }
 
