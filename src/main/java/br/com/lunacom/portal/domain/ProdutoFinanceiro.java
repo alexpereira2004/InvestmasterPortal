@@ -2,14 +2,14 @@ package br.com.lunacom.portal.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Data
+
 @Entity
 @Builder
 @NoArgsConstructor
@@ -17,9 +17,6 @@ import java.time.LocalDateTime;
 public class ProdutoFinanceiro extends BasicEntity<ProdutoFinanceiro> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
 
     @Column(length = 100, nullable = false)
     private String nome;
