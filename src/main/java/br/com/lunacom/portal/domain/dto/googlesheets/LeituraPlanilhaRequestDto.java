@@ -13,4 +13,5 @@ public class LeituraPlanilhaRequestDto {
     private String spreadsheetId;
     private String range;
     private Boolean save;
+    private String ano;
 }
