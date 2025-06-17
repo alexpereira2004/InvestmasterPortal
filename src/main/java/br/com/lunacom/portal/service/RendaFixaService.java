@@ -2,12 +2,16 @@ package br.com.lunacom.portal.service;
 
 import br.com.lunacom.portal.domain.ProdutoFinanceiro;
 import br.com.lunacom.portal.domain.RendaFixa;
+import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
+import br.com.lunacom.portal.domain.dto.googlesheets.RendaFixaDto;
 import br.com.lunacom.portal.domain.enumeration.Meses;
 import br.com.lunacom.portal.repository.ProdutoFinanceiroRepository;
 import br.com.lunacom.portal.repository.RendaFixaRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.var;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +23,7 @@ public class RendaFixaService {
 
     private final RendaFixaRepository repository;
     private final ProdutoFinanceiroRepository produtoFinanceiroRepository;
+    private final ProdutoFinanceiroService produtoFinanceiroService;
 
     public List<RendaFixa> pesquisarTodosPorAno(String ano) {
         return repository.findByDataReferenciaStartingWith(ano);
@@ -54,5 +59,24 @@ public class RendaFixaService {
 
     public void salvar(RendaFixa e) {
         repository.save(e);
+    }
+
+    public void compararDadosAtuaisESalvar(LeituraPlanilhaRequestDto dto, List<RendaFixaDto> rowList) {
+        final List<RendaFixa> rendaFixaAtualList = this.pesquisarTodosPorAno(dto.getAno());
+
+        for (int i = 0; i < rendaFixaAtualList.size(); i++) {
+            var e = rendaFixaAtualList.get(i);
+            var row = rowList.get(i);
+
+            e.setRenda(BigDecimal.valueOf(row.getRenda()));
+            e.setAplicado(BigDecimal.valueOf(row.getInvestido()));
+            e.setRentabilidade(BigDecimal.valueOf(row.getRentabilidade()));
+            e.setComparacao(BigDecimal.valueOf(row.getComparaticoComCdi()));
+            e.setReferenciaValor(BigDecimal.valueOf(row.getCdiMes()));
+            e.setComparacaoReferencia("CDI");
+            e.setProdutoFinanceiro(produtoFinanceiroService.pesquisarPorNome(row.getInstituicao()));
+
+            this.salvar(e);
+        }
     }
 }
