@@ -20,6 +20,10 @@ public class RendaFixaService {
     private final RendaFixaRepository repository;
     private final ProdutoFinanceiroRepository produtoFinanceiroRepository;
 
+    public List<RendaFixa> pesquisarTodosPorAno(String ano) {
+        return repository.findByDataReferenciaStartingWith(ano);
+    }
+
     public boolean dadosRendaFixaDoAnoNaoExistem(String ano) {
         if (Objects.isNull(ano)) {
             return false;
@@ -46,5 +50,9 @@ public class RendaFixaService {
                             .build();
                         repository.save(s);
                 });
+    }
+
+    public void salvar(RendaFixa e) {
+        repository.save(e);
     }
 }

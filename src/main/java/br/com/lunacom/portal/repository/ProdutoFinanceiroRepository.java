@@ -11,4 +11,5 @@ public interface ProdutoFinanceiroRepository extends GenericRepository<ProdutoFi
 
     List<ProdutoFinanceiro> findAllByNomeIn(Collection<String> nomes);
 
+    ProdutoFinanceiro findAllByNome(String nome);
 }

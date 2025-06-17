@@ -20,6 +20,7 @@ CREATE TABLE renda_fixa (
   aplicado DECIMAL(15,2) DEFAULT NULL,
   rentabilidade DECIMAL(5,2) DEFAULT NULL COMMENT 'Em percentual ex: 0.82 para 0,82%',
   comparacao DECIMAL(5,2) DEFAULT NULL COMMENT '% do CDI',
+  referencia_valor DECIMAL(5,2) DEFAULT NULL COMMENT 'Valor do campo comparacao_referencia',
   comparacao_referencia  varchar(10) DEFAULT NULL COMMENT 'Normalmente vai ser CDI',
   data_referencia char(7) COMMENT 'Seguir o padrao YYYY-MM',
   data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

@@ -34,6 +34,9 @@ public class RendaFixa extends BasicEntity<RendaFixa> implements Serializable {
     @Column(precision = 5, scale = 2)
     private BigDecimal comparacao;
 
+    @Column(precision = 5, scale = 2)
+    private BigDecimal referenciaValor;
+
     @Column(name = "comparacao_referencia", length = 10)
     private String comparacaoReferencia;
 

@@ -2,15 +2,19 @@ package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.RendaFixaRowConverter;
+import br.com.lunacom.portal.domain.RendaFixa;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.RendaFixaDto;
+import br.com.lunacom.portal.service.ProdutoFinanceiroService;
 import br.com.lunacom.portal.service.RendaFixaService;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -23,6 +27,7 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
 
     private final RendaFixaRowConverter converter;
     private final RendaFixaService service;
+    private final ProdutoFinanceiroService produtoFinanceiroService;
 
     @Override
     public GoogleSheetsRowConverter<RendaFixaDto> getConverter() {
@@ -37,15 +42,30 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
         ajustesColunasMescladas(rowList);
 
         if (dto.getSave()) {
+            Set<String> instituicoesDistintas = rowList.stream()
+                    .map(RendaFixaDto::getInstituicao)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toSet());
+
             if (service.dadosRendaFixaDoAnoNaoExistem(dto.getAno())) {
-                Set<String> instituicoesDistintas = rowList.stream()
-                        .map(RendaFixaDto::getInstituicao)
-                        .filter(Objects::nonNull)
-                        .collect(Collectors.toSet());
                 service.montarTabelaAno(dto.getAno(), instituicoesDistintas);
             }
+            final List<RendaFixa> rendaFixaAtualList = service.pesquisarTodosPorAno(dto.getAno());
 
+            for (int i = 0; i < rendaFixaAtualList.size(); i++) {
+                var e = rendaFixaAtualList.get(i);
+                var row = rowList.get(i);
 
+                e.setRenda(BigDecimal.valueOf(row.getRenda()));
+                e.setAplicado(BigDecimal.valueOf(row.getInvestido()));
+                e.setRentabilidade(BigDecimal.valueOf(row.getRentabilidade()));
+                e.setComparacao(BigDecimal.valueOf(row.getComparaticoComCdi()));
+                e.setReferenciaValor(BigDecimal.valueOf(row.getCdiMes()));
+                e.setComparacaoReferencia("CDI");
+                e.setProdutoFinanceiro(produtoFinanceiroService.pesquisarPorNome(row.getInstituicao()));
+
+                service.salvar(e);
+            }
         }
 
         return rowList;
