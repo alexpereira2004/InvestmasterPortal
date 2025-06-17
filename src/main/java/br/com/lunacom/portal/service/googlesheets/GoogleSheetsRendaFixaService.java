@@ -4,6 +4,7 @@ import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.RendaFixaRowConverter;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.RendaFixaDto;
+import br.com.lunacom.portal.service.RendaFixaService;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -18,6 +22,7 @@ import java.util.List;
 public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInterface<RendaFixaDto> {
 
     private final RendaFixaRowConverter converter;
+    private final RendaFixaService service;
 
     @Override
     public GoogleSheetsRowConverter<RendaFixaDto> getConverter() {
@@ -32,6 +37,13 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
         ajustesColunasMescladas(rowList);
 
         if (dto.getSave()) {
+            if (service.dadosRendaFixaDoAnoNaoExistem(dto.getAno())) {
+                Set<String> instituicoesDistintas = rowList.stream()
+                        .map(RendaFixaDto::getInstituicao)
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
+                service.montarTabelaAno(dto.getAno(), instituicoesDistintas);
+            }
 
 
         }

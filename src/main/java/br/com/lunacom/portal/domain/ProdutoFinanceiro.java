@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProdutoFinanceiro extends BasicEntity<RendaFixa> implements Serializable {
+public class ProdutoFinanceiro extends BasicEntity<ProdutoFinanceiro> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

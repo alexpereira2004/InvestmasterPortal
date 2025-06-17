@@ -3,7 +3,8 @@ CREATE TABLE produto_financeiro (
   nome VARCHAR(100) NOT NULL COMMENT  'Caixinha Nubank, Diferenciado Itaú',
   instituicao VARCHAR(100) NOT NULL COMMENT 'Nubank, Itaú',
   descricao TEXT,
-  data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
+  data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+  data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 
