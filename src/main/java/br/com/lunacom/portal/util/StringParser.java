@@ -1,5 +1,7 @@
 package br.com.lunacom.portal.util;
 
+import br.com.lunacom.portal.domain.enumeration.FormatosData;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.time.LocalDate;
@@ -50,6 +52,11 @@ public class StringParser {
     public static LocalDate toLocalDate(String dataFormado_dd_MM_yyyy) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         return LocalDate.parse(dataFormado_dd_MM_yyyy, formatter);
+    }
+
+    public static LocalDate toLocalDate(String data, FormatosData t) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(t.getDescricao());
+        return LocalDate.parse(data, formatter);
     }
 
 }

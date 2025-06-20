@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "aporte")
-public class Aporte extends BasicEntity<Aporte> implements Serializable {
+public class AporteDto extends BasicEntity<AporteDto> implements Serializable {
 
     @Column(name = "data_aporte", nullable = false)
     private LocalDate dataAporte;

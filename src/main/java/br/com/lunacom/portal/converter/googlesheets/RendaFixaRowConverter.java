@@ -6,9 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static br.com.lunacom.portal.util.StringParser.toDouble;
 
@@ -17,11 +15,12 @@ import static br.com.lunacom.portal.util.StringParser.toDouble;
 @RequiredArgsConstructor
 public class RendaFixaRowConverter implements GoogleSheetsRowConverter<RendaFixaDto> {
 
-    public static final String WARNING = "Leitura de daLinha ignorada na integração da Renda Fixa: {}";
+    public static final String WARNING = "Leitura de Linha ignorada na integração da Renda Fixa: {}";
 
     @Override
     public RendaFixaDto convert(List<Object> row) {
-        if (linhaVazia(row) || primeiraLinhaHeader(row) || tamanhoNaoPermitido(row)) {
+        final List<Integer> list = Arrays.asList(1, 2, 3, 4);
+        if (linhaVazia(row) || primeiraLinhaHeader(row) || tamanhoNaoPermitido(row, list)) {
             log.warn(WARNING, row);
             return null;
         }
@@ -50,16 +49,7 @@ public class RendaFixaRowConverter implements GoogleSheetsRowConverter<RendaFixa
         return dto;
     }
 
-    private boolean tamanhoNaoPermitido(List<Object> row) {
-        Set<Integer> tamanhosInvalidos = new HashSet<>(Arrays.asList(1, 2, 3, 4));
-        return tamanhosInvalidos.contains(row.size());
-    }
-
     private boolean primeiraLinhaHeader(List<Object> row) {
         return row.size() == 7 && row.get(0).toString().equals("Data");
-    }
-
-    private boolean linhaVazia(List<Object> row) {
-        return row == null || row.isEmpty() || row.size() < 1;
     }
 }
