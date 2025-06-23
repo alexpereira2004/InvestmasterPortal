@@ -58,6 +58,21 @@ public class ProjecaoService {
             }
             projecoes.add(projecaoFii);
 
+            final Projecao projecaoBdr = Projecao.builder()
+                    .ano(e.getAno())
+                    .mes(e.getMes())
+                    .tipo(AcaoTipo.BDR.getCodigo())
+                    .valorAlcancado(e.getOutros())
+                    .totalizador(false)
+                    .build();
+            if (Objects.nonNull(e.getBdrId())) {
+                projecaoBdr.setId(e.getBdrId());
+                projecaoBdr.setDataAtualizacao(LocalDateTime.now());
+            } else {
+                projecaoBdr.setDataCriacao(LocalDateTime.now());
+            }
+            projecoes.add(projecaoBdr);
+
 //            projecoes.add(
 //                    Projecao.builder()
 //                            .ano(Integer.parseInt(e.getAno().substring(0, 4)))
@@ -66,7 +81,7 @@ public class ProjecaoService {
 //                            .valorAlcancado(e.getOutros())
 //                            .totalizador(false)
 //                            .build());
-
+//
 //            projecoes.add(
 //                    Projecao.builder()
 //                            .ano(Integer.parseInt(e.getAno().substring(0, 4)))
