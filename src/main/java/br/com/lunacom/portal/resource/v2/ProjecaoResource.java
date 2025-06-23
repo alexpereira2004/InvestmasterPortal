@@ -47,7 +47,7 @@ public class ProjecaoResource extends GenericController
     @PostMapping(value = "/atualizar-indices")
     public ResponseEntity<List<Projecao>> atualizarIndices() {
         final List<Projecao> projecaoList = service
-                .buscarResultadosDividendos();
+                .atualizarIndices();
         return ResponseEntity.ok(projecaoList);
     }
 }

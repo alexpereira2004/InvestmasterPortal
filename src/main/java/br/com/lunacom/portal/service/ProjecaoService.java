@@ -23,7 +23,7 @@ public class ProjecaoService {
         return repository.searchAllDistinctByAnos();
     }
 
-    public List<Projecao> buscarResultadosDividendos() {
+    public List<Projecao> atualizarIndices() {
         final List<ResultadoDividendo> all = resultadoDividendoRepository.findAll();
         List<Projecao> projecoes = new ArrayList<>();
         all.forEach(e -> {
