@@ -8,6 +8,7 @@ import br.com.lunacom.portal.domain.request.ExtratoDividendosRequest;
 import br.com.lunacom.portal.domain.response.DividendoResponse;
 import br.com.lunacom.portal.domain.response.DividendosImportadosResumoResponse;
 import br.com.lunacom.portal.domain.response.ExtratoDividendoResponse;
+import br.com.lunacom.portal.domain.response.ResultadoAnualResponse;
 import br.com.lunacom.portal.repository.GenericRepository;
 import br.com.lunacom.portal.resource.v2.specification.DividendoSpecification;
 import br.com.lunacom.portal.resource.v2.specification.GenericSpecification;
@@ -68,5 +69,13 @@ public class DividendoResource extends
     public ResponseEntity<DividendosImportadosResumoResponse> getInformacoesDividendosImportados() {
         final DividendosImportadosResumoResponse response = service.getInformacoesDividendosImportados();
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "/resultados-anuais/{ativo}")
+    public ResponseEntity<ResultadoAnualResponse> resultadosAnuais(
+            @PathVariable @NotNull String ativo
+    ) {
+
+        return ResponseEntity.ok(new ResultadoAnualResponse());
     }
 }
