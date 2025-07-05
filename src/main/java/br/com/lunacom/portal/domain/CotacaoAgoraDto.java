@@ -3,14 +3,12 @@ package br.com.lunacom.portal.domain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class CotacaoAgoraDto {
     private String codigo;
@@ -19,6 +17,6 @@ public class CotacaoAgoraDto {
     private BigDecimal variacaoPeriodo;
     private BigDecimal dividendosAnoAnterior;
     private BigDecimal dyPercentual;
-    private LocalDate data;
+    private LocalDate dataCotacao;
     private LocalDate dataImportacao;
 }

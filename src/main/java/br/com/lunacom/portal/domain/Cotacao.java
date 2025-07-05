@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -44,6 +45,36 @@ import java.time.LocalDateTime;
                 "\t      AND (:dataFim IS NULL OR c.referencia <= :dataFim) " +
                 "\t   ORDER BY a.codigo, c.referencia DESC ",
         resultSetMapping = "ExtratoCotacaoDtoMapping"
+)
+
+@SqlResultSetMapping(
+        name = "CotacaoAgoraDtoMapping",
+        classes = @ConstructorResult(
+                targetClass = CotacaoAgoraDto.class,
+                columns = {
+                        @ColumnResult(name = "codigo", type = String.class),
+                        @ColumnResult(name = "nome", type = String.class),
+                        @ColumnResult(name = "cotacao_atual", type = BigDecimal.class),
+                        @ColumnResult(name = "variacao_periodo", type = BigDecimal.class),
+                        @ColumnResult(name = "dividendos_ano_anterior", type = BigDecimal.class),
+                        @ColumnResult(name = "dy_percentual", type = BigDecimal.class),
+                        @ColumnResult(name = "data_cotacao", type = LocalDate.class),
+                        @ColumnResult(name = "data_importacao", type = LocalDate.class)
+                }
+        )
+)
+@NamedNativeQuery(
+        name = "Cotacao.pesquisarCotacaoAgora",
+        query = "SELECT codigo, \n" +
+                "       nome, \n" +
+                "       cotacao_atual, \n" +
+                "       variacao_periodo, \n" +
+                "       dividendos_ano_anterior, \n" +
+                "       dy_percentual, \n" +
+                "       `data` AS data_cotacao, \n" +
+                "       data_importacao \n" +
+                "FROM v_cotacao_agora",
+        resultSetMapping = "CotacaoAgoraDtoMapping"
 )
 
 public class Cotacao implements Serializable, Comparable<Cotacao> {
