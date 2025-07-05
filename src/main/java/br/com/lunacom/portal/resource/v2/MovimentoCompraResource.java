@@ -21,7 +21,7 @@ import javax.validation.Valid;
 @Validated
 @RestController
 @RequestMapping("/v2/movimento-compra")
-public class MovimentoCompraController extends
+public class MovimentoCompraResource extends
         GenericController<MovimentoCompra,
                           MovimentoCompraRequest,
                           MovimentoCompraResponse,
@@ -30,7 +30,7 @@ public class MovimentoCompraController extends
     @Autowired
     private MovimentoCompraService service;
 
-    public MovimentoCompraController(
+    public MovimentoCompraResource(
             GenericRepository<MovimentoCompra> repository,
             DataUtil dataUtil,
             Converter<MovimentoCompraRequest, MovimentoCompra> requestConverter,
