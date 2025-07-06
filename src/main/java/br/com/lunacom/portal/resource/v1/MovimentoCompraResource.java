@@ -19,7 +19,7 @@ import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RestController
+@RestController("movimentoCompraResourceV1")
 @RequestMapping(value="/v1/movimento-compra")
 @Validated
 public class MovimentoCompraResource {
