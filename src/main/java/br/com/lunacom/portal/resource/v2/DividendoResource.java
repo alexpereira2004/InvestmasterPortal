@@ -75,7 +75,7 @@ public class DividendoResource extends
     public ResponseEntity<ResultadoAnualResponse> resultadosAnuais(
             @PathVariable @NotNull String ativo
     ) {
-
+        service.pesquisarResultadoAnual(ativo);
         return ResponseEntity.ok(new ResultadoAnualResponse());
     }
 }

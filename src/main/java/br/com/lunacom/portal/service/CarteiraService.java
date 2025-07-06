@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -32,6 +33,10 @@ public class CarteiraService {
 
     public List<Carteira> pesquisar() {
         return carteiraRepository.findAll();
+    }
+
+    public Optional<Carteira> pesquisarPorCodigoAtivo(String codigoAtivo) {
+        return carteiraRepository.findByAtivoCodigo(codigoAtivo);
     }
 
     @Transactional

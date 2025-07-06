@@ -1,12 +1,14 @@
 package br.com.lunacom.portal.service;
 
 import br.com.lunacom.portal.domain.Ativo;
+import br.com.lunacom.portal.domain.Carteira;
 import br.com.lunacom.portal.domain.Dividendo;
 import br.com.lunacom.portal.domain.dto.AtivoDividendoDto;
 import br.com.lunacom.portal.domain.dto.MediaDividendosDto;
 import br.com.lunacom.portal.domain.request.ExtratoDividendosRequest;
 import br.com.lunacom.portal.domain.response.DividendosImportadosResumoResponse;
 import br.com.lunacom.portal.domain.response.ExtratoDividendoResponse;
+import br.com.lunacom.portal.domain.response.ResultadoAnualResponse;
 import br.com.lunacom.portal.repository.DividendoRepository;
 import br.com.lunacom.portal.util.DataUtil;
 import br.com.lunacom.portal.util.StringParser;
@@ -22,13 +24,17 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.lang.String.format;
+
 @Service
 @RequiredArgsConstructor
 @Log4j2
 public class DividendoService {
+    public static final String MSG_ATIVO_NAO_EXISTE = "Erro ao pesquisar Resultados anuais pois o ativo não existe %s";
     private final DataUtil dataUtil;
     private final DividendoRepository repository;
     private final AtivoService ativoService;
+    private final CarteiraService carteiraService;
     private Set<Ativo> ativoSet = new HashSet<>();
 //    public static final String REGEX = "<div class=\"table-content__item pointer\" role=\"button\" tabindex=\"0\">.+<soma-caption class=\"date soma-caption hydrated\">(.*)<\\/soma-caption>(?:.*\\s\\n){4}.*<soma-caption class=\"value soma-caption hydrated\">R\\$&nbsp;([\\.|\\d{1,3}]+,\\d{2}).*(CRÉDITO FRAÇÕES|JUROS S\\/CAPITAL|DIVIDENDOS|RENDIMENTO|\\* PROV \\* RENDIMENTO)\\s+([\\d*,]*\\d*)(?:\\s*PAPEL\\s|\\s*|)(\\w*)";
     public static final String REGEX = "(\\d{1,2} DE .+ DE \\d{4})|(?:Entrada|ENTRADA)\\t(Juros Sobre Capital Próprio|Dividendo|Rendimento|Restituição de Capital)\\t(\\w{4}\\d{1,2}).*\\s\\n.*\\s.*\\n((\\d\\.*\\d+))\\tR\\$ ([\\.|\\d{1,3}]+,\\d{2})\\tR\\$ ([\\.|\\d{1,3}]+,\\d{2})";
@@ -186,4 +192,21 @@ public class DividendoService {
         return response;
     }
 
+    public ResultadoAnualResponse pesquisarResultadoAnual(String ativo) {
+        final Optional<Carteira> optional = carteiraService.pesquisarPorCodigoAtivo(ativo);
+
+        final Carteira carteira = optional.orElseThrow(
+                () -> new NoSuchElementException(format(MSG_ATIVO_NAO_EXISTE, ativo)));
+
+        return ResultadoAnualResponse.builder()
+//                .precoMedio(carteira.getPrecoPago())
+//                .cotacaoAtual()
+//                .quantidadeCotas()
+//                .investimentoTotal()
+//                .investimentoTotalAtualizado()
+//                .investimentoTotalAtualizadoComDividendos()
+//                .dividendos()
+                .build();
+
+    }
 }
