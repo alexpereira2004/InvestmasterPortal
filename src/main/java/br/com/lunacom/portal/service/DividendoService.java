@@ -5,11 +5,13 @@ import br.com.lunacom.portal.domain.Carteira;
 import br.com.lunacom.portal.domain.CotacaoAgoraDto;
 import br.com.lunacom.portal.domain.Dividendo;
 import br.com.lunacom.portal.domain.dto.AtivoDividendoDto;
+import br.com.lunacom.portal.domain.dto.DividendoAnual;
 import br.com.lunacom.portal.domain.dto.MediaDividendosDto;
+import br.com.lunacom.portal.domain.enumeration.Periodicidade;
 import br.com.lunacom.portal.domain.request.ExtratoDividendosRequest;
 import br.com.lunacom.portal.domain.response.DividendosImportadosResumoResponse;
 import br.com.lunacom.portal.domain.response.ExtratoDividendoResponse;
-import br.com.lunacom.portal.domain.response.ResultadoAnualResponse;
+import br.com.lunacom.portal.domain.response.ResultadoGeralResponse;
 import br.com.lunacom.portal.repository.DividendoRepository;
 import br.com.lunacom.portal.util.DataUtil;
 import br.com.lunacom.portal.util.StringParser;
@@ -19,11 +21,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -194,7 +199,7 @@ public class DividendoService {
         return response;
     }
 
-    public ResultadoAnualResponse pesquisarResultadoAnual(String ativo) {
+    public ResultadoGeralResponse pesquisarResultadoGeral(String ativo) {
         final Optional<Carteira> optional = carteiraService.pesquisarPorCodigoAtivo(ativo);
 
         final Carteira carteira = optional.orElseThrow(
@@ -205,15 +210,54 @@ public class DividendoService {
                 .filter(c -> c.getCodigo().equals(ativo)).findFirst()
                 .orElse(new CotacaoAgoraDto());
 
-        return ResultadoAnualResponse.builder()
+        final ExtratoDividendosRequest request = ExtratoDividendosRequest.builder()
+                .codigos(Arrays.asList(ativo))
+                .periodicidade(Periodicidade.ANUAL.getDescricao().toLowerCase(Locale.ROOT))
+                .build();
+        final ExtratoDividendoResponse extratoDividendoResponse = pesquisarExtratoDividendos(request);
+
+        final List<DividendoAnual> dividendoAnualList = extratoDividendoResponse
+                .getDividendos().stream()
+                .map(r -> conversaoEspecifica(cotacaoAgoraDto, r))
+                .collect(Collectors.toList());
+
+        BigDecimal totalDividendos = calcularTotalDividendos(dividendoAnualList);
+
+        final BigDecimal totalAtualizadoComDividendos = carteira
+                .getTotalAtualizado()
+                .add(totalDividendos);
+
+        return ResultadoGeralResponse.builder()
                 .precoMedio(carteira.getPrecoPago())
                 .cotacaoAtual(cotacaoAgoraDto.getCotacaoAtual())
                 .quantidadeCotas(carteira.getQuantidade())
                 .investimentoTotal(carteira.getTotalInvestido())
                 .investimentoTotalAtualizado(carteira.getTotalAtualizado())
-//                .investimentoTotalAtualizadoComDividendos()
-//                .dividendos()
+                .investimentoTotalAtualizadoComDividendos(totalAtualizadoComDividendos)
+                .dividendos(dividendoAnualList)
                 .build();
+    }
 
+    private BigDecimal calcularTotalDividendos(List<DividendoAnual> dividendoAnualList) {
+        return dividendoAnualList.stream()
+                .map(DividendoAnual::getValor)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private DividendoAnual conversaoEspecifica(CotacaoAgoraDto cotacaoAgoraDto, AtivoDividendoDto r) {
+        return DividendoAnual.builder()
+                .ano(r.getUltimoDividendo().getYear())
+                .valor(r.getValorTotal())
+                .quantidade(r.getQuantidadeMaxima())
+                .dividendYeldAtualizado(calcularDyAtualizado(r, cotacaoAgoraDto.getCotacaoAtual()))
+                .build();
+    }
+
+    private BigDecimal calcularDyAtualizado(AtivoDividendoDto r, BigDecimal cotacaoAtual) {
+        final BigDecimal totalInvestido = cotacaoAtual.multiply(BigDecimal.valueOf(r.getQuantidadeMaxima()));
+        BigDecimal resultado = r.getValorTotal()
+                .divide(totalInvestido, 4, RoundingMode.HALF_UP)
+                .multiply(BigDecimal.valueOf(100l));
+        return resultado;
     }
 }

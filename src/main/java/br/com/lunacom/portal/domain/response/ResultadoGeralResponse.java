@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResultadoAnualResponse {
+public class ResultadoGeralResponse {
     private BigDecimal precoMedio;
     private BigDecimal cotacaoAtual;
     private Integer quantidadeCotas;

@@ -5,6 +5,7 @@ import br.com.lunacom.portal.domain.dto.MediaDividendosValoresDto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -53,8 +54,8 @@ import java.time.LocalDate;
                 targetClass = AtivoDividendoDto.class,
                 columns = {
                         @ColumnResult(name = "codigo", type = String.class),
-                        @ColumnResult(name = "valorTotal", type = Double.class),
-                        @ColumnResult(name = "quantidadeMaxima", type = Long.class),
+                        @ColumnResult(name = "valorTotal", type = BigDecimal.class),
+                        @ColumnResult(name = "quantidadeMaxima", type = Integer.class),
                         @ColumnResult(name = "tipo", type = String.class),
                         @ColumnResult(name = "primeiroDividendo", type = LocalDate.class),
                         @ColumnResult(name = "ultimoDividendo", type = LocalDate.class)

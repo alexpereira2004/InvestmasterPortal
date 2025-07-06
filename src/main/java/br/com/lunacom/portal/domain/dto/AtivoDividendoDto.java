@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -11,8 +12,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class AtivoDividendoDto {
     private String codigo;
-    private Double valorTotal;
-    private Long quantidadeMaxima;
+    private BigDecimal valorTotal;
+    private Integer quantidadeMaxima;
     private String tipo;
     private LocalDate primeiroDividendo;
     private LocalDate ultimoDividendo;
