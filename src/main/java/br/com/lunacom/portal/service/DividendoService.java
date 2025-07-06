@@ -201,9 +201,9 @@ public class DividendoService {
         return ResultadoAnualResponse.builder()
                 .precoMedio(carteira.getPrecoPago())
 //                .cotacaoAtual()
-//                .quantidadeCotas()
-//                .investimentoTotal()
-//                .investimentoTotalAtualizado()
+                .quantidadeCotas(carteira.getQuantidade())
+                .investimentoTotal(carteira.getTotalInvestido())
+                .investimentoTotalAtualizado(carteira.getTotalAtualizado())
 //                .investimentoTotalAtualizadoComDividendos()
 //                .dividendos()
                 .build();

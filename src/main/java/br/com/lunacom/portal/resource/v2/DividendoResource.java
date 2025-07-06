@@ -71,11 +71,11 @@ public class DividendoResource extends
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping(value = "/resultados-anuais/{ativo}")
+    @GetMapping(value = "/{ativo}/resultado-geral")
     public ResponseEntity<ResultadoAnualResponse> resultadosAnuais(
             @PathVariable @NotNull String ativo
     ) {
-        service.pesquisarResultadoAnual(ativo);
-        return ResponseEntity.ok(new ResultadoAnualResponse());
+        final ResultadoAnualResponse response = service.pesquisarResultadoAnual(ativo);
+        return ResponseEntity.ok(response);
     }
 }
