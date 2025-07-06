@@ -182,6 +182,7 @@ public class CotacaoService {
         return cotacaoList.size() == response.size();
     }
 
+    //@TODO Implementar cache de 20 minutos
     public List<CotacaoAgoraDto> pesquisarCotacaoAgora() {
         return repo.pesquisarCotacaoAgora();
     }

@@ -2,6 +2,7 @@ package br.com.lunacom.portal.service;
 
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Carteira;
+import br.com.lunacom.portal.domain.CotacaoAgoraDto;
 import br.com.lunacom.portal.domain.Dividendo;
 import br.com.lunacom.portal.domain.dto.AtivoDividendoDto;
 import br.com.lunacom.portal.domain.dto.MediaDividendosDto;
@@ -35,6 +36,7 @@ public class DividendoService {
     private final DividendoRepository repository;
     private final AtivoService ativoService;
     private final CarteiraService carteiraService;
+    private final CotacaoService cotacaoService;
     private Set<Ativo> ativoSet = new HashSet<>();
 //    public static final String REGEX = "<div class=\"table-content__item pointer\" role=\"button\" tabindex=\"0\">.+<soma-caption class=\"date soma-caption hydrated\">(.*)<\\/soma-caption>(?:.*\\s\\n){4}.*<soma-caption class=\"value soma-caption hydrated\">R\\$&nbsp;([\\.|\\d{1,3}]+,\\d{2}).*(CRÉDITO FRAÇÕES|JUROS S\\/CAPITAL|DIVIDENDOS|RENDIMENTO|\\* PROV \\* RENDIMENTO)\\s+([\\d*,]*\\d*)(?:\\s*PAPEL\\s|\\s*|)(\\w*)";
     public static final String REGEX = "(\\d{1,2} DE .+ DE \\d{4})|(?:Entrada|ENTRADA)\\t(Juros Sobre Capital Próprio|Dividendo|Rendimento|Restituição de Capital)\\t(\\w{4}\\d{1,2}).*\\s\\n.*\\s.*\\n((\\d\\.*\\d+))\\tR\\$ ([\\.|\\d{1,3}]+,\\d{2})\\tR\\$ ([\\.|\\d{1,3}]+,\\d{2})";
@@ -198,9 +200,14 @@ public class DividendoService {
         final Carteira carteira = optional.orElseThrow(
                 () -> new NoSuchElementException(format(MSG_ATIVO_NAO_EXISTE, ativo)));
 
+        final CotacaoAgoraDto cotacaoAgoraDto = cotacaoService
+                .pesquisarCotacaoAgora().stream()
+                .filter(c -> c.getCodigo().equals(ativo)).findFirst()
+                .orElse(new CotacaoAgoraDto());
+
         return ResultadoAnualResponse.builder()
                 .precoMedio(carteira.getPrecoPago())
-//                .cotacaoAtual()
+                .cotacaoAtual(cotacaoAgoraDto.getCotacaoAtual())
                 .quantidadeCotas(carteira.getQuantidade())
                 .investimentoTotal(carteira.getTotalInvestido())
                 .investimentoTotalAtualizado(carteira.getTotalAtualizado())
