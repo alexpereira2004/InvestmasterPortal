@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Builder
@@ -15,12 +16,12 @@ public class CarteiraDto {
     private String header;
     private String codigoAtivo;
     private String estrategia;
-    private Double precoPago;
-    private Double precoAtual;
-    private Double valorizacao;
+    private BigDecimal precoPago;
+    private BigDecimal precoAtual;
+    private BigDecimal valorizacao;
     private Integer quantidade;
-    private Double totalInvestido;
-    private Double atualizacao;
-    private Double resultado;
+    private BigDecimal totalInvestido;
+    private BigDecimal atualizacao;
+    private BigDecimal resultado;
     private LocalDate dataCompra;
 }

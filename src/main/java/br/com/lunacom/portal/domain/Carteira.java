@@ -3,6 +3,7 @@ package br.com.lunacom.portal.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,12 +25,12 @@ public class Carteira {
     @JoinColumn(name = "ativo_id")
     private Ativo ativo;
 
-    private Double precoPago;
-    private Double precoAtual;
-    private Double valorizacao;
+    private BigDecimal precoPago;
+    private BigDecimal precoAtual;
+    private BigDecimal valorizacao;
     private Integer quantidade;
-    private Double totalInvestido;
-    private Double totalAtualizado;
+    private BigDecimal totalInvestido;
+    private BigDecimal totalAtualizado;
     private LocalDate dataCompra;
 
     @ManyToMany

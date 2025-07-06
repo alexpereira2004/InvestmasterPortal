@@ -8,6 +8,8 @@ import br.com.lunacom.portal.util.DataUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 import static br.com.lunacom.portal.util.StringParser.toInteger;
 
 @AllArgsConstructor
@@ -20,9 +22,9 @@ public class MovimentoCompraCsvRequestConverter implements Converter <MovimentoC
     public MovimentoCompra encode(MovimentoCompraCsvRequest input) {
         final Ativo ativo = ativoService.pesquisarPorCodigo(input.getAtivoCodigo())
                 .orElse(null);
-        final Double precoPago = Double.parseDouble(input.getPrecoPago());
+        final BigDecimal precoPago = new BigDecimal(input.getPrecoPago());
         final Integer quantidade = toInteger(input.getQuantidade());
-        final double totalInvestido = precoPago * quantidade;
+        final BigDecimal totalInvestido = precoPago.multiply(BigDecimal.valueOf(quantidade));
 
         return MovimentoCompra.builder()
                 .dataAquisicao(dataUtil.dataBrParaLocalDate(input.getDataAquisicao()))

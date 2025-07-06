@@ -199,7 +199,7 @@ public class DividendoService {
                 () -> new NoSuchElementException(format(MSG_ATIVO_NAO_EXISTE, ativo)));
 
         return ResultadoAnualResponse.builder()
-//                .precoMedio(carteira.getPrecoPago())
+                .precoMedio(carteira.getPrecoPago())
 //                .cotacaoAtual()
 //                .quantidadeCotas()
 //                .investimentoTotal()

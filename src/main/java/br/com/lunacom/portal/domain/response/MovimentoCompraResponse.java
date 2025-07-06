@@ -3,6 +3,7 @@ package br.com.lunacom.portal.domain.response;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -10,9 +11,9 @@ import java.time.LocalDate;
 public class MovimentoCompraResponse extends GenericResponse {
     private Integer id;
     private LocalDate dataAquisicao;
-    private Double precoPago;
+    private BigDecimal precoPago;
     private Integer quantidade;
-    private Double totalInvestido;
+    private BigDecimal totalInvestido;
     private String indicacao;
     private String estrategia;
     private String ativoNome;

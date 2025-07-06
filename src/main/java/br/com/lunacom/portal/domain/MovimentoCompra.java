@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -17,9 +18,9 @@ public class MovimentoCompra implements Serializable, GenericEntity<MovimentoCom
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private LocalDate dataAquisicao;
-    private Double precoPago;
+    private BigDecimal precoPago;
     private Integer quantidade;
-    private Double totalInvestido;
+    private BigDecimal totalInvestido;
     private String indicacao;
     private String estrategia;
     @ManyToOne

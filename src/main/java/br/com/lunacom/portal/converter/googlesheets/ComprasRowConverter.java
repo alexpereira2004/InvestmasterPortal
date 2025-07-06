@@ -40,9 +40,9 @@ public class ComprasRowConverter implements GoogleSheetsRowConverter<CarteiraDto
             return CarteiraDto.builder()
                     .codigoAtivo(check(row, 0))
                     .estrategia(check(row, 1))
-                    .precoPago(StringParser.toDouble(row.get(2).toString()))
+                    .precoPago(StringParser.toBigDecimal(row.get(2).toString()))
                     .quantidade(StringParser.toInteger(row.get(5).toString()))
-                    .totalInvestido(StringParser.toDouble(row.get(6).toString()))
+                    .totalInvestido(StringParser.toBigDecimal(row.get(6).toString()))
                     .dataCompra(dataUtil.dataBrParaLocalDate(row.get(9).toString()))
                     .build();
         }

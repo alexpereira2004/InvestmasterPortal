@@ -3,6 +3,7 @@ package br.com.lunacom.portal.util;
 import br.com.lunacom.portal.domain.enumeration.FormatosData;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -37,6 +38,20 @@ public class StringParser {
             return 0D;
         }
         return Double.parseDouble(valorFormatado);
+    }
+
+    public static BigDecimal toBigDecimal(String input) {
+        if (Objects.isNull(input) || input.isEmpty()) {
+            return BigDecimal.ZERO;
+        }
+        final String valorFormatado = input
+                .replaceAll("[^\\d,\\.\\-]", "")
+                .replace(".", "")
+                .replace(",", ".");
+        if (valorFormatado.isEmpty()) {
+            return BigDecimal.ZERO;
+        }
+        return new BigDecimal(valorFormatado);
     }
 
     public static Double toDouble(String input, Double defaultValue) {
