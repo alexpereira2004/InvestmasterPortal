@@ -20,7 +20,6 @@ public class ResultadoGeralResponse {
     private BigDecimal investimentoTotal;
     private BigDecimal investimentoTotalAtualizado;
     private BigDecimal investimentoTotalAtualizadoComDividendos;
-    private List<DividendoAnual> dividendos;
     private BigDecimal proporcaoTotalInvestido;
     private BigDecimal proporcaoTipoAtivoInvestido;
     private BigDecimal resultado;
@@ -28,4 +27,5 @@ public class ResultadoGeralResponse {
     private BigDecimal resultadoComDividendo;
     private BigDecimal resultadoComDividendoPercentual;
     private BigDecimal dividendYeld;
+    private List<DividendoAnual> dividendos;
 }
