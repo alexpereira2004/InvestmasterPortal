@@ -90,7 +90,10 @@ public class ResultadoGeralService {
                 .map(Carteira::getTotalInvestido)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        return carteira.getTotalInvestido().divide(total, 2, RoundingMode.HALF_UP);
+        return carteira
+                .getTotalInvestido()
+                .divide(total, 2, RoundingMode.HALF_UP)
+                .multiply(BigDecimal.valueOf(100));
     }
 
     private BigDecimal calcularProporcaoPorTipoInvestido(List<Carteira> carteiraList, Carteira carteira) {
@@ -99,7 +102,9 @@ public class ResultadoGeralService {
                 .map(Carteira::getTotalInvestido)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        return carteira.getTotalInvestido().divide(total, 2, RoundingMode.HALF_UP);
+        return carteira
+                .getTotalInvestido().divide(total, 2, RoundingMode.HALF_UP)
+                .multiply(BigDecimal.valueOf(100));
     }
 
     private List<DividendoAnual> getDividendoAnualList(String ativo, CotacaoAgoraDto cotacaoAgoraDto) {
