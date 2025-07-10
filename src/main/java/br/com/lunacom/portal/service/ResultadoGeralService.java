@@ -30,6 +30,15 @@ public class ResultadoGeralService {
 
     public static final String MSG_ATIVO_NAO_EXISTE = "O ativo %s não possui dados na Carteira. Usar o serviço de importação/integração com planilhas Google deve resolver.";
 
+
+    public ResultadoGeralService(CarteiraService carteiraService,
+                                 CotacaoService cotacaoService,
+                                 @Lazy DividendoService dividendoService) {
+        this.carteiraService = carteiraService;
+        this.cotacaoService = cotacaoService;
+        this.dividendoService = dividendoService;
+    }
+
     public ResultadoGeralResponse pesquisarResultadoGeral(String ativo) {
 
         final List<Carteira> carteiraList = carteiraService.pesquisar();
