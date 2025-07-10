@@ -82,7 +82,7 @@ public class ResultadoGeralService {
                 .map(Carteira::getTotalInvestido)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        return carteira.getTotalInvestido().divide(total);
+        return carteira.getTotalInvestido().divide(total, 2, RoundingMode.HALF_UP);
     }
 
     private List<DividendoAnual> getDividendoAnualList(String ativo, CotacaoAgoraDto cotacaoAgoraDto) {
