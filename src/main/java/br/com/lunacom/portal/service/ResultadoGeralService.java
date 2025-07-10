@@ -65,6 +65,13 @@ public class ResultadoGeralService {
                 .investimentoTotal(carteira.getTotalInvestido())
                 .investimentoTotalAtualizado(carteira.getTotalAtualizado())
                 .investimentoTotalAtualizadoComDividendos(totalAtualizadoComDividendos)
+                .proporcaoTotalInvestido(BigDecimal.ZERO)
+                .proporcaoTipoAtivoInvestido(BigDecimal.ZERO)
+                .resultado(BigDecimal.ZERO)
+                .resultadoPercentual(BigDecimal.ZERO)
+                .resultadoComDividendo(BigDecimal.ZERO)
+                .resultadoComDividendoPercentual(BigDecimal.ZERO)
+                .dividendYeld(BigDecimal.ZERO)
                 .dividendos(dividendoAnualList)
                 .build();
     }

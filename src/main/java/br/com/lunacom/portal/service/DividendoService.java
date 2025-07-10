@@ -191,6 +191,7 @@ public class DividendoService {
     }
 
     public ResultadoGeralResponse pesquisarResultadoGeral(String ativo) {
+
         return resultadoGeralService.pesquisarResultadoGeral(ativo);
     }
 }
