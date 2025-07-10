@@ -54,12 +54,8 @@ public class ResultadoGeralService {
                 .getTotalAtualizado()
                 .add(totalDividendos);
 
-        final BigDecimal total = carteiraList.stream()
-//                .filter(c -> c.getAtivo().getTipo().equals(carteira.getAtivo().getTipo()))
-                .map(Carteira::getTotalInvestido)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        final BigDecimal proporcaoTotalInvestido = carteira.getTotalInvestido().divide(total);
+        final BigDecimal proporcaoTotalInvestido
+                = calcularProporcaoDoTotalInvestido(carteiraList, carteira);
 
 
         return ResultadoGeralResponse.builder()
@@ -69,7 +65,7 @@ public class ResultadoGeralService {
                 .investimentoTotal(carteira.getTotalInvestido())
                 .investimentoTotalAtualizado(carteira.getTotalAtualizado())
                 .investimentoTotalAtualizadoComDividendos(totalAtualizadoComDividendos)
-                .proporcaoTotalInvestido(BigDecimal.ZERO)
+                .proporcaoTotalInvestido(proporcaoTotalInvestido)
                 .proporcaoTipoAtivoInvestido(BigDecimal.ZERO)
                 .resultado(BigDecimal.ZERO)
                 .resultadoPercentual(BigDecimal.ZERO)
@@ -78,6 +74,15 @@ public class ResultadoGeralService {
                 .dividendYeld(BigDecimal.ZERO)
                 .dividendos(dividendoAnualList)
                 .build();
+    }
+
+    private BigDecimal calcularProporcaoDoTotalInvestido(List<Carteira> carteiraList, Carteira carteira) {
+        final BigDecimal total = carteiraList.stream()
+//                .filter(c -> c.getAtivo().getTipo().equals(carteira.getAtivo().getTipo()))
+                .map(Carteira::getTotalInvestido)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return carteira.getTotalInvestido().divide(total);
     }
 
     private List<DividendoAnual> getDividendoAnualList(String ativo, CotacaoAgoraDto cotacaoAgoraDto) {
