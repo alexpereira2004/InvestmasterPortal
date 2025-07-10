@@ -8,8 +8,8 @@ import br.com.lunacom.portal.domain.enumeration.Periodicidade;
 import br.com.lunacom.portal.domain.request.ExtratoDividendosRequest;
 import br.com.lunacom.portal.domain.response.ExtratoDividendoResponse;
 import br.com.lunacom.portal.domain.response.ResultadoGeralResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 import static java.lang.String.format;
 
 @Service
-@RequiredArgsConstructor
 @Log4j2
 public class ResultadoGeralService {
 
@@ -45,27 +44,23 @@ public class ResultadoGeralService {
 
         final Carteira carteira = getCarteira(ativo, carteiraList);
 
-        final CotacaoAgoraDto cotacaoAgoraDto = cotacaoService
-                .pesquisarCotacaoAgora().stream()
-                .filter(c -> c.getCodigo().equals(ativo)).findFirst()
-                .orElse(new CotacaoAgoraDto());
+        final CotacaoAgoraDto cotacaoAgoraDto = getCotacaoAgora(ativo);
 
-        final ExtratoDividendosRequest request = ExtratoDividendosRequest.builder()
-                .codigos(Arrays.asList(ativo))
-                .periodicidade(Periodicidade.ANUAL.getDescricao().toLowerCase(Locale.ROOT))
-                .build();
-        final ExtratoDividendoResponse extratoDividendoResponse = dividendoService.pesquisarExtratoDividendos(request);
-
-        final List<DividendoAnual> dividendoAnualList = extratoDividendoResponse
-                .getDividendos().stream()
-                .map(r -> conversaoEspecifica(cotacaoAgoraDto, r))
-                .collect(Collectors.toList());
+        final List<DividendoAnual> dividendoAnualList = getDividendoAnualList(ativo, cotacaoAgoraDto);
 
         BigDecimal totalDividendos = calcularTotalDividendos(dividendoAnualList);
 
         final BigDecimal totalAtualizadoComDividendos = carteira
                 .getTotalAtualizado()
                 .add(totalDividendos);
+
+        final BigDecimal total = carteiraList.stream()
+//                .filter(c -> c.getAtivo().getTipo().equals(carteira.getAtivo().getTipo()))
+                .map(Carteira::getTotalInvestido)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        final BigDecimal proporcaoTotalInvestido = carteira.getTotalInvestido().divide(total);
+
 
         return ResultadoGeralResponse.builder()
                 .precoMedio(carteira.getPrecoPago())
@@ -83,6 +78,27 @@ public class ResultadoGeralService {
                 .dividendYeld(BigDecimal.ZERO)
                 .dividendos(dividendoAnualList)
                 .build();
+    }
+
+    private List<DividendoAnual> getDividendoAnualList(String ativo, CotacaoAgoraDto cotacaoAgoraDto) {
+        final ExtratoDividendosRequest request = ExtratoDividendosRequest.builder()
+                .codigos(Arrays.asList(ativo))
+                .periodicidade(Periodicidade.ANUAL.getDescricao().toLowerCase(Locale.ROOT))
+                .build();
+        final ExtratoDividendoResponse extratoDividendoResponse = dividendoService.pesquisarExtratoDividendos(request);
+
+        final List<DividendoAnual> dividendoAnualList = extratoDividendoResponse
+                .getDividendos().stream()
+                .map(r -> conversaoEspecifica(cotacaoAgoraDto, r))
+                .collect(Collectors.toList());
+        return dividendoAnualList;
+    }
+
+    private CotacaoAgoraDto getCotacaoAgora(String ativo) {
+        return cotacaoService
+                .pesquisarCotacaoAgora().stream()
+                .filter(c -> c.getCodigo().equals(ativo)).findFirst()
+                .orElse(new CotacaoAgoraDto());
     }
 
 
