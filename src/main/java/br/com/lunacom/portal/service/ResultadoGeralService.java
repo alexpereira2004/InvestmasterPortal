@@ -57,6 +57,9 @@ public class ResultadoGeralService {
         final BigDecimal proporcaoTotalInvestido
                 = calcularProporcaoDoTotalInvestido(carteiraList, carteira);
 
+        final BigDecimal proporcaoTipoAtivoInvestido
+                = calcularProporcaoPorTipoInvestido(carteiraList, carteira);
+
 
         return ResultadoGeralResponse.builder()
                 .precoMedio(carteira.getPrecoPago())
@@ -66,7 +69,7 @@ public class ResultadoGeralService {
                 .investimentoTotalAtualizado(carteira.getTotalAtualizado())
                 .investimentoTotalAtualizadoComDividendos(totalAtualizadoComDividendos)
                 .proporcaoTotalInvestido(proporcaoTotalInvestido)
-                .proporcaoTipoAtivoInvestido(BigDecimal.ZERO)
+                .proporcaoTipoAtivoInvestido(proporcaoTipoAtivoInvestido)
                 .resultado(BigDecimal.ZERO)
                 .resultadoPercentual(BigDecimal.ZERO)
                 .resultadoComDividendo(BigDecimal.ZERO)
@@ -78,7 +81,15 @@ public class ResultadoGeralService {
 
     private BigDecimal calcularProporcaoDoTotalInvestido(List<Carteira> carteiraList, Carteira carteira) {
         final BigDecimal total = carteiraList.stream()
-//                .filter(c -> c.getAtivo().getTipo().equals(carteira.getAtivo().getTipo()))
+                .map(Carteira::getTotalInvestido)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return carteira.getTotalInvestido().divide(total, 2, RoundingMode.HALF_UP);
+    }
+
+    private BigDecimal calcularProporcaoPorTipoInvestido(List<Carteira> carteiraList, Carteira carteira) {
+        final BigDecimal total = carteiraList.stream()
+                .filter(c -> c.getAtivo().getTipo().equals(carteira.getAtivo().getTipo()))
                 .map(Carteira::getTotalInvestido)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
