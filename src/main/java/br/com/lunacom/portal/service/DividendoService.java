@@ -36,7 +36,7 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 @Log4j2
 public class DividendoService {
-    public static final String MSG_ATIVO_NAO_EXISTE = "Erro ao pesquisar Resultados anuais pois o ativo não existe %s";
+    public static final String MSG_ATIVO_NAO_EXISTE = "O ativo %s não possui dados na Carteira. Usar o serviço de importação/integração com planilhas Google deve resolver.";
     private final DataUtil dataUtil;
     private final DividendoRepository repository;
     private final AtivoService ativoService;
@@ -200,10 +200,10 @@ public class DividendoService {
     }
 
     public ResultadoGeralResponse pesquisarResultadoGeral(String ativo) {
-        final Optional<Carteira> optional = carteiraService.pesquisarPorCodigoAtivo(ativo);
 
-        final Carteira carteira = optional.orElseThrow(
-                () -> new NoSuchElementException(format(MSG_ATIVO_NAO_EXISTE, ativo)));
+        final List<Carteira> carteiraList = carteiraService.pesquisar();
+
+        final Carteira carteira = getCarteira(ativo, carteiraList);
 
         final CotacaoAgoraDto cotacaoAgoraDto = cotacaoService
                 .pesquisarCotacaoAgora().stream()
@@ -236,6 +236,15 @@ public class DividendoService {
                 .investimentoTotalAtualizadoComDividendos(totalAtualizadoComDividendos)
                 .dividendos(dividendoAnualList)
                 .build();
+    }
+
+    private Carteira getCarteira(String ativo, List<Carteira> carteiraList) {
+        final Optional<Carteira> optional = carteiraList.stream()
+                .filter(c -> c.getAtivo().getCodigo().equals(ativo)).findFirst();
+
+        final Carteira carteira = optional.orElseThrow(
+                () -> new NoSuchElementException(format(MSG_ATIVO_NAO_EXISTE, ativo)));
+        return carteira;
     }
 
     private BigDecimal calcularTotalDividendos(List<DividendoAnual> dividendoAnualList) {
