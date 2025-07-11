@@ -66,6 +66,10 @@ public class ResultadoGeralService {
 
         final BigDecimal resultadoComDividendo = calcularResultadoComDividendos(totalDividendos, resultado);
 
+        final BigDecimal resultadoComDividendoPercentual
+                = calcularResultadoComDividendosPercentual(carteira, resultadoComDividendo);
+
+
         return ResultadoGeralResponse.builder()
                 .precoMedio(carteira.getPrecoPago())
                 .cotacaoAtual(cotacaoAgoraDto.getCotacaoAtual())
@@ -78,10 +82,16 @@ public class ResultadoGeralService {
                 .resultado(resultado)
                 .resultadoPercentual(resultadoPercentual)
                 .resultadoComDividendo(resultadoComDividendo)
-                .resultadoComDividendoPercentual(BigDecimal.ZERO)
+                .resultadoComDividendoPercentual(resultadoComDividendoPercentual)
                 .dividendYeld(BigDecimal.ZERO)
                 .dividendos(dividendoAnualList)
                 .build();
+    }
+
+    private BigDecimal calcularResultadoComDividendosPercentual(Carteira carteira, BigDecimal resultadoComDividendo) {
+        return resultadoComDividendo
+                .divide(carteira.getTotalInvestido(), 2, RoundingMode.HALF_UP)
+                .multiply(BigDecimal.valueOf(100));
     }
 
     private BigDecimal calcularResultadoComDividendos(BigDecimal totalDividendos, BigDecimal resultado) {
