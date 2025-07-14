@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResultadoGeralResponse {
+    private String codigoAtivo;
     private BigDecimal precoMedio;
     private BigDecimal cotacaoAtual;
     private Integer quantidadeCotas;
@@ -27,5 +28,6 @@ public class ResultadoGeralResponse {
     private BigDecimal resultadoComDividendo;
     private BigDecimal resultadoComDividendoPercentual;
     private BigDecimal dividendYeld;
+    private BigDecimal totalDividendos;
     private List<DividendoAnual> dividendos;
 }

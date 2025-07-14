@@ -72,6 +72,7 @@ public class ResultadoGeralService {
         final BigDecimal dividendYeld = calcularDividendYeld(carteira, totalDividendos);
 
         return ResultadoGeralResponse.builder()
+                .codigoAtivo(ativo)
                 .precoMedio(carteira.getPrecoPago())
                 .cotacaoAtual(cotacaoAgoraDto.getCotacaoAtual())
                 .quantidadeCotas(carteira.getQuantidade())
@@ -85,6 +86,7 @@ public class ResultadoGeralService {
                 .resultadoComDividendo(resultadoComDividendo)
                 .resultadoComDividendoPercentual(resultadoComDividendoPercentual)
                 .dividendYeld(dividendYeld)
+                .totalDividendos(totalDividendos)
                 .dividendos(dividendoAnualList)
                 .build();
     }
@@ -142,11 +144,13 @@ public class ResultadoGeralService {
                 .codigos(Arrays.asList(ativo))
                 .periodicidade(Periodicidade.ANUAL.getDescricao().toLowerCase(Locale.ROOT))
                 .build();
-        final ExtratoDividendoResponse extratoDividendoResponse = dividendoService.pesquisarExtratoDividendos(request);
+        final ExtratoDividendoResponse extratoDividendoResponse = dividendoService
+                .pesquisarExtratoDividendos(request);
 
         final List<DividendoAnual> dividendoAnualList = extratoDividendoResponse
                 .getDividendos().stream()
                 .map(r -> conversaoEspecifica(cotacaoAgoraDto, r))
+                .sorted(Comparator.comparing(DividendoAnual::getAno).reversed())
                 .collect(Collectors.toList());
         return dividendoAnualList;
     }
