@@ -38,6 +38,11 @@ public class GoogleSheetsAporteService implements GoogleSheetsDataServiceInterfa
     }
 
     @Override
+    public Runnable criarTask(String name) {
+        return null;
+    }
+
+    @Override
     public List<AporteDto> lerPlanilha(LeituraPlanilhaRequestDto dto) throws IOException {
         final ValueRange valueRange = this.obterDados(dto);
         final List<AporteDto> rowList = convertAll(valueRange.getValues());

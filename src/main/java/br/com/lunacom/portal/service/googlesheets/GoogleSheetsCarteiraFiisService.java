@@ -29,4 +29,9 @@ public class GoogleSheetsCarteiraFiisService extends GoogleSheetsCarteiraService
     protected String getFinal() {
         return FINAL;
     }
+
+    @Override
+    public Runnable criarTask(String name) {
+        return null;
+    }
 }

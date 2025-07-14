@@ -34,4 +34,9 @@ public class GoogleSheetsComprasAcoesService
     public String getTipoAtivo() {
         return AcaoTipo.ACAO.getCodigo();
     }
+
+    @Override
+    public Runnable criarTask(String name) {
+        return null;
+    }
 }

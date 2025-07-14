@@ -29,4 +29,9 @@ public class GoogleSheetsCarteiraAcoesService extends GoogleSheetsCarteiraServic
     protected String getFinal() {
         return FINAL;
     }
+
+    @Override
+    public Runnable criarTask(String name) {
+        return null;
+    }
 }

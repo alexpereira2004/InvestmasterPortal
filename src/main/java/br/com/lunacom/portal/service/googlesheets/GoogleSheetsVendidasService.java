@@ -38,6 +38,11 @@ public class GoogleSheetsVendidasService implements GoogleSheetsDataServiceInter
     }
 
     @Override
+    public Runnable criarTask(String name) {
+        return null;
+    }
+
+    @Override
     public List<VendidasDto> lerPlanilha(LeituraPlanilhaRequestDto dto) throws IOException {
         final ValueRange valueRange = this.obterDados(dto);
         final List<VendidasDto> vendidasDtoList = convertAll(valueRange.getValues());

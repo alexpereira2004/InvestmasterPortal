@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -67,5 +68,24 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
             }
             i++;
         }
+    }
+
+    public Runnable criarTask(String nome) {
+        return () -> {
+            System.out.println("Executando " + nome + " às " + LocalTime.now());
+
+            LeituraPlanilhaRequestDto dto = LeituraPlanilhaRequestDto.builder()
+                    .spreadsheetId("1G5x1lKWTO8_e1qrQm7bmdZ77cYiyF14MrMJZVKITuow")
+                    .range("Renda Fixa!A1:G100")
+                    .save(false)
+                    .ano("2025")
+                    .build();
+
+            try {
+                this.lerPlanilha(dto);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
     }
 }

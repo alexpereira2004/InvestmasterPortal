@@ -34,4 +34,9 @@ public class GoogleSheetsComprasBdrsService
     public String getTipoAtivo() {
         return AcaoTipo.BDR.getCodigo();
     }
+
+    @Override
+    public Runnable criarTask(String name) {
+        return null;
+    }
 }

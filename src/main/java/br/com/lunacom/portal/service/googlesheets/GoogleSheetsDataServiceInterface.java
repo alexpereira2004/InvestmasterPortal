@@ -14,6 +14,8 @@ public interface GoogleSheetsDataServiceInterface <T> {
 
     GoogleSheetsRowConverter<T> getConverter();
 
+    Runnable criarTask(String name);
+
     List<T> lerPlanilha(LeituraPlanilhaRequestDto dto) throws IOException;
 
     default ValueRange obterDados(LeituraPlanilhaRequestDto dto) throws IOException {

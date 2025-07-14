@@ -35,4 +35,9 @@ public class GoogleSheetsComprasFiisService
     public String getTipoAtivo() {
         return AcaoTipo.FII.getCodigo();
     }
+
+    @Override
+    public Runnable criarTask(String name) {
+        return null;
+    }
 }

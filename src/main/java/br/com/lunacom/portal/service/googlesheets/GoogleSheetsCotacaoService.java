@@ -31,6 +31,11 @@ public class GoogleSheetsCotacaoService
         return converter;
     }
 
+    @Override
+    public Runnable criarTask(String name) {
+        return null;
+    }
+
 //    @Override
 //    public Sheets getSheetsService() throws IOException {
 //        return GoogleSheetsFactory.getSheetsService();
