@@ -2,13 +2,16 @@ package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.RendaFixaRowConverter;
+import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.RendaFixaDto;
+import br.com.lunacom.portal.domain.enumeration.Status;
 import br.com.lunacom.portal.service.ProdutoFinanceiroService;
 import br.com.lunacom.portal.service.RendaFixaService;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -26,6 +29,11 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
     private final RendaFixaRowConverter converter;
     private final RendaFixaService service;
     private final ProdutoFinanceiroService produtoFinanceiroService;
+    @Value("${app.googleSheet.spreadsheetId}")
+    private String spreadsheetId;
+    @Value("${app.googleSheet.range.carteira-acoes}")
+    private String range;
+
 
     @Override
     public GoogleSheetsRowConverter<RendaFixaDto> getConverter() {
@@ -70,21 +78,26 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
         }
     }
 
-    public Runnable criarTask(String nome) {
+    public Runnable criarTask(AgendamentoConfig config) {
         return () -> {
-            log.info(MSG_JOB, nome, LocalTime.now());
-            LeituraPlanilhaRequestDto dto = LeituraPlanilhaRequestDto.builder()
-                    .spreadsheetId("1G5x1lKWTO8_e1qrQm7bmdZ77cYiyF14MrMJZVKITuow")
-                    .range("Renda Fixa!A1:G100")
-                    .save(false)
-                    .ano("2025")
-                    .build();
+            log.info(MSG_JOB, config.getNome(), LocalTime.now());
+            if (config.getStatus().equals(Status.ATIVO)) {
+                LeituraPlanilhaRequestDto dto = LeituraPlanilhaRequestDto.builder()
+                        .spreadsheetId(this.spreadsheetId)
+                        .range(this.range)
+                        .save(true)
+                        .ano("2025")
+                        .build();
 
-            try {
-                this.lerPlanilha(dto);
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    this.lerPlanilha(dto);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                log.info(MSG_JOB_INATIVO, config.getNome());
             }
+
         };
     }
 }
