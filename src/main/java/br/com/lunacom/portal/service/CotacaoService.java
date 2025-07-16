@@ -40,7 +40,7 @@ public class CotacaoService {
     private final CotacaoLoteSiteInvestingComRequestConverter cotacaoLoteSiteInvestingComRequestConverter;
     private final ServiceFactory factory;
 
-    @Value("${app.googleSheet.spreadsheetId}")
+    @Value("${app.cotacao.spreadsheetId}")
     private String spreadsheetId;
     private String RANGE = "Cotacoes!A2:B77";
 
