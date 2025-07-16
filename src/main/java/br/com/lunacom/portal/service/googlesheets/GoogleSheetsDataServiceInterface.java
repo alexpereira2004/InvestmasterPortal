@@ -1,6 +1,7 @@
 package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
+import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
@@ -12,10 +13,11 @@ import java.util.stream.Collectors;
 
 public interface GoogleSheetsDataServiceInterface <T> {
     static final String MSG_JOB = "Execução do job automatizado {} às {}";
+    static final String MSG_JOB_INATIVO = "Job {} não executado por estar inativo";
 
     GoogleSheetsRowConverter<T> getConverter();
 
-    Runnable criarTask(String name);
+    Runnable criarTask(AgendamentoConfig config);
 
     List<T> lerPlanilha(LeituraPlanilhaRequestDto dto) throws IOException;
 

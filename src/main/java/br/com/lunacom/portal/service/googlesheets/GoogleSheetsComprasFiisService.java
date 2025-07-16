@@ -1,6 +1,7 @@
 package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.ComprasRowConverter;
+import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.TipoAtivoInterface;
 import br.com.lunacom.portal.domain.enumeration.AcaoTipo;
 import br.com.lunacom.portal.service.AtivoService;
@@ -37,7 +38,7 @@ public class GoogleSheetsComprasFiisService
     }
 
     @Override
-    public Runnable criarTask(String name) {
+    public Runnable criarTask(AgendamentoConfig config) {
         return null;
     }
 }

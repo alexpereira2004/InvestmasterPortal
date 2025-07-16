@@ -31,7 +31,7 @@ public class CronJobService {
         for (AgendamentoConfig config : configs) {
             GoogleSheetsDataServiceInterface<?> service = factory
                     .getService(config.getNome());
-            Runnable task = service.criarTask("");
+            Runnable task = service.criarTask(config);
 
             CronTrigger trigger = new CronTrigger(config.getCron());
 

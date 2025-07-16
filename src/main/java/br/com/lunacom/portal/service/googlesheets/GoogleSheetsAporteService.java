@@ -2,6 +2,7 @@ package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.AporteRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
+import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.Aporte;
 import br.com.lunacom.portal.domain.dto.googlesheets.AporteDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
@@ -38,7 +39,7 @@ public class GoogleSheetsAporteService implements GoogleSheetsDataServiceInterfa
     }
 
     @Override
-    public Runnable criarTask(String name) {
+    public Runnable criarTask(AgendamentoConfig config) {
         return null;
     }
 
