@@ -6,7 +6,7 @@ import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.RendaFixaDto;
 import br.com.lunacom.portal.domain.enumeration.Status;
-import br.com.lunacom.portal.service.ProdutoFinanceiroService;
+import br.com.lunacom.portal.repository.AgendamentoConfigRepository;
 import br.com.lunacom.portal.service.RendaFixaService;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
 
     private final RendaFixaRowConverter converter;
     private final RendaFixaService service;
-    private final ProdutoFinanceiroService produtoFinanceiroService;
+    private final AgendamentoConfigRepository agendamentoConfigRepository;
     @Value("${app.googleSheet.spreadsheetId}")
     private String spreadsheetId;
     @Value("${app.googleSheet.range.renda-fixa}")
@@ -47,7 +47,7 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
 
         ajustesColunasMescladas(rowList);
 
-        if (dto.getSave()) {
+        if (Boolean.TRUE.equals(dto.getSave())) {
             Set<String> instituicoesDistintas = separarInstituicoesUnicas(rowList);
 
             if (service.dadosRendaFixaDoAnoNaoExistem(dto.getAno())) {
@@ -81,8 +81,10 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
     public Runnable criarTask(AgendamentoConfig config) {
         return () -> {
             log.info(MSG_JOB, config.getNome(), LocalTime.now());
-
-            if (config.getStatus().equals(Status.ATIVO)) {
+            final Status status = agendamentoConfigRepository
+                    .findByNome(config.getNome())
+                    .get().getStatus();
+            if (status.equals(Status.ATIVO)) {
                 LeituraPlanilhaRequestDto dto = LeituraPlanilhaRequestDto.builder()
                         .spreadsheetId(this.spreadsheetId)
                         .range(this.range)
