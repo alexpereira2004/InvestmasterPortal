@@ -2,6 +2,7 @@ package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.VendidasRowConverter;
+import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.MovimentoVenda;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
@@ -38,7 +39,7 @@ public class GoogleSheetsVendidasService implements GoogleSheetsDataServiceInter
     }
 
     @Override
-    public Runnable criarTask(String name) {
+    public Runnable criarTask(AgendamentoConfig config) {
         return null;
     }
 

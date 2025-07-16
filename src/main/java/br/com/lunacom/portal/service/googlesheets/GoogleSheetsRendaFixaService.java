@@ -31,7 +31,7 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
     private final ProdutoFinanceiroService produtoFinanceiroService;
     @Value("${app.googleSheet.spreadsheetId}")
     private String spreadsheetId;
-    @Value("${app.googleSheet.range.carteira-acoes}")
+    @Value("${app.googleSheet.range.renda-fixa}")
     private String range;
 
 
@@ -81,6 +81,7 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
     public Runnable criarTask(AgendamentoConfig config) {
         return () -> {
             log.info(MSG_JOB, config.getNome(), LocalTime.now());
+
             if (config.getStatus().equals(Status.ATIVO)) {
                 LeituraPlanilhaRequestDto dto = LeituraPlanilhaRequestDto.builder()
                         .spreadsheetId(this.spreadsheetId)
