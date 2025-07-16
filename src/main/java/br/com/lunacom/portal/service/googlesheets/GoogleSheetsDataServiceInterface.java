@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public interface GoogleSheetsDataServiceInterface <T> {
+    static final String MSG_JOB = "Execução do job automatizado {} às {}";
 
     GoogleSheetsRowConverter<T> getConverter();
 

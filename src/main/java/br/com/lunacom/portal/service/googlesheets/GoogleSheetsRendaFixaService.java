@@ -72,8 +72,7 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
 
     public Runnable criarTask(String nome) {
         return () -> {
-            System.out.println("Executando " + nome + " às " + LocalTime.now());
-
+            log.info(MSG_JOB, nome, LocalTime.now());
             LeituraPlanilhaRequestDto dto = LeituraPlanilhaRequestDto.builder()
                     .spreadsheetId("1G5x1lKWTO8_e1qrQm7bmdZ77cYiyF14MrMJZVKITuow")
                     .range("Renda Fixa!A1:G100")
