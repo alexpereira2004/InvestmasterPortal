@@ -6,12 +6,14 @@ import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.Aporte;
 import br.com.lunacom.portal.domain.dto.googlesheets.AporteDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
+import br.com.lunacom.portal.repository.AgendamentoConfigRepository;
 import br.com.lunacom.portal.service.AporteService;
 import com.google.api.services.sheets.v4.model.ValueRange;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,12 +28,30 @@ import static br.com.lunacom.portal.domain.enumeration.FormatosData.DD_MM_YYYY_B
 import static br.com.lunacom.portal.util.StringParser.toLocalDate;
 
 @Slf4j
-@RequiredArgsConstructor
 @Service("googlesheets-aporte")
-public class GoogleSheetsAporteService implements GoogleSheetsDataServiceInterface<AporteDto> {
+public class GoogleSheetsAporteService extends TarefaBase
+        implements GoogleSheetsDataServiceInterface<AporteDto> {
 
     private final AporteRowConverter converter;
     private final AporteService service;
+    @Value("${app.googleSheet.spreadsheetId}")
+    private String spreadsheetId;
+    @Value("${app.googleSheet.range.aportes}")
+    private String range;
+
+    public GoogleSheetsAporteService(AgendamentoConfigRepository agendamentoConfigRepository,
+                                     AporteRowConverter converter,
+                                     AporteService service) {
+        super(agendamentoConfigRepository);
+        this.converter = converter;
+        this.service = service;
+    }
+
+    @PostConstruct
+    public void init() {
+        this.setSpreadsheetId(spreadsheetId);
+        this.setRange(range);
+    }
 
     @Override
     public GoogleSheetsRowConverter<AporteDto> getConverter() {
@@ -40,7 +60,7 @@ public class GoogleSheetsAporteService implements GoogleSheetsDataServiceInterfa
 
     @Override
     public Runnable criarTask(AgendamentoConfig config) {
-        return null;
+        return this.criarTarefaBase(config, this);
     }
 
     @Override

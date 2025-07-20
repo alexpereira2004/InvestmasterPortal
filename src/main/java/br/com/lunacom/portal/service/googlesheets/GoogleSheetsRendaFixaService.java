@@ -9,11 +9,11 @@ import br.com.lunacom.portal.domain.enumeration.Status;
 import br.com.lunacom.portal.repository.AgendamentoConfigRepository;
 import br.com.lunacom.portal.service.RendaFixaService;
 import com.google.api.services.sheets.v4.model.ValueRange;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
@@ -22,9 +22,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
-@RequiredArgsConstructor
 @Service("googlesheets-renda-fixa")
-public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInterface<RendaFixaDto> {
+public class GoogleSheetsRendaFixaService extends TarefaBase implements GoogleSheetsDataServiceInterface<RendaFixaDto> {
 
     private final RendaFixaRowConverter converter;
     private final RendaFixaService service;
@@ -34,6 +33,18 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
     @Value("${app.googleSheet.range.renda-fixa}")
     private String range;
 
+    public GoogleSheetsRendaFixaService(AgendamentoConfigRepository agendamentoConfigRepository, RendaFixaRowConverter converter, RendaFixaService service, AgendamentoConfigRepository agendamentoConfigRepository1) {
+        super(agendamentoConfigRepository);
+        this.converter = converter;
+        this.service = service;
+        this.agendamentoConfigRepository = agendamentoConfigRepository1;
+    }
+
+    @PostConstruct
+    public void init() {
+        this.setSpreadsheetId(spreadsheetId);
+        this.setRange(range);
+    }
 
     @Override
     public GoogleSheetsRowConverter<RendaFixaDto> getConverter() {

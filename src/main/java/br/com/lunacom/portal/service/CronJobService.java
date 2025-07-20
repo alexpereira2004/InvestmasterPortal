@@ -1,20 +1,27 @@
 package br.com.lunacom.portal.service;
 
 import br.com.lunacom.portal.domain.AgendamentoConfig;
+import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
+import br.com.lunacom.portal.domain.enumeration.Status;
 import br.com.lunacom.portal.repository.AgendamentoConfigRepository;
 import br.com.lunacom.portal.service.googlesheets.GoogleSheetsDataServiceInterface;
 import br.com.lunacom.portal.service.googlesheets.ServiceFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class CronJobService {
@@ -23,6 +30,7 @@ public class CronJobService {
     private final AgendamentoConfigRepository configRepository;
     private final ServiceFactory factory;
     private final Map<Integer, ScheduledFuture<?>> scheduledTasks = new ConcurrentHashMap<>();
+    private final AgendamentoConfigRepository agendamentoConfigRepository;
 
     @PostConstruct
     public void iniciarAgendamentos() {
