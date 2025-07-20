@@ -24,6 +24,6 @@ public class Tag {
     private String nome;
     private String descricao;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags" , fetch = FetchType.EAGER)
     private Set<Carteira> carteiras = new HashSet<>();
 }

@@ -21,7 +21,7 @@ public class Carteira {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ativo_id")
     private Ativo ativo;
 
@@ -33,7 +33,7 @@ public class Carteira {
     private BigDecimal totalAtualizado;
     private LocalDate dataCompra;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tags_carteira",
             joinColumns = @JoinColumn(name = "id_carteira"),
