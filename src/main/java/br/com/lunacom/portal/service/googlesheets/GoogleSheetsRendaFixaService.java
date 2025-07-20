@@ -58,12 +58,12 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
 
     @Override
     public String getSpreadsheetId() {
-        return null;
+        return this.spreadsheetId;
     }
 
     @Override
     public String getRange() {
-        return null;
+        return this.range;
     }
 
     private Set<String> separarInstituicoesUnicas(List<RendaFixaDto> rowList) {
