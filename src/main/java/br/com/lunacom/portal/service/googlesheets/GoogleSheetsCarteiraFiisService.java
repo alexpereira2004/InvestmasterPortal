@@ -1,7 +1,6 @@
 package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.CarteiraRowConverter;
-import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.enumeration.AcaoTipo;
 import br.com.lunacom.portal.service.CarteiraService;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,12 @@ public class GoogleSheetsCarteiraFiisService extends GoogleSheetsCarteiraService
     }
 
     @Override
-    public Runnable criarTask(AgendamentoConfig config) {
+    public String getSpreadsheetId() {
+        return null;
+    }
+
+    @Override
+    public String getRange() {
         return null;
     }
 }

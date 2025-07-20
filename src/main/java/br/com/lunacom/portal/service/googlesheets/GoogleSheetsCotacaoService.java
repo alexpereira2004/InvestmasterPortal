@@ -2,7 +2,6 @@ package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.CotacaoRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
-import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.dto.googlesheets.CotacaoDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import com.google.api.services.sheets.v4.model.ValueRange;
@@ -28,14 +27,20 @@ public class GoogleSheetsCotacaoService
     }
 
     @Override
+    public String getSpreadsheetId() {
+        return null;
+    }
+
+    @Override
+    public String getRange() {
+        return null;
+    }
+
+    @Override
     public GoogleSheetsRowConverter<CotacaoDto> getConverter() {
         return converter;
     }
 
-    @Override
-    public Runnable criarTask(AgendamentoConfig config) {
-        return null;
-    }
 
 //    @Override
 //    public Sheets getSheetsService() throws IOException {

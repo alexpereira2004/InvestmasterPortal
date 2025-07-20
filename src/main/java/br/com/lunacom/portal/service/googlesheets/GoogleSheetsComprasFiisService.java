@@ -1,9 +1,7 @@
 package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.ComprasRowConverter;
-import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.TipoAtivoInterface;
-import br.com.lunacom.portal.domain.enumeration.AcaoTipo;
 import br.com.lunacom.portal.service.AtivoService;
 import br.com.lunacom.portal.service.MovimentoCompraService;
 import org.springframework.stereotype.Service;
@@ -34,11 +32,18 @@ public class GoogleSheetsComprasFiisService
 
     @Override
     public String getTipoAtivo() {
-        return AcaoTipo.FII.getCodigo();
+        return null;
     }
 
     @Override
-    public Runnable criarTask(AgendamentoConfig config) {
+    public String getSpreadsheetId() {
         return null;
     }
+
+    @Override
+    public String getRange() {
+        return null;
+    }
+
+
 }

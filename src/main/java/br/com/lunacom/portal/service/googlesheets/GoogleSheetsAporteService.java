@@ -2,18 +2,16 @@ package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.AporteRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
-import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.Aporte;
 import br.com.lunacom.portal.domain.dto.googlesheets.AporteDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
-import br.com.lunacom.portal.repository.AgendamentoConfigRepository;
 import br.com.lunacom.portal.service.AporteService;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,8 +27,8 @@ import static br.com.lunacom.portal.util.StringParser.toLocalDate;
 
 @Slf4j
 @Service("googlesheets-aporte")
-public class GoogleSheetsAporteService extends TarefaBase
-        implements GoogleSheetsDataServiceInterface<AporteDto> {
+@RequiredArgsConstructor
+public class GoogleSheetsAporteService implements GoogleSheetsDataServiceInterface<AporteDto> {
 
     private final AporteRowConverter converter;
     private final AporteService service;
@@ -39,28 +37,9 @@ public class GoogleSheetsAporteService extends TarefaBase
     @Value("${app.googleSheet.range.aportes}")
     private String range;
 
-    public GoogleSheetsAporteService(AgendamentoConfigRepository agendamentoConfigRepository,
-                                     AporteRowConverter converter,
-                                     AporteService service) {
-        super(agendamentoConfigRepository);
-        this.converter = converter;
-        this.service = service;
-    }
-
-    @PostConstruct
-    public void init() {
-        this.setSpreadsheetId(spreadsheetId);
-        this.setRange(range);
-    }
-
     @Override
     public GoogleSheetsRowConverter<AporteDto> getConverter() {
         return converter;
-    }
-
-    @Override
-    public Runnable criarTask(AgendamentoConfig config) {
-        return this.criarTarefaBase(config, this);
     }
 
     @Override
@@ -80,6 +59,16 @@ public class GoogleSheetsAporteService extends TarefaBase
             result.forEach(i -> service.salvar(i));
         }
         return rowList;
+    }
+
+    @Override
+    public String getSpreadsheetId() {
+        return this.spreadsheetId;
+    }
+
+    @Override
+    public String getRange() {
+        return this.range;
     }
 
     private Predicate<? super Aporte> aplicarFiltroPorMaiorData(Optional<LocalDate> dataUltimoAporte) {

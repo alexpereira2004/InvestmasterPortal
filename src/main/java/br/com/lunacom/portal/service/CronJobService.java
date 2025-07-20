@@ -39,7 +39,7 @@ public class CronJobService {
         for (AgendamentoConfig config : configs) {
             GoogleSheetsDataServiceInterface<?> service = factory
                     .getService(config.getNome());
-            Runnable task = service.criarTask(config);
+            Runnable task = criarTarefaBase(config, service);
 
             CronTrigger trigger = new CronTrigger(config.getCron());
 
@@ -67,5 +67,34 @@ public class CronJobService {
 //            ScheduledFuture<?> future = taskScheduler.schedule(task, trigger);
 //            scheduledTasks.put(id, future);
 //        });
+    }
+
+    private Runnable criarTarefaBase(AgendamentoConfig config, GoogleSheetsDataServiceInterface service) {
+        return () -> {
+            log.info("Executando job '{}' às {}", config.getNome(), LocalTime.now());
+
+            final Optional<AgendamentoConfig> byNome = agendamentoConfigRepository
+                    .findByNome(config.getNome());
+
+            Status status = byNome.orElseThrow(()-> new RuntimeException
+                    (String.format("Erro ao montar a Runnable criarTask"))).getStatus();
+
+            if (status.equals(Status.ATIVO)) {
+                LeituraPlanilhaRequestDto dto = LeituraPlanilhaRequestDto.builder()
+                        .spreadsheetId(service.getSpreadsheetId())
+                        .range(service.getRange())
+                        .save(true)
+                        .ano("2025")
+                        .build();
+
+                try {
+                    service.lerPlanilha(dto);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                log.info("Job '{}' está inativo", config.getNome());
+            }
+        };
     }
 }

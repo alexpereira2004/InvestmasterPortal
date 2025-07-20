@@ -2,7 +2,6 @@ package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.VendidasRowConverter;
-import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.MovimentoVenda;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
@@ -36,11 +35,6 @@ public class GoogleSheetsVendidasService implements GoogleSheetsDataServiceInter
     @Override
     public GoogleSheetsRowConverter<VendidasDto> getConverter() {
         return converter;
-    }
-
-    @Override
-    public Runnable criarTask(AgendamentoConfig config) {
-        return null;
     }
 
     @Override
@@ -93,5 +87,15 @@ public class GoogleSheetsVendidasService implements GoogleSheetsDataServiceInter
                 .rendimento(item.getDiferenca())
                 .ativo(ativo)
                 .build();
+    }
+
+    @Override
+    public String getSpreadsheetId() {
+        return null;
+    }
+
+    @Override
+    public String getRange() {
+        return null;
     }
 }

@@ -1,7 +1,6 @@
 package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
-import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
@@ -17,7 +16,7 @@ public interface GoogleSheetsDataServiceInterface <T> {
 
     GoogleSheetsRowConverter<T> getConverter();
 
-    Runnable criarTask(AgendamentoConfig config);
+//    Runnable criarTask(AgendamentoConfig config);
 
     List<T> lerPlanilha(LeituraPlanilhaRequestDto dto) throws IOException;
 
@@ -38,4 +37,9 @@ public interface GoogleSheetsDataServiceInterface <T> {
     default Sheets getSheetsService() throws IOException {
         return GoogleSheetsFactory.getSheetsService();
     }
+
+
+    String getSpreadsheetId();
+
+    String getRange();
 }
