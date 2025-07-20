@@ -3,6 +3,7 @@ package br.com.lunacom.portal.service.googlesheets;
 import br.com.lunacom.portal.converter.googlesheets.CarteiraRowConverter;
 import br.com.lunacom.portal.domain.enumeration.AcaoTipo;
 import br.com.lunacom.portal.service.CarteiraService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service("googlesheets-carteira-bdrs")
@@ -10,6 +11,10 @@ public class GoogleSheetsCarteiraBdrsService extends GoogleSheetsCarteiraService
 
     private static String INICIO = "Total Movimentações BDRs";
     private static String FINAL = "Total Consolidado BDRs";
+    @Value("${app.googleSheet.spreadsheetId}")
+    private String spreadsheetId;
+    @Value("${app.googleSheet.range.carteira-bdrs}")
+    private String range;
 
     public GoogleSheetsCarteiraBdrsService(CarteiraRowConverter converter, CarteiraService carteiraService) {
         super(converter, carteiraService);
@@ -32,11 +37,11 @@ public class GoogleSheetsCarteiraBdrsService extends GoogleSheetsCarteiraService
 
     @Override
     public String getSpreadsheetId() {
-        return null;
+        return this.spreadsheetId;
     }
 
     @Override
     public String getRange() {
-        return null;
+        return this.range;
     }
 }
