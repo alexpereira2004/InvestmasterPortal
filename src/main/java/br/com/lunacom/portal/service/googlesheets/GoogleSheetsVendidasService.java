@@ -11,6 +11,7 @@ import br.com.lunacom.portal.service.MovimentoVendaService;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -31,6 +32,10 @@ public class GoogleSheetsVendidasService implements GoogleSheetsDataServiceInter
 
     private final MovimentoVendaService movimentoVendaService;
     private final AtivoService ativoService;
+    @Value("${app.googleSheet.spreadsheetId}")
+    private String spreadsheetId;
+    @Value("${app.googleSheet.range.vendidas}")
+    private String range;
 
     @Override
     public GoogleSheetsRowConverter<VendidasDto> getConverter() {
@@ -42,17 +47,17 @@ public class GoogleSheetsVendidasService implements GoogleSheetsDataServiceInter
         final ValueRange valueRange = this.obterDados(dto);
         final List<VendidasDto> vendidasDtoList = convertAll(valueRange.getValues());
 
-        if (dto.getSave()) {
+        if (Boolean.TRUE.equals(dto.getSave())) {
 
             Optional<LocalDate> dataUltimaVenda = movimentoVendaService.pesquisarUltimaDataCompra();
 
             final List<MovimentoVenda> result = vendidasDtoList.stream()
-                    .map(i -> this.converter(i))
+                    .map(this::converter)
                     .filter(i -> Objects.nonNull(i.getAtivo().getCodigo()))
                     .filter(aplicarFiltroPorMaiorData(dataUltimaVenda))
                     .collect(Collectors.toList());
             movimentoVendaService.removerUltimasVendas(dataUltimaVenda);
-            result.forEach(i -> movimentoVendaService.salvar(i));
+            result.forEach(movimentoVendaService::salvar);
         }
 
         return vendidasDtoList;
@@ -91,11 +96,11 @@ public class GoogleSheetsVendidasService implements GoogleSheetsDataServiceInter
 
     @Override
     public String getSpreadsheetId() {
-        return null;
+        return this.spreadsheetId;
     }
 
     @Override
     public String getRange() {
-        return null;
+        return this.range;
     }
 }
