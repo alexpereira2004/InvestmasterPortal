@@ -5,6 +5,7 @@ import br.com.lunacom.portal.domain.TipoAtivoInterface;
 import br.com.lunacom.portal.domain.enumeration.AcaoTipo;
 import br.com.lunacom.portal.service.AtivoService;
 import br.com.lunacom.portal.service.MovimentoCompraService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service("googlesheets-compras-acoes")
@@ -13,6 +14,10 @@ public class GoogleSheetsComprasAcoesService
 
     private static String INICIO = "Ações BR";
     private static String FINAL = "Total Movimentações Ações";
+    @Value("${app.googleSheet.spreadsheetId}")
+    private String spreadsheetId;
+    @Value("${app.googleSheet.range.compras-acoes}")
+    private String range;
 
     public GoogleSheetsComprasAcoesService(ComprasRowConverter converter,
                                            MovimentoCompraService movimentoCompraService,
@@ -37,11 +42,11 @@ public class GoogleSheetsComprasAcoesService
 
     @Override
     public String getSpreadsheetId() {
-        return null;
+        return this.spreadsheetId;
     }
 
     @Override
     public String getRange() {
-        return null;
+        return this.range;
     }
 }
