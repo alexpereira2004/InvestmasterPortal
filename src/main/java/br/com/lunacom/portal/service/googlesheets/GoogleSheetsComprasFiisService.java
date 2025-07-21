@@ -38,7 +38,7 @@ public class GoogleSheetsComprasFiisService
 
     @Override
     public String getTipoAtivo() {
-        return null;
+        return AcaoTipo.FII.getCodigo();
     }
 
     @Override
