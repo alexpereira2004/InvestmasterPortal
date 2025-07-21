@@ -5,6 +5,7 @@ import br.com.lunacom.portal.domain.TipoAtivoInterface;
 import br.com.lunacom.portal.domain.enumeration.AcaoTipo;
 import br.com.lunacom.portal.service.AtivoService;
 import br.com.lunacom.portal.service.MovimentoCompraService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service("googlesheets-compras-bdrs")
@@ -13,6 +14,10 @@ public class GoogleSheetsComprasBdrsService
 
     private static String INICIO = "BDRs";
     private static String FINAL = "Total Movimentações BDRs";
+    @Value("${app.googleSheet.spreadsheetId}")
+    private String spreadsheetId;
+    @Value("${app.googleSheet.range.compras-bdrs}")
+    private String range;
 
     public GoogleSheetsComprasBdrsService(ComprasRowConverter converter,
                                           MovimentoCompraService movimentoCompraService,
@@ -37,11 +42,11 @@ public class GoogleSheetsComprasBdrsService
 
     @Override
     public String getSpreadsheetId() {
-        return null;
+        return this.spreadsheetId;
     }
 
     @Override
     public String getRange() {
-        return null;
+        return this.range;
     }
 }
