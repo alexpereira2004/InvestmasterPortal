@@ -1,5 +1,5 @@
-# Etapa 1: Build da aplicação usando Maven
-FROM maven:3.9.6-eclipse-temurin-17 AS builder
+# Etapa 1: Build da aplicação usando Maven com Java 8
+FROM maven:3.9.6-eclipse-temurin-8 AS builder
 
 # Definir diretório de trabalho
 WORKDIR /app
@@ -11,8 +11,8 @@ COPY src ./src
 # Rodar o build e gerar o .jar
 RUN mvn clean package -DskipTests
 
-# Etapa 2: Executar a aplicação em imagem menor (somente com JRE)
-FROM eclipse-temurin:17-jre-alpine
+# Etapa 2: Executar a aplicação com JRE 8
+FROM eclipse-temurin:8-jre-alpine
 
 WORKDIR /app
 
