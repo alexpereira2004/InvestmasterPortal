@@ -10,11 +10,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collections;
 
+import static br.com.lunacom.portal.config.AppProperties.CREDENTIALS_FILE_PATH;
+
 @Service
 public class GoogleSheetsFactory {
 
     private static final String APPLICATION_NAME = "Investmaster";
-    private static final String CREDENTIALS_FILE_PATH = "src/main/resources/credenciais/google-sheets-credentials.json";
 
     public static Sheets getSheetsService() throws IOException {
         GoogleCredentials credentials = GoogleCredentials
