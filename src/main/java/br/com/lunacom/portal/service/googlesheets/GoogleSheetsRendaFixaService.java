@@ -40,9 +40,9 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
     @Override
     public List<RendaFixaDto> lerPlanilha(LeituraPlanilhaRequestDto dto) throws IOException {
         final ValueRange valueRange = this.obterDados(dto);
-        final List<RendaFixaDto> rowList = convertAll(valueRange.getValues());
+        final List<RendaFixaDto> novosDados = convertAll(valueRange.getValues());
 
-        ajustesColunasMescladas(rowList);
+        ajustesColunasMescladas(novosDados);
 
         if (Boolean.TRUE.equals(dto.getSave())) {
 
