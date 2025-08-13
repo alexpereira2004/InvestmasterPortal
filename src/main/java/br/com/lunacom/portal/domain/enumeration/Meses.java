@@ -42,4 +42,12 @@ public enum Meses {
                 .findFirst()
                 .orElse(JAN);
     }
+
+    public static Meses fromCodigo(String value) {
+        return EnumSet.allOf(Meses.class)
+                .stream()
+                .filter(it -> it.getCodigo().equals(value))
+                .findFirst()
+                .orElse(JAN);
+    }
 }
