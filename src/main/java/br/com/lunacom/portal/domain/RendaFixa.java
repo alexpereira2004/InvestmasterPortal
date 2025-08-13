@@ -49,7 +49,7 @@ public class RendaFixa extends BasicEntity<RendaFixa> implements Serializable {
     @Column(name = "data_criacao", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime dataCriacao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "produto_financeiro_id", nullable = false)
     private ProdutoFinanceiro produtoFinanceiro;
 }

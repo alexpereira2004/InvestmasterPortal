@@ -45,15 +45,22 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
         ajustesColunasMescladas(rowList);
 
         if (Boolean.TRUE.equals(dto.getSave())) {
-            Set<String> instituicoesDistintas = separarInstituicoesUnicas(rowList);
+
+            Set<String> instituicoesDistintas = separarInstituicoesUnicas(novosDados);
+
+            if (service.quantidadeProdutosFinanceirosExistenteEhDiferente(
+                    dto.getAno(), novosDados.size())) {
+                service.apagarPorAno(dto.getAno());
+            }
+
 
             if (service.dadosRendaFixaDoAnoNaoExistem(dto.getAno())) {
                 service.montarTabelaAno(dto.getAno(), instituicoesDistintas);
             }
-            service.compararDadosAtuaisESalvar(dto, rowList);
+            service.compararDadosAtuaisESalvar(dto, novosDados);
         }
 
-        return rowList;
+        return novosDados;
     }
 
     @Override

@@ -8,8 +8,10 @@ import br.com.lunacom.portal.domain.enumeration.Meses;
 import br.com.lunacom.portal.repository.ProdutoFinanceiroRepository;
 import br.com.lunacom.portal.repository.RendaFixaRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class RendaFixaService {
@@ -61,22 +64,46 @@ public class RendaFixaService {
         repository.save(e);
     }
 
-    public void compararDadosAtuaisESalvar(LeituraPlanilhaRequestDto dto, List<RendaFixaDto> rowList) {
+    public void compararDadosAtuaisESalvar(LeituraPlanilhaRequestDto dto, List<RendaFixaDto> novosDados) {
         final List<RendaFixa> rendaFixaAtualList = this.pesquisarTodosPorAno(dto.getAno());
 
         for (int i = 0; i < rendaFixaAtualList.size(); i++) {
             var e = rendaFixaAtualList.get(i);
-            var row = rowList.get(i);
 
-            e.setRenda(BigDecimal.valueOf(row.getRenda()));
-            e.setAplicado(BigDecimal.valueOf(row.getInvestido()));
-            e.setRentabilidade(BigDecimal.valueOf(row.getRentabilidade()));
-            e.setComparacao(BigDecimal.valueOf(row.getComparaticoComCdi()));
-            e.setReferenciaValor(BigDecimal.valueOf(row.getCdiMes()));
-            e.setComparacaoReferencia("CDI");
-            e.setProdutoFinanceiro(produtoFinanceiroService.pesquisarPorNome(row.getInstituicao()));
+            String mes = Meses.fromCodigo(e.getDataReferencia().substring(5, 7)).getDescricaoPt();
+            String inst = e.getProdutoFinanceiro().getNome();
 
-            this.salvar(e);
+            novosDados.stream()
+                .filter(item -> Objects.equals(item.getData(), mes)
+                        && Objects.equals(item.getInstituicao(), inst))
+                .findFirst()
+                .ifPresent( novoItem -> {
+                    e.setRenda(BigDecimal.valueOf(novoItem.getRenda()));
+                    e.setAplicado(BigDecimal.valueOf(novoItem.getInvestido()));
+                    e.setRentabilidade(BigDecimal.valueOf(novoItem.getRentabilidade()));
+                    e.setComparacao(BigDecimal.valueOf(novoItem.getComparaticoComCdi()));
+                    e.setReferenciaValor(BigDecimal.valueOf(novoItem.getCdiMes()));
+                    e.setComparacaoReferencia("CDI");
+                    e.setProdutoFinanceiro(produtoFinanceiroService.pesquisarPorNome(novoItem.getInstituicao()));
+                    this.salvar(e);
+                });
         }
     }
+
+    public boolean quantidadeProdutosFinanceirosExistenteEhDiferente(
+            String ano, int quantidadeDadosNovos) {
+
+        final List<RendaFixa> dadosExistentes = repository.findByDataReferenciaStartingWith(ano);
+        if (dadosExistentes.size() == quantidadeDadosNovos) {
+            return false;
+        }
+        return true;
+    }
+
+    @Transactional
+    public void apagarPorAno(String ano) {
+        repository.deleteByAno(ano);
+    }
+
+
 }
