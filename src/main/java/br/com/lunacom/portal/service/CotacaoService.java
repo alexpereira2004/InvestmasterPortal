@@ -3,7 +3,7 @@ package br.com.lunacom.portal.service;
 import br.com.lunacom.portal.converter.CotacaoLoteSiteInvestingComRequestConverter;
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Cotacao;
-import br.com.lunacom.portal.domain.CotacaoAgoraDto;
+import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
 import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.CotacaoDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
@@ -185,5 +185,13 @@ public class CotacaoService {
     //@TODO Implementar cache de 20 minutos
     public List<CotacaoAgoraDto> pesquisarCotacaoAgora() {
         return repo.pesquisarCotacaoAgora();
+    }
+
+    public void buscarHistorico(
+            LocalDate dataInicio,
+            LocalDate dataFinal,
+            List<String> ativos) {
+
+
     }
 }

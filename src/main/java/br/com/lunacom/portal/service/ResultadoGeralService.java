@@ -1,8 +1,8 @@
 package br.com.lunacom.portal.service;
 
 import br.com.lunacom.portal.domain.Carteira;
-import br.com.lunacom.portal.domain.CotacaoAgoraDto;
 import br.com.lunacom.portal.domain.dto.AtivoDividendoDto;
+import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
 import br.com.lunacom.portal.domain.dto.DividendoAnual;
 import br.com.lunacom.portal.domain.enumeration.Periodicidade;
 import br.com.lunacom.portal.domain.request.ExtratoDividendosRequest;

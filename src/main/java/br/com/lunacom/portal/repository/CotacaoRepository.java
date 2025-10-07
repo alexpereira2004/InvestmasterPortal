@@ -3,7 +3,7 @@ package br.com.lunacom.portal.repository;
 
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Cotacao;
-import br.com.lunacom.portal.domain.CotacaoAgoraDto;
+import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
 import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
