@@ -1,4 +1,4 @@
-package br.com.lunacom.portal.domain;
+package br.com.lunacom.portal.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

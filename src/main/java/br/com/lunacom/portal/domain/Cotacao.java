@@ -1,5 +1,6 @@
 package br.com.lunacom.portal.domain;
 
+import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
 import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
 import lombok.*;
 
