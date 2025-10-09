@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CotacaoHistoricoDto {
     private String id;
-    private String ativo;
+    private String nomeAtivo;
     private String codigo;
     private BigDecimal primeiroPreco;
     private BigDecimal ultimoPreco;

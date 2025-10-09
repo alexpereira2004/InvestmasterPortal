@@ -1,6 +1,7 @@
 package br.com.lunacom.portal.domain;
 
 import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
+import br.com.lunacom.portal.domain.dto.CotacaoHistoricoDto;
 import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
 import lombok.*;
 
@@ -76,6 +77,71 @@ import java.time.LocalDateTime;
                 "       data_importacao \n" +
                 "FROM v_cotacao_agora",
         resultSetMapping = "CotacaoAgoraDtoMapping"
+)
+
+
+@SqlResultSetMapping(
+        name = "CotacaoHistoricoDto",
+        classes = @ConstructorResult(
+                targetClass = CotacaoHistoricoDto.class,
+                columns = {
+                        @ColumnResult(name = "id", type = String.class),
+                        @ColumnResult(name = "nome_ativo", type = String.class),
+                        @ColumnResult(name = "codigo", type = String.class),
+                        @ColumnResult(name = "primeiro_preco", type = BigDecimal.class),
+                        @ColumnResult(name = "ultimo_preco", type = BigDecimal.class),
+                        @ColumnResult(name = "variacao", type = BigDecimal.class),
+                        @ColumnResult(name = "preco_medio", type = BigDecimal.class),
+                        @ColumnResult(name = "up_pm", type = BigDecimal.class),
+                        @ColumnResult(name = "referencia_inicio", type = LocalDate.class),
+                        @ColumnResult(name = "referencia_final", type = LocalDate.class),
+                        @ColumnResult(name = "quantidade_leituras", type = Integer.class),
+                        @ColumnResult(name = "preco_minimo_periodo", type = BigDecimal.class),
+                        @ColumnResult(name = "preco_maximo_periodo", type = BigDecimal.class),
+                        @ColumnResult(name = "data_importacao", type = LocalDateTime.class)
+                }
+        )
+)
+@NamedNativeQuery(
+        name = "Cotacao.pesquisarHistorico",
+        query = "                SELECT aid AS id, " +
+                "                       nome AS nome_ativo, " +
+                "                       codigo,\n" +
+                "                       pri_c.preco AS primeiro_preco,\n" +
+                "                       ult_c.preco AS ultimo_preco, \n" +
+                "                       round(((ult_c.preco * 100 ) / pri_c.preco ) - 100, 2) AS variacao,\n" +
+                "                       media AS preco_medio,\n" +
+                "                       ult_c.preco - media AS \"up_pm\",\n" +
+                "                       pri_c.referencia AS referencia_inicio,\n" +
+                "                       ult_c.referencia AS referencia_final, \n" +
+                "                       cotacoes AS quantidade_leituras, \n" +
+                "                       preco_minimo_periodo, \n" +
+                "                       preco_maximo_periodo,\n" +
+                "                       tmp.importacao AS data_importacao\n" +
+                "                  FROM (\n" +
+                "                            SELECT a.id aid, a.nome, a.codigo,\n" +
+                "                                   c.abertura, c.preco,\n" +
+                "                                   round(sum(c.preco)/count(1),2) AS media,\n" +
+                "                                   min(c.referencia) min_referencia, \n" +
+                "                                   max(c.referencia) AS max_referencia, \n" +
+                "                                   count(1) AS cotacoes, \n" +
+                "                                   max(c.preco) AS preco_maximo_periodo,\n" +
+                "                                   min(c.preco) AS preco_minimo_periodo,\n" +
+                "                                   c.importacao\n" +
+                "                              FROM ativo a \n" +
+                "                        LEFT JOIN cotacao c ON a.id = c.ativo_id\n" +
+                "                            WHERE c.referencia >= '2025-01-01' \n" +
+                "                               AND c.referencia < '2025-10-15' \n" +
+                "                               AND a.tipo = 'A' \n" +
+                "                               AND a.codigo IN ('BRSR6') \n" +
+                "                          GROUP BY a.id, a.nome, a.codigo \n" +
+                "                    ) tmp\n" +
+                "            INNER JOIN cotacao pri_c ON aid = pri_c.ativo_id AND pri_c.referencia = min_referencia \n" +
+                "            INNER JOIN cotacao ult_c ON aid = ult_c.ativo_id AND ult_c.referencia = max_referencia\n" +
+                "                WHERE 1=1\n" +
+                "                AND cotacoes > 1\n" +
+                "              ORDER BY cotacoes, ult_c.referencia DESC",
+        resultSetMapping = "CotacaoHistoricoDto"
 )
 
 public class Cotacao implements Serializable, Comparable<Cotacao> {

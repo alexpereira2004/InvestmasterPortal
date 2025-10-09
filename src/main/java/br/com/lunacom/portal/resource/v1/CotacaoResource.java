@@ -1,6 +1,7 @@
 package br.com.lunacom.portal.resource.v1;
 
 import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
+import br.com.lunacom.portal.domain.dto.CotacaoHistoricoDto;
 import br.com.lunacom.portal.domain.request.ExtratoCotacaoRequest;
 import br.com.lunacom.portal.domain.wrapper.ExtratoCotacaoWrapper;
 import br.com.lunacom.portal.service.CotacaoService;
@@ -48,10 +49,12 @@ public class CotacaoResource {
     }
 
     @GetMapping("/historico")
-    public void historico(
-        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
-        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal,
-        @RequestParam List<String> ativos) {
-        cotacaoService.buscarHistorico(dataInicio, dataFinal, ativos);
+    public List<CotacaoHistoricoDto> historico(
+        @RequestParam(required = false)
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
+        @RequestParam(required = false)
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal,
+        @RequestParam(required = false) List<String> ativos) {
+        return cotacaoService.buscarHistorico(dataInicio, dataFinal, ativos);
     }
 }

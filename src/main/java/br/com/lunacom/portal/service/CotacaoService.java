@@ -4,6 +4,7 @@ import br.com.lunacom.portal.converter.CotacaoLoteSiteInvestingComRequestConvert
 import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Cotacao;
 import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
+import br.com.lunacom.portal.domain.dto.CotacaoHistoricoDto;
 import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.CotacaoDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
@@ -187,11 +188,14 @@ public class CotacaoService {
         return repo.pesquisarCotacaoAgora();
     }
 
-    public void buscarHistorico(
+    public List<CotacaoHistoricoDto> buscarHistorico(
             LocalDate dataInicio,
             LocalDate dataFinal,
             List<String> ativos) {
 
+        final List<CotacaoHistoricoDto> resposta = repo
+                .pesquisarHistorico();
 
+        return resposta;
     }
 }
