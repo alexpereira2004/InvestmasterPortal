@@ -54,7 +54,9 @@ public class CotacaoResource {
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
         @RequestParam(required = false)
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal,
-        @RequestParam(required = false) List<String> ativos) {
-        return cotacaoService.buscarHistorico(dataInicio, dataFinal, ativos);
+        @RequestParam(required = false) String tipoAtivo,
+        @RequestParam(required = false) List<String> ativos
+    ) {
+        return cotacaoService.buscarHistorico(dataInicio, dataFinal, tipoAtivo, ativos);
     }
 }

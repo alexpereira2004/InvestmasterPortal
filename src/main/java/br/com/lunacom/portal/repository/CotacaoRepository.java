@@ -33,5 +33,9 @@ public interface CotacaoRepository extends JpaRepository<Cotacao, Integer> {
     List<CotacaoAgoraDto> pesquisarCotacaoAgora();
 
     @Query(nativeQuery = true)
-    List<CotacaoHistoricoDto> pesquisarHistorico();
+    List<CotacaoHistoricoDto> pesquisarHistorico(
+            LocalDate dataInicio,
+            LocalDate dataFinal,
+            String tipoAtivo,
+            List<String> ativos);
 }

@@ -130,10 +130,10 @@ import java.time.LocalDateTime;
                 "                                   c.importacao\n" +
                 "                              FROM ativo a \n" +
                 "                        LEFT JOIN cotacao c ON a.id = c.ativo_id\n" +
-                "                            WHERE c.referencia >= '2025-01-01' \n" +
-                "                               AND c.referencia < '2025-10-15' \n" +
-                "                               AND a.tipo = 'A' \n" +
-                "                               AND a.codigo IN ('BRSR6') \n" +
+                "                             WHERE (:dataInicio IS NULL OR c.referencia >= :dataInicio ) \n" +
+                "                               AND (:dataFinal IS NULL OR c.referencia < :dataFinal ) \n" +
+                "                               AND (:tipoAtivo IS NULL OR a.tipo = :tipoAtivo ) \n" +
+                "                               AND (:ativos IS NULL OR a.codigo IN (:ativos)) \n" +
                 "                          GROUP BY a.id, a.nome, a.codigo \n" +
                 "                    ) tmp\n" +
                 "            INNER JOIN cotacao pri_c ON aid = pri_c.ativo_id AND pri_c.referencia = min_referencia \n" +

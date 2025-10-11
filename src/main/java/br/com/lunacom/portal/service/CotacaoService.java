@@ -191,10 +191,11 @@ public class CotacaoService {
     public List<CotacaoHistoricoDto> buscarHistorico(
             LocalDate dataInicio,
             LocalDate dataFinal,
+            String tipoAtivo,
             List<String> ativos) {
 
         final List<CotacaoHistoricoDto> resposta = repo
-                .pesquisarHistorico();
+                .pesquisarHistorico(dataInicio, dataFinal, tipoAtivo, ativos);
 
         return resposta;
     }

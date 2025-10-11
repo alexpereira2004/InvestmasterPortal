@@ -21,7 +21,7 @@ public class CotacaoHistoricoDto {
     private BigDecimal ultimoPreco;
     private BigDecimal variacao;
     private BigDecimal precoMedio;
-    private BigDecimal ultimoPrecoPrecoMedio;
+    private BigDecimal relacaoUltimoPrecoPrecoMedio;
     private LocalDate referenciaInicio;
     private LocalDate referenciaFinal;
     private Integer quantidadeLeituras;
