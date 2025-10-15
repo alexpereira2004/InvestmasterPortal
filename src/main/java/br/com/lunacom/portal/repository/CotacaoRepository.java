@@ -6,8 +6,10 @@ import br.com.lunacom.portal.domain.Cotacao;
 import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
 import br.com.lunacom.portal.domain.dto.CotacaoHistoricoDto;
 import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
+import br.com.lunacom.portal.domain.dto.ReferenciaRangeDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -38,4 +40,13 @@ public interface CotacaoRepository extends JpaRepository<Cotacao, Integer> {
             LocalDate dataFinal,
             String tipoAtivo,
             List<String> ativos);
+
+    @Query(" SELECT new br.com.lunacom.portal.domain.dto.ReferenciaRangeDto(\n" +
+            "        MIN(h.referencia),\n" +
+            "        MAX(h.referencia)\n" +
+            "    ) " +
+            " FROM Cotacao h " +
+            " WHERE h.ativo.codigo = :codigo ")
+    ReferenciaRangeDto findMinAndMaxReferenciaByAtivo(@Param("codigo") String codigo);
+
 }

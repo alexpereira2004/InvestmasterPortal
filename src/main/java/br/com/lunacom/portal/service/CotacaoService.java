@@ -6,6 +6,7 @@ import br.com.lunacom.portal.domain.Cotacao;
 import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
 import br.com.lunacom.portal.domain.dto.CotacaoHistoricoDto;
 import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
+import br.com.lunacom.portal.domain.dto.ReferenciaRangeDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.CotacaoDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import br.com.lunacom.portal.domain.request.CotacaoLoteSiteInvestingComRequest;
@@ -198,5 +199,10 @@ public class CotacaoService {
                 .pesquisarHistorico(dataInicio, dataFinal, tipoAtivo, ativos);
 
         return resposta;
+    }
+
+    public ReferenciaRangeDto primeiraE_Ultima(String codigo) {
+        return repo.findMinAndMaxReferenciaByAtivo(codigo);
+
     }
 }
