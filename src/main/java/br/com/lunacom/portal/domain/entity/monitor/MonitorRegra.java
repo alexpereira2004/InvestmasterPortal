@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Builder
 @Data
@@ -34,14 +34,15 @@ public class MonitorRegra {
 
     // ====== RELACIONAMENTOS ======
 
-    @OneToMany(mappedBy = "regra", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<MonitorRegraQuedaPercentual> regrasQuedaPercentual = new ArrayList<>();
+    @OneToMany(mappedBy = "regra", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<MonitorRegraQuedaPercentual> regrasQuedaPercentual = new HashSet<>();
 
-    @OneToMany(mappedBy = "regra", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<MonitorRegraVolume> regrasVolume = new ArrayList<>();
+    @OneToMany(mappedBy = "regra", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<MonitorRegraVolume> regrasVolume = new HashSet<>();
 
-    @OneToMany(mappedBy = "regra", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<MonitorRegraCruzamentoMedia> regrasCruzamentoMedia = new ArrayList<>();
+    @OneToMany(mappedBy = "regra", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<MonitorRegraCruzamentoMedia> regrasCruzamentoMedia = new HashSet<>();
+
 
     // ====== MÉTODOS AUXILIARES ======
 
