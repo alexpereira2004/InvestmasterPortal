@@ -7,9 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Data
 @Builder
@@ -23,34 +24,25 @@ public class MonitorRegraDto {
     private String status;
     private LocalDateTime dataCriacao;
 
-    private List<MonitorRegraQuedaPercentualDto> quedas = new ArrayList<>();
-    private List<MonitorRegraVolumeDto> volumes = new ArrayList<>();
-    private List<MonitorRegraCruzamentoMediaDto> cruzamentos = new ArrayList<>();
+    private Map<String, List<?>> resultados = new HashMap<>();
 
-    public MonitorRegraDto(MonitorRegra entidade) {
-        this.id = entidade.getId();
-        this.ativoId = entidade.getAtivoId();
-        this.prioridade = entidade.getPrioridade();
-        this.status = entidade.getStatus();
-        this.dataCriacao = entidade.getDataCriacao();
-
-        if (entidade.getRegrasQuedaPercentual() != null) {
-            this.quedas = entidade.getRegrasQuedaPercentual()
-                    .stream().map(MonitorRegraQuedaPercentualDto::new)
-                    .collect(Collectors.toList());
-        }
-
-        if (entidade.getRegrasVolume() != null) {
-            this.volumes = entidade.getRegrasVolume()
-                    .stream().map(MonitorRegraVolumeDto::new)
-                    .collect(Collectors.toList());
-        }
-
-        if (entidade.getRegrasCruzamentoMedia() != null) {
-            this.cruzamentos = entidade.getRegrasCruzamentoMedia()
-                    .stream().map(MonitorRegraCruzamentoMediaDto::new)
-                    .collect(Collectors.toList());
-        }
+    public MonitorRegraDto(MonitorRegra regra) {
+        this.id = regra.getId();
+        this.ativoId  = regra.getAtivoId();
+        this.prioridade  = regra.getPrioridade();
+        this.status  = regra.getStatus();
+        this.dataCriacao = regra.getDataCriacao();
     }
+
+    public <T> void adicionarResultado(String tipo, List<T> lista) {
+        resultados.put(tipo, lista);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> List<T> obterResultado(String tipo) {
+        return (List<T>) resultados.getOrDefault(tipo, Collections.emptyList());
+    }
+
+
 
 }

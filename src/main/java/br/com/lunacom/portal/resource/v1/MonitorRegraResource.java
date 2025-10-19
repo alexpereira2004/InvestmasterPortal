@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.resource.v1;
 
 import br.com.lunacom.portal.domain.dto.monitor.MonitorRegraDto;
-import br.com.lunacom.portal.service.MonitorRegraService;
+import br.com.lunacom.portal.service.monitor.MonitorRegraService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
