@@ -2,6 +2,7 @@ package br.com.lunacom.portal.resource.v1;
 
 import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
 import br.com.lunacom.portal.domain.dto.CotacaoHistoricoDto;
+import br.com.lunacom.portal.domain.dto.ReferenciaRangeDto;
 import br.com.lunacom.portal.domain.request.ExtratoCotacaoRequest;
 import br.com.lunacom.portal.domain.wrapper.ExtratoCotacaoWrapper;
 import br.com.lunacom.portal.service.CotacaoService;
@@ -53,10 +54,17 @@ public class CotacaoResource {
         @RequestParam(required = false)
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
         @RequestParam(required = false)
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFinal,
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim,
         @RequestParam(required = false) String tipoAtivo,
         @RequestParam(required = false) List<String> ativos
     ) {
-        return cotacaoService.buscarHistorico(dataInicio, dataFinal, tipoAtivo, ativos);
+        return cotacaoService.buscarHistorico(dataInicio, dataFim, tipoAtivo, ativos);
     }
+
+
+    @GetMapping("/primeira-e-ultima")
+    public ReferenciaRangeDto primeiraE_Ultima(@RequestParam String codigo) {
+        return cotacaoService.primeiraE_Ultima(codigo);
+    }
+
 }

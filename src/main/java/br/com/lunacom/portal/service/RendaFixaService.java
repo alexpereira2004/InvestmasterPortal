@@ -9,7 +9,6 @@ import br.com.lunacom.portal.repository.ProdutoFinanceiroRepository;
 import br.com.lunacom.portal.repository.RendaFixaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
