@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RequiredArgsConstructor
-@RestController
 @RequestMapping(value="v1/monitor/regras")
+@RestController("monitorRegraV1ResourceV1")
 public class MonitorRegraResource {
 
     private final MonitorRegraService service;
