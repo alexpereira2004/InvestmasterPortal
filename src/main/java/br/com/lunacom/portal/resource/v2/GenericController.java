@@ -52,8 +52,8 @@ public abstract class GenericController<
     }
 
     @PutMapping("")
-    public ResponseEntity<T> update(@RequestBody T updated){
-        return ResponseEntity.ok(service.update(updated));
+    public ResponseEntity<T> update(@RequestBody R updated){
+        return ResponseEntity.ok(service.update(requestConverter.encode(updated)));
     }
 
     @PostMapping("")
