@@ -21,6 +21,7 @@ public class MonitorRegraRequestConverter extends GenericConverter<MonitorRegraR
                 .pesquisarPorCodigo(input.getAtivoCodigo())
                 .orElseThrow(() -> new EntityNotFoundException("Ativo informado não existe"));
         return MonitorRegra.builder()
+                .id(input.getId())
                 .ativoId(ativo.getId())
                 .prioridade(input.getPrioridade())
                 .status(input.getStatus().getCodigo())
