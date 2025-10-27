@@ -1,4 +1,4 @@
-package br.com.lunacom.portal.resource.v1;
+package br.com.lunacom.portal.resource.v1.monitor;
 
 import br.com.lunacom.portal.domain.dto.monitor.MonitorRegraDto;
 import br.com.lunacom.portal.service.monitor.MonitorRegraService;
