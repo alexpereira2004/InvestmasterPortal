@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "monitor_regra_cruzamento_media")
+@Table(name = "mr_cruzamento_media")
 public class MonitorRegraCruzamentoMedia {
 
     @Id

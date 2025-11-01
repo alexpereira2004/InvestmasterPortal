@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "monitor_regra")
+@Table(name = "m_regra")
 public class MonitorRegra extends BasicEntity<MonitorRegra> implements Serializable {
 
     @Id

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "monitor_regra_queda_percentual")
+@Table(name = "mr_queda_percentual")
 public class MonitorRegraQuedaPercentual {
 
     @Id

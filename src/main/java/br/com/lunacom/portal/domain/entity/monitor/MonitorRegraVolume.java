@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "monitor_regra_volume")
+@Table(name = "mr_volume")
 public class MonitorRegraVolume {
 
     @Id
