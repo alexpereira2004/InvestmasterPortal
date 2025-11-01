@@ -38,7 +38,7 @@ public class MonitorRegraSpecification extends GenericSpecification
 
         if (Objects.nonNull(request.getStatus())) {
             predicates.add(
-                    criteriaBuilder.and(criteriaBuilder.equal(root.get("status"), request.getStatus()))
+                    criteriaBuilder.and(criteriaBuilder.equal(root.get("status"), request.getStatus().getCodigo()))
             );
         }
 
