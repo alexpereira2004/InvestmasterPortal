@@ -19,7 +19,7 @@ public class MonitorRegraResponseConverter
     public MonitorRegraResponse decode(MonitorRegra input) {
         return MonitorRegraResponse.builder()
                 .id(input.getId())
-//                .codigoAtivo(input.getCodigoAtivo())
+                .codigoAtivo(input.getAtivo().getCodigo())
                 .prioridade(input.getPrioridade())
                 .status(input.getStatus())
                 .build();

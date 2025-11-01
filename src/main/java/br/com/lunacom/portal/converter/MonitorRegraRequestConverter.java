@@ -22,7 +22,7 @@ public class MonitorRegraRequestConverter extends GenericConverter<MonitorRegraR
                 .orElseThrow(() -> new EntityNotFoundException("Ativo informado não existe"));
         return MonitorRegra.builder()
                 .id(input.getId())
-                .ativoId(ativo.getId())
+                .ativo(ativo)
                 .prioridade(input.getPrioridade())
                 .status(input.getStatus().getCodigo())
                 .build();

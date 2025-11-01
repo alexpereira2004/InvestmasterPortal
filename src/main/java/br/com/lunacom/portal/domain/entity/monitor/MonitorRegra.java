@@ -1,5 +1,6 @@
 package br.com.lunacom.portal.domain.entity.monitor;
 
+import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.BasicEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,8 +23,9 @@ public class MonitorRegra extends BasicEntity<MonitorRegra> implements Serializa
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "ativo_id")
-    private Integer ativoId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ativo_id", referencedColumnName = "id")
+    private Ativo ativo;
 
     private Integer prioridade;
 
