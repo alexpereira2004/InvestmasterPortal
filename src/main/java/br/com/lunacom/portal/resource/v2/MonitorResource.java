@@ -7,7 +7,7 @@ import br.com.lunacom.portal.domain.response.MonitorRegraResponse;
 import br.com.lunacom.portal.repository.GenericRepository;
 import br.com.lunacom.portal.resource.v2.specification.GenericSpecification;
 import br.com.lunacom.portal.resource.v2.specification.MonitorSpecification;
-import br.com.lunacom.portal.service.monitor.MonitorRegraService;
+import br.com.lunacom.portal.service.monitor.MonitorService;
 import br.com.lunacom.portal.util.DataUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +25,7 @@ public class MonitorResource extends GenericController<
         MonitorRegraResponse,
         MonitorSpecification> {
 
-    private MonitorRegraService service;
+    private MonitorService service;
 
     public MonitorResource(
             GenericRepository<Monitor> repository,
@@ -33,7 +33,7 @@ public class MonitorResource extends GenericController<
             Converter<MonitorRegraRequest, Monitor> requestConverter,
             Converter<MonitorRegraResponse, Monitor> responseConverter,
             @Qualifier("monitorSpecification")GenericSpecification specification,
-            MonitorRegraService service) {
+            MonitorService service) {
         super(repository, dataUtil, requestConverter, responseConverter, specification);
         this.service = service;
     }
