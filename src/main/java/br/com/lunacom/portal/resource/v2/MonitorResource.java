@@ -18,8 +18,8 @@ import javax.validation.Valid;
 
 @Validated
 @RestController
-@RequestMapping(value="v2/monitor/regras")
-public class MonitorRegraResource extends GenericController<
+@RequestMapping(value="v2/monitor")
+public class MonitorResource extends GenericController<
         Monitor,
         @Valid MonitorRegraRequest,
         MonitorRegraResponse,
@@ -27,7 +27,7 @@ public class MonitorRegraResource extends GenericController<
 
     private MonitorRegraService service;
 
-    public MonitorRegraResource(
+    public MonitorResource(
             GenericRepository<Monitor> repository,
             DataUtil dataUtil,
             Converter<MonitorRegraRequest, Monitor> requestConverter,
