@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.resource.v1.monitor;
 
-import br.com.lunacom.portal.domain.dto.monitor.MonitorRegraDto;
+import br.com.lunacom.portal.domain.dto.monitor.MonitorDto;
 import br.com.lunacom.portal.service.monitor.MonitorRegraService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class MonitorRegraResource {
     private final MonitorRegraService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<MonitorRegraDto> buscarPorId(@PathVariable Integer id) {
+    public ResponseEntity<MonitorDto> buscarPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 }

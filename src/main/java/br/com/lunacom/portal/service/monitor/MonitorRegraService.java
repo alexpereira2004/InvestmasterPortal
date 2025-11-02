@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.service.monitor;
 
-import br.com.lunacom.portal.domain.dto.monitor.MonitorRegraDto;
-import br.com.lunacom.portal.domain.entity.monitor.MonitorRegra;
+import br.com.lunacom.portal.domain.dto.monitor.MonitorDto;
+import br.com.lunacom.portal.domain.entity.monitor.Monitor;
 import br.com.lunacom.portal.repository.monitor.MonitorRegraRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +23,10 @@ public class MonitorRegraService {
     private final List<MonitorRegraInterface> regras;
 
     @Transactional(readOnly = true)
-    public MonitorRegraDto buscarPorId(Integer id) {
-        MonitorRegra regra = repository.findById(id)
+    public MonitorDto buscarPorId(Integer id) {
+        Monitor regra = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(REGRA_NAO_ENCONTRADA));
-        MonitorRegraDto dto = new MonitorRegraDto(regra);
+        MonitorDto dto = new MonitorDto(regra);
 
         for (MonitorRegraInterface r : regras) {
             var lista = r.buscarPorRegra(regra);

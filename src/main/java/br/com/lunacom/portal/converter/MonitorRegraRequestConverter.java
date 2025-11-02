@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.converter;
 
 import br.com.lunacom.portal.domain.Ativo;
-import br.com.lunacom.portal.domain.entity.monitor.MonitorRegra;
+import br.com.lunacom.portal.domain.entity.monitor.Monitor;
 import br.com.lunacom.portal.domain.request.MonitorRegraRequest;
 import br.com.lunacom.portal.service.AtivoService;
 import lombok.AllArgsConstructor;
@@ -11,16 +11,16 @@ import javax.persistence.EntityNotFoundException;
 
 @AllArgsConstructor
 @Component
-public class MonitorRegraRequestConverter extends GenericConverter<MonitorRegraRequest, MonitorRegra> {
+public class MonitorRegraRequestConverter extends GenericConverter<MonitorRegraRequest, Monitor> {
 
     AtivoService ativoService;
 
     @Override
-    public MonitorRegra encode(MonitorRegraRequest input) {
+    public Monitor encode(MonitorRegraRequest input) {
         final Ativo ativo = ativoService
                 .pesquisarPorCodigo(input.getAtivoCodigo())
                 .orElseThrow(() -> new EntityNotFoundException("Ativo informado não existe"));
-        return MonitorRegra.builder()
+        return Monitor.builder()
                 .id(input.getId())
                 .ativo(ativo)
                 .prioridade(input.getPrioridade())
@@ -29,7 +29,7 @@ public class MonitorRegraRequestConverter extends GenericConverter<MonitorRegraR
     }
 
     @Override
-    public MonitorRegraRequest decode(MonitorRegra input) {
+    public MonitorRegraRequest decode(Monitor input) {
         return null;
     }
 }

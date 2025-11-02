@@ -27,6 +27,6 @@ public class MonitorRegraVolume {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_regra")
-    private MonitorRegra regra;
+    private Monitor regra;
 
 }

@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.resource.v2.specification;
 
-import br.com.lunacom.portal.domain.entity.monitor.MonitorRegra;
+import br.com.lunacom.portal.domain.entity.monitor.Monitor;
 import br.com.lunacom.portal.domain.request.GenericRequest;
 import br.com.lunacom.portal.domain.request.MonitorRegraRequest;
 import br.com.lunacom.portal.util.DataUtil;
@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class MonitorRegraSpecification extends GenericSpecification
-        implements Specification<MonitorRegra> {
+public class MonitorSpecification extends GenericSpecification
+        implements Specification<Monitor> {
 
     DataUtil dataUtil;
     MonitorRegraRequest request;
@@ -33,7 +33,7 @@ public class MonitorRegraSpecification extends GenericSpecification
     }
 
     @Override
-    public Predicate toPredicate(Root<MonitorRegra> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+    public Predicate toPredicate(Root<Monitor> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
 
         if (Objects.nonNull(request.getStatus())) {

@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "m_regra")
-public class MonitorRegra extends BasicEntity<MonitorRegra> implements Serializable {
+@Table(name = "monitor")
+public class Monitor extends BasicEntity<Monitor> implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
