@@ -25,20 +25,6 @@ public class RegraCompraPorHistoricoVendaRequest {
      */
     private Boleano excluirPrejuizos;
 
-    /**
-     * C: Compra, V: Venda, N: Neutro
-     */
-    @Size(max = 2)
-    private String recomendacao;
-
-    @Size(max = 2)
-    private Integer recomendacaoEscala;
-
-    private String analise;
-
-    @Size(max = 400)
-    private String observacao;
-
     private Integer monitorId;
 
     private Integer movimentoVendaId;

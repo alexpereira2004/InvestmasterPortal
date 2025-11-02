@@ -7,10 +7,12 @@ import br.com.lunacom.portal.domain.request.monitor.RegraCompraPorHistoricoVenda
 import br.com.lunacom.portal.service.MovimentoVendaService;
 import br.com.lunacom.portal.service.monitor.MonitorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 @RequiredArgsConstructor
+@Component
 public class RegraCompraPorHistoricoVendaRequestConverter implements OneWayConverter
         <RegraCompraPorHistoricoVendaRequest, RegraCompraPorHistoricoVenda> {
 
@@ -26,10 +28,6 @@ public class RegraCompraPorHistoricoVendaRequestConverter implements OneWayConve
         final RegraCompraPorHistoricoVenda build = RegraCompraPorHistoricoVenda.builder()
                 .periodo(input.getPeriodo())
                 .excluirPrejuizos(input.getExcluirPrejuizos().getCodigo())
-                .recomendacao(input.getRecomendacao())
-                .recomendacaoEscala(input.getRecomendacaoEscala())
-                .analise(input.getAnalise())
-                .observacao(input.getObservacao())
                 .monitor(monitor)
                 .build();
 
