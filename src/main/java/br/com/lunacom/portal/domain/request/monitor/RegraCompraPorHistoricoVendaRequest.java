@@ -1,13 +1,12 @@
 package br.com.lunacom.portal.domain.request.monitor;
 
 import br.com.lunacom.portal.domain.enumeration.Boleano;
+import br.com.lunacom.portal.domain.enumeration.PeriodoVenda;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,13 +15,8 @@ import javax.validation.constraints.Size;
 @Component
 public class RegraCompraPorHistoricoVendaRequest {
 
-    // U: Ultima venda, A: Ano atual, D: Ultimos 12 meses, T: Todo historico
-    @Size(max = 1)
-    private String periodo;
+    private PeriodoVenda periodo;
 
-    /**
-     * S: Sim, N: Nao
-     */
     private Boleano excluirPrejuizos;
 
     private Integer monitorId;
