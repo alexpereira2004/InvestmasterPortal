@@ -36,6 +36,12 @@ public class MonitorSpecification extends GenericSpecification
     public Predicate toPredicate(Root<Monitor> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
 
+        if (Objects.nonNull(request.getAtivoCodigo())) {
+            predicates.add(
+                    criteriaBuilder.and(criteriaBuilder.equal(root.get("ativo").get("codigo"), request.getAtivoCodigo()))
+            );
+        }
+
         if (Objects.nonNull(request.getStatus())) {
             predicates.add(
                     criteriaBuilder.and(criteriaBuilder.equal(root.get("status"), request.getStatus().getCodigo()))
