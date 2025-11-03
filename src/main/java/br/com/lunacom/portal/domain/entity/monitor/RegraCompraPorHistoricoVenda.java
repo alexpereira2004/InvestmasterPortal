@@ -49,7 +49,7 @@ public class RegraCompraPorHistoricoVenda {
     private String observacao;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_regra", nullable = false,
+    @JoinColumn(name = "id_monitor", nullable = false,
             foreignKey = @ForeignKey(name = "FK_mr_historico_compra_monitor_regra"))
     private Monitor monitor;
 
