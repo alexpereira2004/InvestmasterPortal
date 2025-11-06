@@ -48,7 +48,7 @@ public class DataUtil {
         return LocalDate.now();
     }
 
-    public LocalDateTime dataHoraAora() {
+    public LocalDateTime dataHoraAgora() {
         return LocalDateTime.now();
     }
 }

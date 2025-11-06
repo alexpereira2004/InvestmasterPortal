@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "monitor_regra_queda_percentual")
+@Table(name = "mr_queda_percentual")
 public class MonitorRegraQuedaPercentual {
 
     @Id
@@ -27,5 +27,5 @@ public class MonitorRegraQuedaPercentual {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_regra")
-    private MonitorRegra regra;
+    private Monitor regra;
 }

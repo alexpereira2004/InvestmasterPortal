@@ -44,7 +44,7 @@ public class CotacaoService {
 
     @Value("${app.cotacao.spreadsheetId}")
     private String spreadsheetId;
-    private String RANGE = "Cotacoes!A2:B79";
+    private String RANGE = "Cotacoes!A2:B80";
 
     public void importarDadosGoogle() throws IOException {
 

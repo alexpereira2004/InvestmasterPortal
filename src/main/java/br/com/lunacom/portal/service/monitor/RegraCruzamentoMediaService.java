@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.service.monitor;
 
-import br.com.lunacom.portal.domain.entity.monitor.MonitorRegra;
+import br.com.lunacom.portal.domain.entity.monitor.Monitor;
 import br.com.lunacom.portal.repository.monitor.MonitorRegraCruzamentoMediaRepository;
 import br.com.lunacom.portal.util.MonitorConstants;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MonitorRegraCruzamentoMediaService implements MonitorRegraInterface {
+public class RegraCruzamentoMediaService implements MonitorRegraInterface {
 
     private final MonitorRegraCruzamentoMediaRepository repository;
 
@@ -20,7 +20,7 @@ public class MonitorRegraCruzamentoMediaService implements MonitorRegraInterface
     }
 
     @Override
-    public List<?> buscarPorRegra(MonitorRegra regra) {
+    public List<?> buscarPorRegra(Monitor regra) {
         return repository.findAllByRegraId(regra.getId());
     }
 }

@@ -15,12 +15,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.io.Reader;
 import java.io.StringReader;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import static br.com.lunacom.portal.util.MonitorConstants.MOVIMENTO_VENDA_NAO_ENCONTRADO;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -72,4 +75,10 @@ public class MovimentoVendaService {
     public void removerUltimasVendas(Optional<LocalDate> dataUltimaVenda) {
         dataUltimaVenda.ifPresent(repository::deleteByDataVendaGreaterThanEqual);
     }
+
+    public MovimentoVenda buscarPorId(Integer id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(MOVIMENTO_VENDA_NAO_ENCONTRADO));
+    }
+
 }

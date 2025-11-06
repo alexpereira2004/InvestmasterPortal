@@ -23,8 +23,12 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("/v2/projecao")
-public class ProjecaoResource extends GenericController
-        <Projecao, @Valid ProjecaoRequest, ProjecaoResponse, ProjecaoSpecification> {
+public class ProjecaoResource extends GenericController<
+        Projecao,
+        @Valid ProjecaoRequest,
+        ProjecaoResponse,
+        ProjecaoSpecification> {
+
     ProjecaoService service;
 
     public ProjecaoResource(

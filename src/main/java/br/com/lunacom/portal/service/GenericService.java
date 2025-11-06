@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -37,19 +38,20 @@ public abstract class GenericService<
     @Transactional
     public T update(T updated){
         T dbDomain = get(updated.getId());
-        updated.setDataAtualizacao(dataUtil.dataHoraAora());
+        updated.setDataAtualizacao(dataUtil.dataHoraAgora());
+        this.mergeNonNullFields(updated, dbDomain);
         return repository.save(dbDomain);
     }
 
     @Transactional
     public T save(T newDomain){
-        newDomain.setDataCriacao(dataUtil.dataHoraAora());
+        newDomain.setDataCriacao(dataUtil.dataHoraAgora());
         return repository.save(newDomain);
     }
 
     @Transactional
     public List<T> saveAll(List<T> list){
-        list.stream().forEach(e -> e.setDataCriacao(dataUtil.dataHoraAora()));
+        list.stream().forEach(e -> e.setDataCriacao(dataUtil.dataHoraAgora()));
         return repository.saveAll(list);
     }
 
@@ -65,4 +67,18 @@ public abstract class GenericService<
         list.stream().forEach(e -> repository.deleteById(e));
     }
 
+    private void mergeNonNullFields(T source, T target) {
+        try {
+            for (Field field : source.getClass().getDeclaredFields()) {
+                field.setAccessible(true);
+                Object newValue = field.get(source);
+
+                if (newValue != null) {
+                    field.set(target, newValue);
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Erro ao mesclar campos", e);
+        }
+    }
 }

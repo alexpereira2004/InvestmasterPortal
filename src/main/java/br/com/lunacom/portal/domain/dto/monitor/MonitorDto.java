@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.domain.dto.monitor;
 
-import br.com.lunacom.portal.domain.entity.monitor.MonitorRegra;
+import br.com.lunacom.portal.domain.entity.monitor.Monitor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.util.Map;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MonitorRegraDto {
+public class MonitorDto {
 
     private Integer id;
     private Integer ativoId;
@@ -26,9 +26,9 @@ public class MonitorRegraDto {
 
     private Map<String, List<?>> resultados = new HashMap<>();
 
-    public MonitorRegraDto(MonitorRegra regra) {
+    public MonitorDto(Monitor regra) {
         this.id = regra.getId();
-        this.ativoId  = regra.getAtivoId();
+//        this.ativoId  = regra.getAtivoId();
         this.prioridade  = regra.getPrioridade();
         this.status  = regra.getStatus();
         this.dataCriacao = regra.getDataCriacao();
