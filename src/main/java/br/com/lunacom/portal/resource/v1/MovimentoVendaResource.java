@@ -1,9 +1,12 @@
 package br.com.lunacom.portal.resource.v1;
 
+import br.com.lunacom.portal.converter.AtivoResponseConverter;
 import br.com.lunacom.portal.converter.MovimentoVendaRequestConverter;
 import br.com.lunacom.portal.converter.MovimentoVendaResponseConverter;
+import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.MovimentoVenda;
 import br.com.lunacom.portal.domain.request.MovimentoVendaRequest;
+import br.com.lunacom.portal.domain.response.AtivoResponse;
 import br.com.lunacom.portal.domain.response.MovimentoVendaResponse;
 import br.com.lunacom.portal.service.MovimentoVendaService;
 import br.com.lunacom.portal.util.StringParser;
@@ -28,6 +31,7 @@ public class MovimentoVendaResource {
     private final MovimentoVendaService service;
     private final MovimentoVendaRequestConverter requestConverter;
     private final MovimentoVendaResponseConverter responseConverter;
+    private final AtivoResponseConverter ativoResponseConverter;
 
     @PostMapping
     public ResponseEntity<MovimentoVenda> create(@RequestBody @Valid MovimentoVendaRequest request) {
@@ -42,6 +46,12 @@ public class MovimentoVendaResource {
         final Page<MovimentoVenda> movimentoVendaPage = service.pesquisarComPaginacao(request, pageable);
         final Page<MovimentoVendaResponse> response = movimentoVendaPage.map(e -> responseConverter.decode(e));
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value="/ativos-com-venda")
+    public ResponseEntity<List<AtivoResponse>> buscarTodosAtivosComVenda() {
+        final List<Ativo> ativos = service.buscarTodosAtivosComVenda();
+        return ResponseEntity.ok(ativoResponseConverter.decode(ativos));
     }
 
     @DeleteMapping("/{id}")

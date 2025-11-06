@@ -1,6 +1,7 @@
 package br.com.lunacom.portal.service;
 
 import br.com.lunacom.portal.converter.MovimentoVendaCsvRequestConverter;
+import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.MovimentoVenda;
 import br.com.lunacom.portal.domain.request.MovimentoVendaCsvRequest;
 import br.com.lunacom.portal.domain.request.MovimentoVendaRequest;
@@ -20,6 +21,7 @@ import javax.transaction.Transactional;
 import java.io.Reader;
 import java.io.StringReader;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,6 +81,12 @@ public class MovimentoVendaService {
     public MovimentoVenda buscarPorId(Integer id) {
         return repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(MOVIMENTO_VENDA_NAO_ENCONTRADO));
+    }
+
+    public List<Ativo> buscarTodosAtivosComVenda() {
+        final List<Ativo> ativos = repository.findDistinctAtivosFromMovimentoVenda();
+        ativos.sort(Comparator.comparing(Ativo::getNome));
+        return ativos;
     }
 
 }
