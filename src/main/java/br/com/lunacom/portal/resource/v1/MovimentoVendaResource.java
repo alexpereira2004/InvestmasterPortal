@@ -48,6 +48,7 @@ public class MovimentoVendaResource {
         return ResponseEntity.ok(response);
     }
 
+    // @TODO Aplicar cache
     @GetMapping(value="/ativos-com-venda")
     public ResponseEntity<List<AtivoResponse>> buscarTodosAtivosComVenda() {
         final List<Ativo> ativos = service.buscarTodosAtivosComVenda();
