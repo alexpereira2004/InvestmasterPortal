@@ -1,6 +1,8 @@
 package br.com.lunacom.portal.domain.entity.monitor;
 
+import br.com.lunacom.portal.converter.attribute.StatusConverter;
 import br.com.lunacom.portal.domain.MovimentoVenda;
+import br.com.lunacom.portal.domain.enumeration.Status;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,6 +19,12 @@ public class RegraCompraPorHistoricoVenda {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
+    @Column(name = "nome", length = 50)
+    private String nome;
+
+    @Convert(converter = StatusConverter.class)
+    private Status status;
 
     /**
      * U: Ultima venda, A: Ano atual, D: Ultimos 12 meses, T: Todo historico
