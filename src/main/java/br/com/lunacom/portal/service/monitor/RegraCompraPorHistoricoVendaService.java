@@ -14,6 +14,7 @@ public class RegraCompraPorHistoricoVendaService {
     private final RegraCompraPorHistoricoVendaRepository repository;
 
     public RegraCompraPorHistoricoVenda salvar(RegraCompraPorHistoricoVenda entity) {
+        repository.inativarRegrasPorMonitor(entity.getMonitor().getId());
         entity.setStatus(Status.ATIVO);
         return repository.save(entity);
     }
