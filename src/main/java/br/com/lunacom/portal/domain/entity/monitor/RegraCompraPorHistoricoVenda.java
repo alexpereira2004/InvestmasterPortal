@@ -1,8 +1,10 @@
 package br.com.lunacom.portal.domain.entity.monitor;
 
 import br.com.lunacom.portal.converter.attribute.StatusConverter;
+import br.com.lunacom.portal.converter.attribute.TipoMovimentoConverter;
 import br.com.lunacom.portal.domain.MovimentoVenda;
 import br.com.lunacom.portal.domain.enumeration.Status;
+import br.com.lunacom.portal.domain.enumeration.TipoMovimento;
 import lombok.Builder;
 import lombok.Data;
 
@@ -25,6 +27,9 @@ public class RegraCompraPorHistoricoVenda {
 
     @Convert(converter = StatusConverter.class)
     private Status status;
+
+    @Convert(converter = TipoMovimentoConverter.class)
+    TipoMovimento tipo;
 
     /**
      * U: Ultima venda, A: Ano atual, D: Ultimos 12 meses, T: Todo historico

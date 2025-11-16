@@ -2,6 +2,7 @@ package br.com.lunacom.portal.service.monitor;
 
 import br.com.lunacom.portal.domain.entity.monitor.RegraCompraPorHistoricoVenda;
 import br.com.lunacom.portal.domain.enumeration.Status;
+import br.com.lunacom.portal.domain.enumeration.TipoMovimento;
 import br.com.lunacom.portal.repository.monitor.RegraCompraPorHistoricoVendaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ public class RegraCompraPorHistoricoVendaService {
     public RegraCompraPorHistoricoVenda salvar(RegraCompraPorHistoricoVenda entity) {
         repository.inativarRegrasPorMonitor(entity.getMonitor().getId());
         entity.setStatus(Status.ATIVO);
+        entity.setTipo(TipoMovimento.COMPRA);
         return repository.save(entity);
     }
 }
