@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.domain.response;
 
-import br.com.lunacom.portal.domain.dto.DividendoAnual;
+import br.com.lunacom.comum.domain.dto.DividendoAnual;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

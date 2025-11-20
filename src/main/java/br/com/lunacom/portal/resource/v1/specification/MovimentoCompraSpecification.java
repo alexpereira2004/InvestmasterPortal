@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.resource.v1.specification;
 
-import br.com.lunacom.portal.domain.MovimentoCompra;
+import br.com.lunacom.comum.domain.MovimentoCompra;
 import br.com.lunacom.portal.domain.request.MovimentoCompraRequest;
 import br.com.lunacom.portal.util.DataUtil;
 import jakarta.persistence.criteria.CriteriaBuilder;

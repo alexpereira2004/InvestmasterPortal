@@ -2,8 +2,8 @@ package br.com.lunacom.portal.service;
 
 import br.com.lunacom.comum.domain.Ativo;
 import br.com.lunacom.comum.domain.Carteira;
+import br.com.lunacom.comum.domain.Tag;
 import br.com.lunacom.comum.domain.dto.googlesheets.CarteiraDto;
-import br.com.lunacom.portal.domain.Tag;
 import br.com.lunacom.portal.repository.AtivoRepository;
 import br.com.lunacom.portal.repository.CarteiraRepository;
 import br.com.lunacom.portal.repository.TagRepository;
