@@ -1,8 +1,7 @@
 package br.com.lunacom.portal.converter.attribute;
 
-import br.com.lunacom.portal.domain.enumeration.Seguindo;
-
-import javax.persistence.AttributeConverter;
+import br.com.lunacom.comum.domain.enumeration.Seguindo;
+import jakarta.persistence.AttributeConverter;
 
 public class SeguindoConverter implements AttributeConverter<Seguindo, String> {
 

@@ -1,13 +1,13 @@
 package br.com.lunacom.portal.domain.entity.monitor;
 
-import br.com.lunacom.portal.domain.Ativo;
+import br.com.lunacom.comum.domain.Ativo;
 import br.com.lunacom.portal.domain.BasicEntity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 

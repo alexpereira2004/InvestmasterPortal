@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.domain.response;
 
-import br.com.lunacom.portal.domain.Contato;
-import br.com.lunacom.portal.domain.Endereco;
+import br.com.lunacom.comum.domain.Contato;
+import br.com.lunacom.comum.domain.Endereco;
 import lombok.Builder;
 import lombok.Data;
 

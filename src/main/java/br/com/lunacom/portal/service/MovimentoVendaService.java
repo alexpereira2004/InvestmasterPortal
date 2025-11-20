@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.service;
 
+import br.com.lunacom.comum.domain.Ativo;
 import br.com.lunacom.portal.converter.MovimentoVendaCsvRequestConverter;
-import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.MovimentoVenda;
 import br.com.lunacom.portal.domain.request.MovimentoVendaCsvRequest;
 import br.com.lunacom.portal.domain.request.MovimentoVendaRequest;
@@ -10,13 +10,13 @@ import br.com.lunacom.portal.resource.v1.specification.MovimentoVendaSpecificati
 import br.com.lunacom.portal.util.DataUtil;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.io.Reader;
 import java.io.StringReader;

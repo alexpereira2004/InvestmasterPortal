@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.service.monitor;
 
+import br.com.lunacom.comum.domain.enumeration.Status;
 import br.com.lunacom.portal.domain.entity.monitor.RegraCompraPorHistoricoVenda;
-import br.com.lunacom.portal.domain.enumeration.Status;
 import br.com.lunacom.portal.domain.enumeration.TipoMovimento;
 import br.com.lunacom.portal.repository.monitor.RegraCompraPorHistoricoVendaRepository;
 import lombok.RequiredArgsConstructor;

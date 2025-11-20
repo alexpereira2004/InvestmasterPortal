@@ -3,13 +3,13 @@ package br.com.lunacom.portal.resource.v2.specification;
 import br.com.lunacom.portal.domain.MovimentoVenda;
 import br.com.lunacom.portal.domain.request.MovimentoVendaRequest;
 import br.com.lunacom.portal.util.DataUtil;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.Builder;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

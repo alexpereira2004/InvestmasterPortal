@@ -1,14 +1,14 @@
 package br.com.lunacom.portal.service.googlesheets;
 
+import br.com.lunacom.comum.domain.Ativo;
+import br.com.lunacom.comum.domain.enumeration.Seguindo;
+import br.com.lunacom.comum.domain.enumeration.Status;
 import br.com.lunacom.portal.converter.googlesheets.ComprasRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
-import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.MovimentoCompra;
 import br.com.lunacom.portal.domain.TipoAtivoInterface;
 import br.com.lunacom.portal.domain.dto.googlesheets.CarteiraDto;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
-import br.com.lunacom.portal.domain.enumeration.Seguindo;
-import br.com.lunacom.portal.domain.enumeration.Status;
 import br.com.lunacom.portal.service.AtivoService;
 import br.com.lunacom.portal.service.MovimentoCompraService;
 import com.google.api.services.sheets.v4.model.ValueRange;

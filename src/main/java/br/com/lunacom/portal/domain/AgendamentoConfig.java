@@ -1,16 +1,15 @@
 package br.com.lunacom.portal.domain;
 
+import br.com.lunacom.comum.domain.enumeration.Status;
 import br.com.lunacom.portal.converter.attribute.StatusConverter;
-import br.com.lunacom.portal.domain.enumeration.Status;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Data
 @NoArgsConstructor

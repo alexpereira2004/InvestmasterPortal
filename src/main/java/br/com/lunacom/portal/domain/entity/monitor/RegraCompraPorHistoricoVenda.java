@@ -1,14 +1,13 @@
 package br.com.lunacom.portal.domain.entity.monitor;
 
+import br.com.lunacom.comum.domain.enumeration.Status;
 import br.com.lunacom.portal.converter.attribute.StatusConverter;
 import br.com.lunacom.portal.converter.attribute.TipoMovimentoConverter;
 import br.com.lunacom.portal.domain.MovimentoVenda;
-import br.com.lunacom.portal.domain.enumeration.Status;
 import br.com.lunacom.portal.domain.enumeration.TipoMovimento;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
-
-import javax.persistence.*;
 
 @Builder
 @Entity

@@ -1,22 +1,53 @@
 package br.com.lunacom.portal.domain;
 
-import lombok.Data;
+import br.com.lunacom.comum.domain.GenericEntity;
+import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Data
 @MappedSuperclass
-public abstract class BasicEntity<T> implements Serializable, GenericEntity<T>{
+@NoArgsConstructor
+@Access(AccessType.FIELD)
+public abstract class BasicEntity<T> implements Serializable, GenericEntity<T> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "data_criacao", updatable = false)
+    @Column(updatable = false)
     private LocalDateTime dataCriacao;
 
-    @Column(name = "data_atualizacao")
+    @Column
     private LocalDateTime dataAtualizacao;
 
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    @Override
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    @Override
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    @Override
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
 }

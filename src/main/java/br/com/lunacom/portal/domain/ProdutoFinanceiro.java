@@ -1,12 +1,12 @@
 package br.com.lunacom.portal.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 

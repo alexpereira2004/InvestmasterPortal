@@ -1,4 +1,5 @@
 # InvestMaster
+A proposta deste projeto é automatizar a coleta, análise e monitoramento de dados de investimento baseados em planilhas externas (Google Sheets).
 
 Este é o backend da aplicação InvestMaster, construído com **Spring Boot** para fornecer uma API robusta e eficiente. Ele é responsável pela lógica de negócios, persistência de dados e integração com serviços externos, servindo como o coração do sistema InvestMaster.
 

@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.service;
 
-import br.com.lunacom.portal.domain.GenericEntity;
+import br.com.lunacom.comum.domain.GenericEntity;
 import br.com.lunacom.portal.domain.request.GenericRequest;
 import br.com.lunacom.portal.repository.GenericRepository;
 import br.com.lunacom.portal.resource.v2.specification.GenericSpecification;

@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.converter;
 
-import br.com.lunacom.portal.domain.Endereco;
+import br.com.lunacom.comum.domain.Endereco;
 import br.com.lunacom.portal.domain.request.EnderecoRequest;
 import org.springframework.stereotype.Component;
 

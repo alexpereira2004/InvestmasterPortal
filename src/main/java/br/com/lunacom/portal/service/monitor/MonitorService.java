@@ -3,12 +3,12 @@ package br.com.lunacom.portal.service.monitor;
 import br.com.lunacom.portal.domain.dto.monitor.MonitorDto;
 import br.com.lunacom.portal.domain.entity.monitor.Monitor;
 import br.com.lunacom.portal.repository.monitor.MonitorRegraRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 import static br.com.lunacom.portal.util.MonitorConstants.MONITOR_NAO_ENCONTRADO;

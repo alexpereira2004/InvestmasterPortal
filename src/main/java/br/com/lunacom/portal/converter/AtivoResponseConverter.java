@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.converter;
 
-import br.com.lunacom.portal.domain.Ativo;
+import br.com.lunacom.comum.domain.Ativo;
 import br.com.lunacom.portal.domain.enumeration.AcaoTipo;
 import br.com.lunacom.portal.domain.response.AtivoResponse;
 import lombok.AllArgsConstructor;

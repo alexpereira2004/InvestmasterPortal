@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.repository;
 
-import br.com.lunacom.portal.domain.Ativo;
+import br.com.lunacom.comum.domain.Ativo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

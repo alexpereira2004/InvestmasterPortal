@@ -1,8 +1,10 @@
 package br.com.lunacom.portal.domain;
 
+import br.com.lunacom.comum.domain.Ativo;
+import br.com.lunacom.comum.domain.GenericEntity;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;

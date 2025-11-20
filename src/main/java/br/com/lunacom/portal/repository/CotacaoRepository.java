@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.repository;
 
 
-import br.com.lunacom.portal.domain.Ativo;
+import br.com.lunacom.comum.domain.Ativo;
 import br.com.lunacom.portal.domain.Cotacao;
 import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
 import br.com.lunacom.portal.domain.dto.CotacaoHistoricoDto;

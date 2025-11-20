@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.converter;
 
-import br.com.lunacom.portal.domain.Ativo;
+import br.com.lunacom.comum.domain.Ativo;
 import br.com.lunacom.portal.domain.MovimentoVenda;
 import br.com.lunacom.portal.domain.request.MovimentoVendaRequest;
 import br.com.lunacom.portal.service.AtivoService;

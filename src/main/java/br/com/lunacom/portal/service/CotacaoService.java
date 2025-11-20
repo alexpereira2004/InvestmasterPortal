@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.service;
 
+import br.com.lunacom.comum.domain.Ativo;
 import br.com.lunacom.portal.converter.CotacaoLoteSiteInvestingComRequestConverter;
-import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.Cotacao;
 import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
 import br.com.lunacom.portal.domain.dto.CotacaoHistoricoDto;

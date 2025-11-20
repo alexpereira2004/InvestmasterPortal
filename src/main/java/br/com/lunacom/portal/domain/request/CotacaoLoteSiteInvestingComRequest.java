@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.domain.request;
 
-import br.com.lunacom.portal.domain.Ativo;
+import br.com.lunacom.comum.domain.Ativo;
 import com.opencsv.bean.CsvBindByPosition;
 import lombok.Data;
 

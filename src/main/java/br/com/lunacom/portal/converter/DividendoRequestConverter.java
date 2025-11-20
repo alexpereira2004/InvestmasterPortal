@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.converter;
 
-import br.com.lunacom.portal.domain.Ativo;
+import br.com.lunacom.comum.domain.Ativo;
 import br.com.lunacom.portal.domain.Dividendo;
 import br.com.lunacom.portal.domain.request.DividendoRequest;
 import br.com.lunacom.portal.service.AtivoService;

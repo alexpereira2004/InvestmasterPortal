@@ -1,9 +1,10 @@
 package br.com.lunacom.portal.domain;
 
+import br.com.lunacom.comum.domain.Ativo;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 

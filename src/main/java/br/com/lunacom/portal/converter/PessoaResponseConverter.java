@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.converter;
 
-import br.com.lunacom.portal.domain.Pessoa;
-import br.com.lunacom.portal.domain.enumeration.Status;
+import br.com.lunacom.comum.domain.Pessoa;
+import br.com.lunacom.comum.domain.enumeration.Status;
 import br.com.lunacom.portal.domain.response.PessoaResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

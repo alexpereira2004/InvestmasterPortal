@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.service;
 
-import br.com.lunacom.portal.domain.Ativo;
+import br.com.lunacom.comum.domain.Ativo;
 import br.com.lunacom.portal.repository.AtivoRepository;
 import br.com.lunacom.portal.repository.DividendoRepository;
 import lombok.RequiredArgsConstructor;

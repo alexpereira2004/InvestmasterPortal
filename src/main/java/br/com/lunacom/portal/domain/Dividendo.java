@@ -1,10 +1,11 @@
 package br.com.lunacom.portal.domain;
 
+import br.com.lunacom.comum.domain.Ativo;
 import br.com.lunacom.portal.domain.dto.AtivoDividendoDto;
 import br.com.lunacom.portal.domain.dto.MediaDividendosValoresDto;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
