@@ -35,7 +35,7 @@ public class DividendoService {
 
     private Set<Ativo> ativoSet = new HashSet<>();
 //    public static final String REGEX = "<div class=\"table-content__item pointer\" role=\"button\" tabindex=\"0\">.+<soma-caption class=\"date soma-caption hydrated\">(.*)<\\/soma-caption>(?:.*\\s\\n){4}.*<soma-caption class=\"value soma-caption hydrated\">R\\$&nbsp;([\\.|\\d{1,3}]+,\\d{2}).*(CRÉDITO FRAÇÕES|JUROS S\\/CAPITAL|DIVIDENDOS|RENDIMENTO|\\* PROV \\* RENDIMENTO)\\s+([\\d*,]*\\d*)(?:\\s*PAPEL\\s|\\s*|)(\\w*)";
-    public static final String REGEX = "(\\d{1,2} DE .+ DE \\d{4})|(?:Entrada|ENTRADA)\\t(Juros Sobre Capital Próprio|Dividendo|Rendimento|Restituição de Capital)\\t(\\w{4}\\d{1,2}).*\\s\\n.*\\s.*\\n((\\d\\.*\\d+))\\tR\\$ ([\\.|\\d{1,3}]+,\\d{2})\\tR\\$ ([\\.|\\d{1,3}]+,\\d{2})";
+    public static final String REGEX = "(\\d{1,2} DE .+ DE \\d{4})|(?:Entrada|ENTRADA)\\t(Juros Sobre Capital Próprio|Dividendo|Rendimento|Restituição de Capital|Reembolso)\\t(\\w{4}\\d{1,2}).*\\s\\n.*\\s.*\\n((\\d\\.*\\d+))\\tR\\$ ([\\.|\\d{1,3}]+,\\d{2})\\tR\\$ ([\\.|\\d{1,3}]+,\\d{2})";
 
     public void salvarHtml(String request) {
         List<Dividendo> dividendoList = new ArrayList<>();
