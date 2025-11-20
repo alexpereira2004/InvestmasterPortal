@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.util;
 
-import br.com.lunacom.portal.domain.enumeration.FormatosData;
+import br.com.lunacom.comum.domain.enumeration.FormatosData;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;

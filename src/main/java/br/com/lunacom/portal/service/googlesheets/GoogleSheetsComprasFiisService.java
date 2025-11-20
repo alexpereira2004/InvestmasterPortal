@@ -1,8 +1,8 @@
 package br.com.lunacom.portal.service.googlesheets;
 
+import br.com.lunacom.comum.domain.enumeration.AcaoTipo;
 import br.com.lunacom.portal.converter.googlesheets.ComprasRowConverter;
 import br.com.lunacom.portal.domain.TipoAtivoInterface;
-import br.com.lunacom.portal.domain.enumeration.AcaoTipo;
 import br.com.lunacom.portal.service.AtivoService;
 import br.com.lunacom.portal.service.MovimentoCompraService;
 import org.springframework.beans.factory.annotation.Value;

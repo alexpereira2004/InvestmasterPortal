@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.converter.attribute;
 
-import br.com.lunacom.portal.domain.enumeration.TipoMovimento;
+import br.com.lunacom.comum.domain.enumeration.TipoMovimento;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static br.com.lunacom.portal.domain.enumeration.FormatosData.DD_MM_YYYY_BARRA;
+import static br.com.lunacom.comum.domain.enumeration.FormatosData.DD_MM_YYYY_BARRA;
 import static br.com.lunacom.portal.util.StringParser.toLocalDate;
 
 @Slf4j
