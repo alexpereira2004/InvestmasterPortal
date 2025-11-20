@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.service.monitor;
 
-import br.com.lunacom.portal.domain.entity.monitor.Monitor;
+import br.com.lunacom.comum.domain.entity.monitor.Monitor;
 import br.com.lunacom.portal.repository.monitor.MonitorRegraCruzamentoMediaRepository;
 import br.com.lunacom.portal.util.MonitorConstants;
 import lombok.RequiredArgsConstructor;

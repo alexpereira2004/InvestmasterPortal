@@ -1,9 +1,9 @@
 package br.com.lunacom.portal.service.googlesheets;
 
+import br.com.lunacom.comum.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
+import br.com.lunacom.comum.domain.dto.googlesheets.RendaFixaDto;
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.RendaFixaRowConverter;
-import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
-import br.com.lunacom.portal.domain.dto.googlesheets.RendaFixaDto;
 import br.com.lunacom.portal.repository.AgendamentoConfigRepository;
 import br.com.lunacom.portal.service.RendaFixaService;
 import com.google.api.services.sheets.v4.model.ValueRange;

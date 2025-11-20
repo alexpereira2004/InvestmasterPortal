@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.service;
 
-import br.com.lunacom.portal.domain.Aporte;
+import br.com.lunacom.comum.domain.Aporte;
 import br.com.lunacom.portal.repository.AporteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

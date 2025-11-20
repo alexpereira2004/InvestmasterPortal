@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.converter;
 
 import br.com.lunacom.comum.domain.Ativo;
-import br.com.lunacom.portal.domain.entity.monitor.Monitor;
+import br.com.lunacom.comum.domain.entity.monitor.Monitor;
 import br.com.lunacom.portal.domain.request.MonitorRegraRequest;
 import br.com.lunacom.portal.service.AtivoService;
 import jakarta.persistence.EntityNotFoundException;

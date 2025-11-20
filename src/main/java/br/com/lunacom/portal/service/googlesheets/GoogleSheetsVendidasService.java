@@ -1,11 +1,11 @@
 package br.com.lunacom.portal.service.googlesheets;
 
 import br.com.lunacom.comum.domain.Ativo;
+import br.com.lunacom.comum.domain.MovimentoVenda;
+import br.com.lunacom.comum.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
+import br.com.lunacom.comum.domain.dto.googlesheets.VendidasDto;
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.VendidasRowConverter;
-import br.com.lunacom.portal.domain.MovimentoVenda;
-import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
-import br.com.lunacom.portal.domain.dto.googlesheets.VendidasDto;
 import br.com.lunacom.portal.service.AtivoService;
 import br.com.lunacom.portal.service.MovimentoVendaService;
 import com.google.api.services.sheets.v4.model.ValueRange;

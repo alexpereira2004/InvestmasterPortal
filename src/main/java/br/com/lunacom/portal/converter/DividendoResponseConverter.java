@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.converter;
 
-import br.com.lunacom.portal.domain.Dividendo;
+import br.com.lunacom.comum.domain.Dividendo;
 import br.com.lunacom.portal.domain.response.DividendoResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

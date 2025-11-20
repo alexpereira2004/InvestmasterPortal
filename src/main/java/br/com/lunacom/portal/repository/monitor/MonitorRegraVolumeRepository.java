@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.repository.monitor;
 
-import br.com.lunacom.portal.domain.entity.monitor.MonitorRegraVolume;
+import br.com.lunacom.comum.domain.entity.monitor.MonitorRegraVolume;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

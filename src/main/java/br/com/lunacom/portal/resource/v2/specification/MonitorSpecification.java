@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.resource.v2.specification;
 
-import br.com.lunacom.portal.domain.entity.monitor.Monitor;
+import br.com.lunacom.comum.domain.entity.monitor.Monitor;
 import br.com.lunacom.portal.domain.request.GenericRequest;
 import br.com.lunacom.portal.domain.request.MonitorRegraRequest;
 import br.com.lunacom.portal.util.DataUtil;

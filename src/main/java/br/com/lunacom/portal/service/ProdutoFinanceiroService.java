@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.service;
 
-import br.com.lunacom.portal.domain.ProdutoFinanceiro;
+import br.com.lunacom.comum.domain.ProdutoFinanceiro;
 import br.com.lunacom.portal.repository.ProdutoFinanceiroRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

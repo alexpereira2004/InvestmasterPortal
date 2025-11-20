@@ -1,8 +1,8 @@
 package br.com.lunacom.portal.converter.monitor;
 
+import br.com.lunacom.comum.domain.entity.monitor.Monitor;
+import br.com.lunacom.comum.domain.entity.monitor.RegraCompraPorHistoricoVenda;
 import br.com.lunacom.portal.converter.OneWayConverter;
-import br.com.lunacom.portal.domain.entity.monitor.Monitor;
-import br.com.lunacom.portal.domain.entity.monitor.RegraCompraPorHistoricoVenda;
 import br.com.lunacom.portal.domain.request.monitor.RegraCompraPorHistoricoVendaRequest;
 import br.com.lunacom.portal.service.MovimentoVendaService;
 import br.com.lunacom.portal.service.monitor.MonitorService;

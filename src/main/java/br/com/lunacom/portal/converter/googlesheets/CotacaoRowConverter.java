@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.converter.googlesheets;
 
-import br.com.lunacom.portal.domain.dto.googlesheets.CotacaoDto;
+import br.com.lunacom.comum.domain.dto.googlesheets.CotacaoDto;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

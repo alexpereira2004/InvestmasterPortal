@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.service.monitor;
 
+import br.com.lunacom.comum.domain.entity.monitor.Monitor;
 import br.com.lunacom.portal.domain.dto.monitor.MonitorDto;
-import br.com.lunacom.portal.domain.entity.monitor.Monitor;
 import br.com.lunacom.portal.repository.monitor.MonitorRegraRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

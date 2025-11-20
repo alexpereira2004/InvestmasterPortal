@@ -1,10 +1,10 @@
 package br.com.lunacom.portal.service.googlesheets;
 
+import br.com.lunacom.comum.domain.Aporte;
+import br.com.lunacom.comum.domain.dto.googlesheets.AporteDto;
+import br.com.lunacom.comum.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import br.com.lunacom.portal.converter.googlesheets.AporteRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
-import br.com.lunacom.portal.domain.Aporte;
-import br.com.lunacom.portal.domain.dto.googlesheets.AporteDto;
-import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import br.com.lunacom.portal.service.AporteService;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import lombok.RequiredArgsConstructor;
