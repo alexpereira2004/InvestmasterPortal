@@ -16,7 +16,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping(value="v1/monitor/regras/compra-por-historico-venda")
