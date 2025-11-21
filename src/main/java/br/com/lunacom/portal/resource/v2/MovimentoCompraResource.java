@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.resource.v2;
 
+import br.com.lunacom.comum.domain.MovimentoCompra;
 import br.com.lunacom.portal.converter.Converter;
-import br.com.lunacom.portal.domain.MovimentoCompra;
 import br.com.lunacom.portal.domain.request.MovimentoCompraRequest;
 import br.com.lunacom.portal.domain.response.MovimentoCompraResponse;
 import br.com.lunacom.portal.repository.GenericRepository;

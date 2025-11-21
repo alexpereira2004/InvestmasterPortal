@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.resource.v2.specification;
 
-import br.com.lunacom.portal.domain.Projecao;
+import br.com.lunacom.comum.domain.Projecao;
 import br.com.lunacom.portal.domain.request.GenericRequest;
 import br.com.lunacom.portal.domain.request.ProjecaoRequest;
 import br.com.lunacom.portal.util.DataUtil;

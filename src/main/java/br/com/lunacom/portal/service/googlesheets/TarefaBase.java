@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.service.googlesheets;
 
+import br.com.lunacom.comum.domain.AgendamentoConfig;
 import br.com.lunacom.comum.domain.enumeration.Status;
-import br.com.lunacom.portal.domain.AgendamentoConfig;
 import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import br.com.lunacom.portal.repository.AgendamentoConfigRepository;
 import lombok.RequiredArgsConstructor;
