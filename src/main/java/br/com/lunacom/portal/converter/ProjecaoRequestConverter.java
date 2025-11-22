@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.converter;
 
-import br.com.lunacom.portal.domain.Projecao;
+import br.com.lunacom.comum.domain.Projecao;
 import br.com.lunacom.portal.domain.request.ProjecaoRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

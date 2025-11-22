@@ -1,10 +1,10 @@
 package br.com.lunacom.portal.resource.v1;
 
 import br.com.lunacom.comum.domain.Ativo;
+import br.com.lunacom.comum.domain.MovimentoVenda;
 import br.com.lunacom.portal.converter.AtivoResponseConverter;
 import br.com.lunacom.portal.converter.MovimentoVendaRequestConverter;
 import br.com.lunacom.portal.converter.MovimentoVendaResponseConverter;
-import br.com.lunacom.portal.domain.MovimentoVenda;
 import br.com.lunacom.portal.domain.request.MovimentoVendaRequest;
 import br.com.lunacom.portal.domain.response.AtivoResponse;
 import br.com.lunacom.portal.domain.response.MovimentoVendaResponse;

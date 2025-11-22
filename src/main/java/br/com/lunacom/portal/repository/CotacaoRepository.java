@@ -41,7 +41,7 @@ public interface CotacaoRepository extends JpaRepository<Cotacao, Integer> {
             String tipoAtivo,
             List<String> ativos);
 
-    @Query(" SELECT new br.com.lunacom.portal.domain.dto.ReferenciaRangeDto(\n" +
+    @Query(" SELECT new br.com.lunacom.comum.domain.dto.ReferenciaRangeDto(\n" +
             "        MIN(h.referencia),\n" +
             "        MAX(h.referencia)\n" +
             "    ) " +

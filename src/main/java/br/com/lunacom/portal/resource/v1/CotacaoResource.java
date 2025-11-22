@@ -1,8 +1,8 @@
 package br.com.lunacom.portal.resource.v1;
 
-import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
-import br.com.lunacom.portal.domain.dto.CotacaoHistoricoDto;
-import br.com.lunacom.portal.domain.dto.ReferenciaRangeDto;
+import br.com.lunacom.comum.domain.dto.CotacaoAgoraDto;
+import br.com.lunacom.comum.domain.dto.CotacaoHistoricoDto;
+import br.com.lunacom.comum.domain.dto.ReferenciaRangeDto;
 import br.com.lunacom.portal.domain.request.ExtratoCotacaoRequest;
 import br.com.lunacom.portal.domain.wrapper.ExtratoCotacaoWrapper;
 import br.com.lunacom.portal.service.CotacaoService;
