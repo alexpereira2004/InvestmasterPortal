@@ -1,11 +1,11 @@
 package br.com.lunacom.portal.converter;
 
-import br.com.lunacom.portal.domain.Ativo;
+import br.com.lunacom.comum.domain.Ativo;
 import br.com.lunacom.portal.domain.request.AtivoRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import static br.com.lunacom.portal.domain.enumeration.Seguindo.fromCodigo;
+import static br.com.lunacom.comum.domain.enumeration.Seguindo.fromCodigo;
 
 @AllArgsConstructor
 @Component

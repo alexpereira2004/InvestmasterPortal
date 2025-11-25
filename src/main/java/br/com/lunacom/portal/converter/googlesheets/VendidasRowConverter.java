@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.converter.googlesheets;
 
-import br.com.lunacom.portal.domain.dto.googlesheets.VendidasDto;
+import br.com.lunacom.comum.domain.dto.googlesheets.VendidasDto;
 import br.com.lunacom.portal.util.DataUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

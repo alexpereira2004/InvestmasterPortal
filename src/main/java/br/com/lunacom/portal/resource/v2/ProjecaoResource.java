@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.resource.v2;
 
+import br.com.lunacom.comum.domain.Projecao;
 import br.com.lunacom.portal.converter.Converter;
-import br.com.lunacom.portal.domain.Projecao;
 import br.com.lunacom.portal.domain.request.ProjecaoRequest;
 import br.com.lunacom.portal.domain.response.ProjecaoResponse;
 import br.com.lunacom.portal.repository.GenericRepository;

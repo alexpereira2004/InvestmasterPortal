@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.0</version>
+        <version>3.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com.lunacom</groupId>
@@ -60,12 +60,12 @@
             <version>8.0</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.49</version>
-            <scope>runtime</scope>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -114,7 +114,7 @@
         <dependency>
             <groupId>br.com.lunacom</groupId>
             <artifactId>comum</artifactId>
-            <version>1.0.5</version>
+            <version>1.0.8-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

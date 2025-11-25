@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.repository;
 
-import br.com.lunacom.portal.domain.MovimentoCompra;
+import br.com.lunacom.comum.domain.MovimentoCompra;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

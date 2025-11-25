@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.resource.v1;
 
-import br.com.lunacom.portal.domain.dto.googlesheets.CotacaoDto;
-import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
+import br.com.lunacom.comum.domain.dto.googlesheets.CotacaoDto;
+import br.com.lunacom.comum.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
 import br.com.lunacom.portal.service.googlesheets.GoogleSheetsDataServiceInterface;
 import br.com.lunacom.portal.service.googlesheets.ServiceFactory;
 import io.swagger.v3.oas.annotations.Operation;

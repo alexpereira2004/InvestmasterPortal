@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.domain.request;
 
-import br.com.lunacom.portal.domain.enumeration.TipoContato;
+import br.com.lunacom.comum.domain.enumeration.TipoContato;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

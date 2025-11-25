@@ -1,10 +1,10 @@
 package br.com.lunacom.portal.service;
 
-import br.com.lunacom.portal.domain.ProdutoFinanceiro;
-import br.com.lunacom.portal.domain.RendaFixa;
-import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
-import br.com.lunacom.portal.domain.dto.googlesheets.RendaFixaDto;
-import br.com.lunacom.portal.domain.enumeration.Meses;
+import br.com.lunacom.comum.domain.ProdutoFinanceiro;
+import br.com.lunacom.comum.domain.RendaFixa;
+import br.com.lunacom.comum.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
+import br.com.lunacom.comum.domain.dto.googlesheets.RendaFixaDto;
+import br.com.lunacom.comum.domain.enumeration.Meses;
 import br.com.lunacom.portal.repository.ProdutoFinanceiroRepository;
 import br.com.lunacom.portal.repository.RendaFixaRepository;
 import lombok.RequiredArgsConstructor;

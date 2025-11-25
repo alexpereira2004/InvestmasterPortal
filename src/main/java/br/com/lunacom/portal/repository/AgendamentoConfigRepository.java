@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.repository;
 
-import br.com.lunacom.portal.domain.AgendamentoConfig;
+import br.com.lunacom.comum.domain.AgendamentoConfig;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

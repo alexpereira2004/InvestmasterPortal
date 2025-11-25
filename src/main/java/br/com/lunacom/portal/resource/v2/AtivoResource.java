@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.resource.v2;
 
+import br.com.lunacom.comum.domain.Ativo;
 import br.com.lunacom.portal.converter.Converter;
-import br.com.lunacom.portal.domain.Ativo;
 import br.com.lunacom.portal.domain.request.AtivoRequest;
 import br.com.lunacom.portal.domain.response.AtivoResponse;
 import br.com.lunacom.portal.repository.GenericRepository;

@@ -1,8 +1,8 @@
 package br.com.lunacom.portal.converter;
 
-import br.com.lunacom.portal.domain.Contato;
-import br.com.lunacom.portal.domain.Endereco;
-import br.com.lunacom.portal.domain.Pessoa;
+import br.com.lunacom.comum.domain.Contato;
+import br.com.lunacom.comum.domain.Endereco;
+import br.com.lunacom.comum.domain.Pessoa;
 import br.com.lunacom.portal.domain.request.PessoaRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

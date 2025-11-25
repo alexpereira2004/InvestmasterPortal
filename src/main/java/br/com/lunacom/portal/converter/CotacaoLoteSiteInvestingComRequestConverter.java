@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.converter;
 
-import br.com.lunacom.portal.domain.Cotacao;
+import br.com.lunacom.comum.domain.Cotacao;
 import br.com.lunacom.portal.domain.request.CotacaoLoteSiteInvestingComRequest;
 import br.com.lunacom.portal.util.StringParser;
 import lombok.AllArgsConstructor;

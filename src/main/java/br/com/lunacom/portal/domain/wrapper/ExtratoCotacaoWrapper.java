@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.domain.wrapper;
 
-import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
+import br.com.lunacom.comum.domain.dto.ExtratoCotacaoDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -1,8 +1,8 @@
 package br.com.lunacom.portal.resource.v2;
 
+import br.com.lunacom.comum.domain.Dividendo;
+import br.com.lunacom.comum.domain.dto.MediaDividendosDto;
 import br.com.lunacom.portal.converter.Converter;
-import br.com.lunacom.portal.domain.Dividendo;
-import br.com.lunacom.portal.domain.dto.MediaDividendosDto;
 import br.com.lunacom.portal.domain.request.DividendoRequest;
 import br.com.lunacom.portal.domain.request.ExtratoDividendosRequest;
 import br.com.lunacom.portal.domain.response.DividendoResponse;

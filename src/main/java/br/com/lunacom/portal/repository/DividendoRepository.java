@@ -1,9 +1,9 @@
 package br.com.lunacom.portal.repository;
 
-import br.com.lunacom.portal.domain.Ativo;
-import br.com.lunacom.portal.domain.Dividendo;
-import br.com.lunacom.portal.domain.dto.AtivoDividendoDto;
-import br.com.lunacom.portal.domain.dto.MediaDividendosValoresDto;
+import br.com.lunacom.comum.domain.Ativo;
+import br.com.lunacom.comum.domain.Dividendo;
+import br.com.lunacom.comum.domain.dto.AtivoDividendoDto;
+import br.com.lunacom.comum.domain.dto.MediaDividendosValoresDto;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 

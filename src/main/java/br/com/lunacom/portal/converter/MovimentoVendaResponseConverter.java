@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.converter;
 
-import br.com.lunacom.portal.domain.MovimentoVenda;
+import br.com.lunacom.comum.domain.MovimentoVenda;
 import br.com.lunacom.portal.domain.response.MovimentoVendaResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

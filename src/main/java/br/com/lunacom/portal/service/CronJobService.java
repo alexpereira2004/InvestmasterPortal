@@ -1,8 +1,8 @@
 package br.com.lunacom.portal.service;
 
-import br.com.lunacom.portal.domain.AgendamentoConfig;
-import br.com.lunacom.portal.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
-import br.com.lunacom.portal.domain.enumeration.Status;
+import br.com.lunacom.comum.domain.AgendamentoConfig;
+import br.com.lunacom.comum.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
+import br.com.lunacom.comum.domain.enumeration.Status;
 import br.com.lunacom.portal.repository.AgendamentoConfigRepository;
 import br.com.lunacom.portal.service.googlesheets.GoogleSheetsDataServiceInterface;
 import br.com.lunacom.portal.service.googlesheets.ServiceFactory;

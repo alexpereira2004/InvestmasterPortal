@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.repository;
 
-import br.com.lunacom.portal.domain.Tag;
+import br.com.lunacom.comum.domain.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.domain.request.monitor;
 
-import br.com.lunacom.portal.domain.enumeration.Boleano;
-import br.com.lunacom.portal.domain.enumeration.PeriodoVenda;
+import br.com.lunacom.comum.domain.enumeration.Boleano;
+import br.com.lunacom.comum.domain.enumeration.PeriodoVenda;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

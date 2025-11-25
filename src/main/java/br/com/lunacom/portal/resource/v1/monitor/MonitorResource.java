@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.resource.v1.monitor;
 
-import br.com.lunacom.portal.domain.dto.monitor.MonitorDto;
+import br.com.lunacom.comum.domain.dto.monitor.MonitorDto;
 import br.com.lunacom.portal.service.monitor.MonitorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

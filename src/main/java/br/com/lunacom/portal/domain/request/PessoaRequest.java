@@ -1,7 +1,7 @@
 package br.com.lunacom.portal.domain.request;
 
-import br.com.lunacom.portal.domain.enumeration.Genero;
-import br.com.lunacom.portal.domain.enumeration.Status;
+import br.com.lunacom.comum.domain.enumeration.Genero;
+import br.com.lunacom.comum.domain.enumeration.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

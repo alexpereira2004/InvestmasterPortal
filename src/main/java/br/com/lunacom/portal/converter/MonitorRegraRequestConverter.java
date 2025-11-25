@@ -1,13 +1,12 @@
 package br.com.lunacom.portal.converter;
 
-import br.com.lunacom.portal.domain.Ativo;
-import br.com.lunacom.portal.domain.entity.monitor.Monitor;
+import br.com.lunacom.comum.domain.Ativo;
+import br.com.lunacom.comum.domain.entity.monitor.Monitor;
 import br.com.lunacom.portal.domain.request.MonitorRegraRequest;
 import br.com.lunacom.portal.service.AtivoService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import javax.persistence.EntityNotFoundException;
 
 @AllArgsConstructor
 @Component

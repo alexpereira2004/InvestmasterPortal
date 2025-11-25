@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.repository;
 
-import br.com.lunacom.portal.domain.Aporte;
+import br.com.lunacom.comum.domain.Aporte;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

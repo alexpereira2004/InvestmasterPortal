@@ -1,12 +1,12 @@
 package br.com.lunacom.portal.repository;
 
 
-import br.com.lunacom.portal.domain.Ativo;
-import br.com.lunacom.portal.domain.Cotacao;
-import br.com.lunacom.portal.domain.dto.CotacaoAgoraDto;
-import br.com.lunacom.portal.domain.dto.CotacaoHistoricoDto;
-import br.com.lunacom.portal.domain.dto.ExtratoCotacaoDto;
-import br.com.lunacom.portal.domain.dto.ReferenciaRangeDto;
+import br.com.lunacom.comum.domain.Ativo;
+import br.com.lunacom.comum.domain.Cotacao;
+import br.com.lunacom.comum.domain.dto.CotacaoAgoraDto;
+import br.com.lunacom.comum.domain.dto.CotacaoHistoricoDto;
+import br.com.lunacom.comum.domain.dto.ExtratoCotacaoDto;
+import br.com.lunacom.comum.domain.dto.ReferenciaRangeDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -41,7 +41,7 @@ public interface CotacaoRepository extends JpaRepository<Cotacao, Integer> {
             String tipoAtivo,
             List<String> ativos);
 
-    @Query(" SELECT new br.com.lunacom.portal.domain.dto.ReferenciaRangeDto(\n" +
+    @Query(" SELECT new br.com.lunacom.comum.domain.dto.ReferenciaRangeDto(\n" +
             "        MIN(h.referencia),\n" +
             "        MAX(h.referencia)\n" +
             "    ) " +

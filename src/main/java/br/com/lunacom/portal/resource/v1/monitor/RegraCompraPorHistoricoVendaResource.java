@@ -1,8 +1,8 @@
 package br.com.lunacom.portal.resource.v1.monitor;
 
+import br.com.lunacom.comum.domain.MovimentoCompra;
+import br.com.lunacom.comum.domain.entity.monitor.RegraCompraPorHistoricoVenda;
 import br.com.lunacom.portal.converter.monitor.RegraCompraPorHistoricoVendaRequestConverter;
-import br.com.lunacom.portal.domain.MovimentoCompra;
-import br.com.lunacom.portal.domain.entity.monitor.RegraCompraPorHistoricoVenda;
 import br.com.lunacom.portal.domain.request.monitor.RegraCompraPorHistoricoVendaRequest;
 import br.com.lunacom.portal.service.monitor.RegraCompraPorHistoricoVendaService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping(value="v1/monitor/regras/compra-por-historico-venda")

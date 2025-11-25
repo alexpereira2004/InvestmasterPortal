@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.util;
 
-import br.com.lunacom.portal.domain.enumeration.Meses;
+import br.com.lunacom.comum.domain.enumeration.Meses;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

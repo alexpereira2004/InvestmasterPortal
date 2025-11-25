@@ -1,9 +1,8 @@
 package br.com.lunacom.portal.converter.attribute;
 
-import br.com.lunacom.portal.domain.enumeration.TipoMovimento;
-
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import br.com.lunacom.comum.domain.enumeration.TipoMovimento;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
 @Converter(autoApply = false)
 public class TipoMovimentoConverter implements AttributeConverter<TipoMovimento, String> {

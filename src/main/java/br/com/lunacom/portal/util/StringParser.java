@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.util;
 
-import br.com.lunacom.portal.domain.enumeration.FormatosData;
+import br.com.lunacom.comum.domain.enumeration.FormatosData;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -55,6 +55,9 @@ public class StringParser {
     }
 
     public static Double toDouble(String input, Double defaultValue) {
+        if (Objects.isNull(input) || input.isEmpty()) {
+            return defaultValue;
+        }
         input = input.replace(",",".");
         return Optional.ofNullable(input).map(Double::valueOf).orElse(defaultValue);
     }

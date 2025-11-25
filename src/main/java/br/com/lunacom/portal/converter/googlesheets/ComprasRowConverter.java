@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.converter.googlesheets;
 
-import br.com.lunacom.portal.domain.dto.googlesheets.CarteiraDto;
+import br.com.lunacom.comum.domain.dto.googlesheets.CarteiraDto;
 import br.com.lunacom.portal.util.DataUtil;
 import br.com.lunacom.portal.util.StringParser;
 import lombok.RequiredArgsConstructor;

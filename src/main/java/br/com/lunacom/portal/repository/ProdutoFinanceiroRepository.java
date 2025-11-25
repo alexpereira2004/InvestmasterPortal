@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.repository;
 
-import br.com.lunacom.portal.domain.ProdutoFinanceiro;
+import br.com.lunacom.comum.domain.ProdutoFinanceiro;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;

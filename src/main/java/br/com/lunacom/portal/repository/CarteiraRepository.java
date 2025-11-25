@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.repository;
 
-import br.com.lunacom.portal.domain.Carteira;
+import br.com.lunacom.comum.domain.Carteira;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

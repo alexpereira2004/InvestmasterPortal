@@ -1,6 +1,6 @@
 package br.com.lunacom.portal.converter;
 
-import br.com.lunacom.portal.domain.entity.monitor.Monitor;
+import br.com.lunacom.comum.domain.entity.monitor.Monitor;
 import br.com.lunacom.portal.domain.response.MonitorRegraResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

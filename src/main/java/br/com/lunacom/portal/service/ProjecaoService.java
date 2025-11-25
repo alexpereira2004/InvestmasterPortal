@@ -1,8 +1,8 @@
 package br.com.lunacom.portal.service;
 
-import br.com.lunacom.portal.domain.Projecao;
-import br.com.lunacom.portal.domain.ResultadoDividendo;
-import br.com.lunacom.portal.domain.enumeration.AcaoTipo;
+import br.com.lunacom.comum.domain.Projecao;
+import br.com.lunacom.comum.domain.ResultadoDividendo;
+import br.com.lunacom.comum.domain.enumeration.AcaoTipo;
 import br.com.lunacom.portal.repository.ProjecaoRepository;
 import br.com.lunacom.portal.repository.ResultadoDividendoRepository;
 import lombok.RequiredArgsConstructor;
