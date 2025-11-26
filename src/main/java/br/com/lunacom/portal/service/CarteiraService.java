@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -39,11 +38,8 @@ public class CarteiraService {
         return carteiraRepository.findByAtivoCodigo(codigoAtivo);
     }
 
-    @Transactional
     public void removerPorCodigoAtivo(List<String> codigoAtivoLista) {
-        if (codigoAtivoLista != null && !codigoAtivoLista.isEmpty()) {
-            carteiraRepository.deleteByAtivoCodigoIn(codigoAtivoLista);
-        }
+        codigoAtivoLista.stream().forEach(carteiraRepository::deleteByAtivoCodigo);
     }
 
     private Carteira salvar(CarteiraDto item) {
