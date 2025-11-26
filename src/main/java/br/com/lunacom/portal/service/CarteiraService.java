@@ -41,7 +41,9 @@ public class CarteiraService {
 
     @Transactional
     public void removerPorCodigoAtivo(List<String> codigoAtivoLista) {
-        codigoAtivoLista.stream().forEach(carteiraRepository::deleteByAtivoCodigo);
+        if (codigoAtivoLista != null && !codigoAtivoLista.isEmpty()) {
+            carteiraRepository.deleteByAtivoCodigoIn(codigoAtivoLista);
+        }
     }
 
     private Carteira salvar(CarteiraDto item) {
