@@ -4,6 +4,7 @@ import br.com.lunacom.comum.domain.Ativo;
 import br.com.lunacom.comum.domain.MovimentoVenda;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,7 @@ public interface MovimentoVendaRepository extends JpaRepository<MovimentoVenda, 
 
     Optional<MovimentoVenda> findFirstByOrderByDataVendaDesc();
 
+    @Modifying
     void deleteByDataVendaGreaterThanEqual(LocalDate ultimaVenda);
 
     @Query("SELECT DISTINCT mv.ativo FROM MovimentoVenda mv")
