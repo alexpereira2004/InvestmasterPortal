@@ -3,15 +3,16 @@ package br.com.lunacom.portal.resource.v1.monitor;
 import br.com.lunacom.comum.domain.MovimentoCompra;
 import br.com.lunacom.comum.domain.entity.monitor.RegraCompraPorHistoricoVenda;
 import br.com.lunacom.portal.converter.monitor.RegraCompraPorHistoricoVendaRequestConverter;
+import br.com.lunacom.portal.domain.request.MovimentoCompraRequest;
 import br.com.lunacom.portal.domain.request.monitor.RegraCompraPorHistoricoVendaRequest;
+import br.com.lunacom.portal.domain.response.MovimentoCompraResponse;
 import br.com.lunacom.portal.service.monitor.RegraCompraPorHistoricoVendaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -32,5 +33,13 @@ public class RegraCompraPorHistoricoVendaResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(response.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @GetMapping(value="/listagem-paginado")
+    public ResponseEntity<Page<MovimentoCompraResponse>> pesquisar(MovimentoCompraRequest request, Pageable pageable) {
+        service.pesquisarComPaginacao(request, pageable);
+//        final Page<MovimentoCompraResponse> response = movimentoCompraPage.map(e -> responseConverter.decode(e));
+//        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(null);
     }
 }

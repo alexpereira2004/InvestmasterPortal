@@ -3,9 +3,12 @@ package br.com.lunacom.portal.service.monitor;
 import br.com.lunacom.comum.domain.entity.monitor.RegraCompraPorHistoricoVenda;
 import br.com.lunacom.comum.domain.enumeration.Status;
 import br.com.lunacom.comum.domain.enumeration.TipoMovimento;
+import br.com.lunacom.portal.domain.request.MovimentoCompraRequest;
 import br.com.lunacom.portal.repository.monitor.RegraCompraPorHistoricoVendaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -19,5 +22,10 @@ public class RegraCompraPorHistoricoVendaService {
         entity.setStatus(Status.ATIVO);
         entity.setTipo(TipoMovimento.COMPRA);
         return repository.save(entity);
+    }
+
+    public Page<RegraCompraPorHistoricoVenda> pesquisarComPaginacao(MovimentoCompraRequest request, Pageable pageable) {
+
+        return repository.findAll(pageable);
     }
 }
