@@ -26,7 +26,7 @@ public class RegraCompraPorHistoricoVendaRequestConverter implements OneWayConve
                 .buscarPorMonitorId(input.getMonitorId());
 
         final RegraCompraPorHistoricoVenda build = RegraCompraPorHistoricoVenda.builder()
-                .periodo(input.getPeriodo().getCodigo())
+//                .periodo(input.getPeriodo().getCodigo())
                 .excluirPrejuizos(input.getExcluirPrejuizos().getCodigo())
                 .monitor(monitor)
                 .build();
