@@ -5,7 +5,7 @@ import br.com.lunacom.comum.domain.entity.monitor.RegraCompraPorHistoricoVenda;
 import br.com.lunacom.portal.converter.monitor.RegraCompraPorHistoricoVendaRequestConverter;
 import br.com.lunacom.portal.domain.request.MovimentoCompraRequest;
 import br.com.lunacom.portal.domain.request.monitor.RegraCompraPorHistoricoVendaRequest;
-import br.com.lunacom.portal.domain.response.MovimentoCompraResponse;
+import br.com.lunacom.portal.domain.response.RegraCompraPorHistoricoVendaResponse;
 import br.com.lunacom.portal.service.monitor.RegraCompraPorHistoricoVendaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +24,12 @@ import java.net.URI;
 public class RegraCompraPorHistoricoVendaResource {
 
     private final RegraCompraPorHistoricoVendaService service;
-    private final RegraCompraPorHistoricoVendaRequestConverter converter;
+    private final RegraCompraPorHistoricoVendaRequestConverter requestConverter;
+
     @PostMapping
     public ResponseEntity<MovimentoCompra> create(
             @RequestBody @Valid RegraCompraPorHistoricoVendaRequest request) {
-        final RegraCompraPorHistoricoVenda entity = converter.encode(request);
+        final RegraCompraPorHistoricoVenda entity = requestConverter.encode(request);
         final RegraCompraPorHistoricoVenda response = service.salvar(entity);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(response.getId()).toUri();
