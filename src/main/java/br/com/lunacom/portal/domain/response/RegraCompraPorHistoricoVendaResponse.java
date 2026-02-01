@@ -20,6 +20,7 @@ public class RegraCompraPorHistoricoVendaResponse {
     private String recomendacao; //: 'N',
     private String recomendacaoEscala; //: 0,
     private String analise; //: 'O preço atual considerado para o calculo foi de R$ 23.65. O valor da aquisição na única venda foi de R$ 19.07. A relação entre os preços está 24.02% mais cara',
+    private String observacao; //: 'O preço atual considerado para o calculo foi de R$ 23.65. O valor da aquisição na única venda foi de R$ 19.07. A relação entre os preços está 24.02% mais cara',
     private String idMonitor; //: 12,
     private String cotacaoAlvo; //: 12.54,
     private String cotacaoAtual; //: 13.60
