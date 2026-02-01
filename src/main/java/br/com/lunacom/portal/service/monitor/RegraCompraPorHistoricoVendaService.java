@@ -5,9 +5,10 @@ import br.com.lunacom.comum.domain.entity.monitor.RegraCompraPorHistoricoVenda;
 import br.com.lunacom.comum.domain.enumeration.Status;
 import br.com.lunacom.comum.domain.enumeration.TipoMovimento;
 import br.com.lunacom.portal.converter.monitor.RegraCompraPorHistoricoVendaResponseConverter;
-import br.com.lunacom.portal.domain.request.MovimentoCompraRequest;
+import br.com.lunacom.portal.domain.request.monitor.RegraCompraPorHistoricoVendaConsultaRequest;
 import br.com.lunacom.portal.domain.response.RegraCompraPorHistoricoVendaResponse;
 import br.com.lunacom.portal.repository.monitor.RegraCompraPorHistoricoVendaRepository;
+import br.com.lunacom.portal.resource.v1.specification.RegraCompraPorHistoricoVendaSpecification;
 import br.com.lunacom.portal.service.CotacaoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,11 +34,17 @@ public class RegraCompraPorHistoricoVendaService {
         return repository.save(entity);
     }
 
-    public Page<RegraCompraPorHistoricoVendaResponse> pesquisarComPaginacao(MovimentoCompraRequest request, Pageable pageable) {
+    public Page<RegraCompraPorHistoricoVendaResponse> pesquisarComPaginacao(
+            RegraCompraPorHistoricoVendaConsultaRequest request,
+            Pageable pageable) {
         final List<CotacaoAgoraDto> cotacaoAgoraDtos = cotacaoService
                 .pesquisarCotacaoAgora();
+        final RegraCompraPorHistoricoVendaSpecification specification = RegraCompraPorHistoricoVendaSpecification
+                .builder()
+                .request(request)
+                .build();
         final Page<RegraCompraPorHistoricoVenda> all = repository
-                .findAll(pageable);
+                .findAll(specification, pageable);
         final Page<RegraCompraPorHistoricoVendaResponse> response = all.map(e -> responseConverter.encode(e));
         response.forEach(regra -> {
             final BigDecimal cotacaoAtual = cotacaoAgoraDtos.stream()
