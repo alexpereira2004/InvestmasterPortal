@@ -6,6 +6,8 @@ import br.com.lunacom.portal.domain.response.RegraCompraPorHistoricoVendaRespons
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Component
 public class RegraCompraPorHistoricoVendaResponseConverter implements OneWayConverter
@@ -13,19 +15,30 @@ public class RegraCompraPorHistoricoVendaResponseConverter implements OneWayConv
 
     @Override
     public RegraCompraPorHistoricoVendaResponse encode(RegraCompraPorHistoricoVenda input) {
-        final RegraCompraPorHistoricoVendaResponse item = RegraCompraPorHistoricoVendaResponse
-                .builder()
+        final RegraCompraPorHistoricoVendaResponse item = RegraCompraPorHistoricoVendaResponse.builder()
                 .id(String.valueOf(input.getId()))
-                .nome(input.getMonitor().getAtivo().getCodigo())
-                .tipo(input.getTipo().getCodigo())
-                .status(input.getStatus().getCodigo())
-                .periodo(input.getPeriodo().getCodigo())
+                .nome(Optional.ofNullable(input.getMonitor())
+                        .map(m -> m.getAtivo())
+                        .map(a -> a.getCodigo())
+                        .orElse(null))
+                .tipo(Optional.ofNullable(input.getTipo())
+                        .map(t -> t.getCodigo())
+                        .orElse(null))
+                .status(Optional.ofNullable(input.getStatus())
+                        .map(s -> s.getCodigo())
+                        .orElse(null))
+                .periodo(Optional.ofNullable(input.getPeriodo())
+                        .map(p -> p.getCodigo())
+                        .orElse(null))
                 .excluirPrejuizos(input.getExcluirPrejuizos())
                 .recomendacao(input.getRecomendacao())
                 .recomendacaoEscala(String.valueOf(input.getRecomendacaoEscala()))
                 .analise(input.getAnalise())
                 .observacao(input.getObservacao())
-                .idMonitor(input.getMonitor().getId().toString())
+                .idMonitor(Optional.ofNullable(input.getMonitor())
+                        .map(m -> m.getId())
+                        .map(Object::toString)
+                        .orElse(null))
                 .build();
         return item;
     }
