@@ -37,10 +37,11 @@ public class RegraCompraPorHistoricoVendaResource {
     }
 
     @GetMapping(value="/listagem-paginado")
-    public ResponseEntity<Page<MovimentoCompraResponse>> pesquisar(MovimentoCompraRequest request, Pageable pageable) {
-        service.pesquisarComPaginacao(request, pageable);
-//        final Page<MovimentoCompraResponse> response = movimentoCompraPage.map(e -> responseConverter.decode(e));
-//        return ResponseEntity.ok(response);
-        return ResponseEntity.ok(null);
+    public ResponseEntity<Page<RegraCompraPorHistoricoVendaResponse>> pesquisar
+            (MovimentoCompraRequest request, Pageable pageable) {
+        final Page<RegraCompraPorHistoricoVendaResponse> response = service
+                .pesquisarComPaginacao(request, pageable);
+
+        return ResponseEntity.ok(response);
     }
 }
