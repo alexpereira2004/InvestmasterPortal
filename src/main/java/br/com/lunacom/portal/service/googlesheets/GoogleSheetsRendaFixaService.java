@@ -39,7 +39,9 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
 
     @Override
     public List<RendaFixaDto> lerPlanilha(LeituraPlanilhaRequestDto dto) throws IOException {
-        dto.setSpreadsheetId(this.spreadsheetId);
+        if (Objects.isNull(dto.getSpreadsheetId())) {
+            dto.setSpreadsheetId(this.spreadsheetId);
+        }
         final ValueRange valueRange = this.obterDados(dto);
         final List<RendaFixaDto> novosDados = convertAll(valueRange.getValues());
 
