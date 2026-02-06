@@ -70,11 +70,11 @@ public class RendaFixaService {
             var e = rendaFixaAtualList.get(i);
 
             String mes = Meses.fromCodigo(e.getDataReferencia().substring(5, 7)).getDescricaoPt();
-            String inst = e.getProdutoFinanceiro().getNome();
+            String produto = e.getProdutoFinanceiro().getNome();
 
             novosDados.stream()
                 .filter(item -> Objects.equals(item.getData(), mes)
-                        && Objects.equals(item.getInstituicao(), inst))
+                        && Objects.equals(item.getInstituicao(), produto))
                 .findFirst()
                 .ifPresent( novoItem -> {
                     e.setRenda(BigDecimal.valueOf(novoItem.getRenda()));
