@@ -35,7 +35,7 @@ public class RendaFixaRowConverter implements GoogleSheetsRowConverter<RendaFixa
 
 
         final RendaFixaDto dto = RendaFixaDto.builder()
-                .data(row.get(0).toString())
+                .data(row.get(0).toString().trim())
                 .instituicao(row.get(1).toString())
                 .renda(toDouble(row.get(2).toString()))
                 .investido(toDouble(row.get(3).toString()))
