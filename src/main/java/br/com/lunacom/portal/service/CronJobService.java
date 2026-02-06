@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +85,7 @@ public class CronJobService {
                         .spreadsheetId(service.getSpreadsheetId())
                         .range(service.getRange())
                         .save(true)
-                        .ano("2025")
+                        .ano(String.valueOf(LocalDate.now().getYear()))
                         .build();
 
                 try {
