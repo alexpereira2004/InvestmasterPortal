@@ -5,7 +5,6 @@ import br.com.lunacom.portal.repository.AporteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -20,7 +19,6 @@ public class AporteService {
                 .map(Aporte::getDataAporte);
     }
 
-    @Transactional
     public void removerUltimosAportes(Optional<LocalDate> dataUltimoAporte) {
         dataUltimoAporte.ifPresent(repository::deleteByDataAporteGreaterThanEqual);
     }
