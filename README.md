@@ -69,6 +69,6 @@ A aplicação é configurada para ser facilmente empacotada em uma imagem Docker
 
 Após iniciar a aplicação (seja via `mvn spring-boot:run` ou Docker), você pode acessar a documentação interativa da API via Swagger UI:
 
-* Acesse: `http://localhost:12001/swagger-ui/index.html#/`
+* Acesse: `http://localhost:12001/swagger-ui/index.html`
 
 ---
