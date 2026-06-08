@@ -1,4 +1,4 @@
-CREATE TABLE metas (
+CREATE TABLE meta (
     id INT AUTO_INCREMENT,
     titulo VARCHAR(120) NOT NULL,
 	descricao TEXT,
