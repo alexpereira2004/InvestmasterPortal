@@ -7,6 +7,7 @@ import br.com.lunacom.portal.domain.request.monitor.RegraCompraPorHistoricoVenda
 import br.com.lunacom.portal.domain.request.monitor.RegraCompraPorHistoricoVendaRequest;
 import br.com.lunacom.portal.domain.response.RegraCompraPorHistoricoVendaResponse;
 import br.com.lunacom.portal.service.monitor.RegraCompraPorHistoricoVendaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 @Slf4j
 @RequiredArgsConstructor

@@ -5,11 +5,11 @@ import br.com.lunacom.portal.domain.request.GenericRequest;
 import br.com.lunacom.portal.repository.GenericRepository;
 import br.com.lunacom.portal.resource.v2.specification.GenericSpecification;
 import br.com.lunacom.portal.util.DataUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.NoSuchElementException;

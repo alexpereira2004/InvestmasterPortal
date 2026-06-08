@@ -10,6 +10,7 @@ import br.com.lunacom.portal.domain.response.AtivoResponse;
 import br.com.lunacom.portal.domain.response.MovimentoVendaResponse;
 import br.com.lunacom.portal.service.MovimentoVendaService;
 import br.com.lunacom.portal.util.StringParser;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.List;

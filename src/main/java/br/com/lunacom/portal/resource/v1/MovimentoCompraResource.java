@@ -6,6 +6,7 @@ import br.com.lunacom.portal.converter.MovimentoCompraResponseConverter;
 import br.com.lunacom.portal.domain.request.MovimentoCompraRequest;
 import br.com.lunacom.portal.domain.response.MovimentoCompraResponse;
 import br.com.lunacom.portal.service.MovimentoCompraService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 

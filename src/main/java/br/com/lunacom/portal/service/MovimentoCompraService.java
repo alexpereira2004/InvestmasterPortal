@@ -9,13 +9,13 @@ import br.com.lunacom.portal.resource.v1.specification.MovimentoCompraSpecificat
 import br.com.lunacom.portal.util.DataUtil;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.io.Reader;
 import java.io.StringReader;
 import java.time.LocalDate;

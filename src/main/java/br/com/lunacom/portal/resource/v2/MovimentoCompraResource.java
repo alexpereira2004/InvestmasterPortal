@@ -8,6 +8,7 @@ import br.com.lunacom.portal.repository.GenericRepository;
 import br.com.lunacom.portal.resource.v2.specification.MovimentoCompraSpecification;
 import br.com.lunacom.portal.service.MovimentoCompraService;
 import br.com.lunacom.portal.util.DataUtil;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 @Validated
 @RestController

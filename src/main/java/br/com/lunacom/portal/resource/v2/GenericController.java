@@ -8,6 +8,7 @@ import br.com.lunacom.portal.repository.GenericRepository;
 import br.com.lunacom.portal.resource.v2.specification.GenericSpecification;
 import br.com.lunacom.portal.service.GenericService;
 import br.com.lunacom.portal.util.DataUtil;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 

@@ -2,10 +2,10 @@ package br.com.lunacom.portal.validation.validator;
 
 import br.com.lunacom.portal.util.DataUtil;
 import br.com.lunacom.portal.validation.DataBrasil;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import java.time.format.DateTimeParseException;
 
 public class DataBrasilValidator implements ConstraintValidator<DataBrasil, String> {

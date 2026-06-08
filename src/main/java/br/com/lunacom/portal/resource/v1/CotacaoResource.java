@@ -6,13 +6,13 @@ import br.com.lunacom.comum.domain.dto.ReferenciaRangeDto;
 import br.com.lunacom.portal.domain.request.ExtratoCotacaoRequest;
 import br.com.lunacom.portal.domain.wrapper.ExtratoCotacaoWrapper;
 import br.com.lunacom.portal.service.CotacaoService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
