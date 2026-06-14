@@ -29,6 +29,14 @@ public class MetaResource {
     public Optional<Meta> lerUm(@PathVariable Integer id) {
         final Optional<Meta> meta = this.service.pesquisarPorId(id);
         return meta;
+    }
 
+    @GetMapping("/{categoria}/{ano}")
+    public Meta lerUmPorCategoriaEAno(
+            @PathVariable String categoria,
+            @PathVariable Integer ano
+    ) {
+        final Meta meta = this.service.pesquisarUnicoPorCategoriaEAno(categoria, ano);
+        return meta;
     }
 }

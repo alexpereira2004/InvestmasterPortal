@@ -6,4 +6,5 @@ public final class MonitorConstants {
     public static final String CRUZAMENTO = "CRUZAMENTO";
     public static final String MONITOR_NAO_ENCONTRADO = "Monitor não encontrado";
     public static final String MOVIMENTO_VENDA_NAO_ENCONTRADO = "Movimento de venda informado não foi encontrado";
+    public static final String META_NAO_ENCONTRADA = "Meta não foi encontrada";
 }
