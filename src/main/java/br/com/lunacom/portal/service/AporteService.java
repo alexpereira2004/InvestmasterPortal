@@ -5,6 +5,7 @@ import br.com.lunacom.portal.repository.AporteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -25,5 +26,9 @@ public class AporteService {
 
     public Aporte salvar(Aporte i) {
         return repository.save(i);
+    }
+
+    public BigDecimal calcularTotalAportes(Integer ano) {
+        return repository.sumValorByAno(ano);
     }
 }

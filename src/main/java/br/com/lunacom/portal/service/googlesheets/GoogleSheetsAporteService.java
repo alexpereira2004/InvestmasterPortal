@@ -3,9 +3,11 @@ package br.com.lunacom.portal.service.googlesheets;
 import br.com.lunacom.comum.domain.Aporte;
 import br.com.lunacom.comum.domain.dto.googlesheets.AporteDto;
 import br.com.lunacom.comum.domain.dto.googlesheets.LeituraPlanilhaRequestDto;
+import br.com.lunacom.comum.domain.enumeration.MetaCategoria;
 import br.com.lunacom.portal.converter.googlesheets.AporteRowConverter;
 import br.com.lunacom.portal.converter.googlesheets.GoogleSheetsRowConverter;
 import br.com.lunacom.portal.service.AporteService;
+import br.com.lunacom.portal.service.MetaService;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,7 @@ public class GoogleSheetsAporteService implements GoogleSheetsDataServiceInterfa
 
     private final AporteRowConverter converter;
     private final AporteService service;
+    private final MetaService metaService;
     @Value("${app.googleSheet.spreadsheetId}")
     private String spreadsheetId;
     @Value("${app.googleSheet.range.aportes}")
@@ -57,6 +60,9 @@ public class GoogleSheetsAporteService implements GoogleSheetsDataServiceInterfa
 
             service.removerUltimosAportes(dataUltimoAporte);
             result.forEach(i -> service.salvar(i));
+            metaService.atualizarMetaEspecifica(
+                    MetaCategoria.TOTAL_INVESTIDO.name(),
+                    LocalDateTime.now().getYear());
         }
         return rowList;
     }
