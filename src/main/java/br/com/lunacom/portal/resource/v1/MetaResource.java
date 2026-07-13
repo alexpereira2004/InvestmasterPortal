@@ -1,6 +1,7 @@
 package br.com.lunacom.portal.resource.v1;
 
 import br.com.lunacom.comum.domain.entity.meta.Meta;
+import br.com.lunacom.portal.domain.response.DetalheInvestimentoAnualResponse;
 import br.com.lunacom.portal.service.MetaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,4 +40,13 @@ public class MetaResource {
         final Meta meta = this.service.pesquisarUnicoPorCategoriaEAno(categoria, ano);
         return meta;
     }
+
+    @GetMapping("/detalhes/anual-bruto/{ano}")
+    public DetalheInvestimentoAnualResponse lerDetalhesInvestimentoAnualBruto(
+            @PathVariable Integer ano
+    ) {
+        final DetalheInvestimentoAnualResponse response = this.service.pesquisarDetalhesInvestimentoAnualBruto(ano);
+        return response;
+    }
+
 }
