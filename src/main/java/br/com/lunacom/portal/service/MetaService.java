@@ -74,21 +74,6 @@ public class MetaService {
 
     }
 
-    private void calcularProjecaoFutura(DetalheInvestimentoAnualResponse response, BigDecimal totalAporteProprio) {
-        final int monthValue = LocalDate.now().getMonthValue();
-
-        final int mesesPassados = monthValue > 0 ? monthValue : 1;
-
-        final BigDecimal projecaoMensal = totalAporteProprio.divide(BigDecimal.valueOf(mesesPassados), 2, RoundingMode.HALF_UP);
-
-        for (int mes = 1; mes <= 12; mes++) {
-            if (mes <= monthValue) {
-                response.getProjecaoFuturaAportes().put(mes, BigDecimal.ZERO);
-            } else {
-                response.getProjecaoFuturaAportes().put(mes, projecaoMensal);
-            }
-        }
-    }
 
     private List<Aporte> buscarAportes(Integer ano, PeriodoAnual periodo) {
         final List<Aporte> resultado = aporteRepository.findByDataAporteBetweenOrderByDataAporteDesc(
@@ -153,5 +138,21 @@ public class MetaService {
     private BigDecimal calcularTotalAporteProprio(DetalheInvestimentoAnualResponse response) {
         return response.getAporteProprioMensalMap().values().stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private void calcularProjecaoFutura(DetalheInvestimentoAnualResponse response, BigDecimal totalAporteProprio) {
+        final int mesAtual = LocalDate.now().getMonthValue();
+
+        final int mesesPassados = mesAtual > 0 ? mesAtual : 1;
+
+        final BigDecimal projecaoMensal = totalAporteProprio.divide(BigDecimal.valueOf(mesesPassados), 2, RoundingMode.HALF_UP);
+
+        for (int mes = 1; mes <= 12; mes++) {
+            if (mes <= mesAtual) {
+                response.getProjecaoFuturaAportes().put(mes, BigDecimal.ZERO);
+            } else {
+                response.getProjecaoFuturaAportes().put(mes, projecaoMensal);
+            }
+        }
     }
 }
