@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.List;
@@ -65,10 +66,27 @@ public class MetaService {
         preencherComZeros(response);
 
         response.setTotalRendaFixa(calcularTotalRendaFixa(response));
-        response.setTotalAporteProprio(calcularTotalAporteProprio(response));
+        final BigDecimal totalAporteProprio = calcularTotalAporteProprio(response);
+        response.setTotalAporteProprio(totalAporteProprio);
 
         return response;
 
+    }
+
+    private void calcularProjecaoFutura(DetalheInvestimentoAnualResponse response, BigDecimal totalAporteProprio) {
+        final int monthValue = LocalDate.now().getMonthValue();
+
+        final int mesesPassados = monthValue > 0 ? monthValue : 1;
+
+        final BigDecimal projecaoMensal = totalAporteProprio.divide(BigDecimal.valueOf(mesesPassados), 2, RoundingMode.HALF_UP);
+
+        for (int mes = 1; mes <= 12; mes++) {
+            if (mes <= monthValue) {
+                response.getProjecaoFuturaAportes().put(mes, BigDecimal.ZERO);
+            } else {
+                response.getProjecaoFuturaAportes().put(mes, projecaoMensal);
+            }
+        }
     }
 
     private List<Aporte> buscarAportes(Integer ano, PeriodoAnual periodo) {

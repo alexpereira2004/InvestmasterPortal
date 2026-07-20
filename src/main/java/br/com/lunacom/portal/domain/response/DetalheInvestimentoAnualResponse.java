@@ -18,5 +18,5 @@ public class DetalheInvestimentoAnualResponse extends GenericResponse {
     private BigDecimal totalRendaFixa;
     private Map<Integer, BigDecimal> aporteProprioMensalMap = new HashMap<>();
     private BigDecimal totalAporteProprio;
-
+    private Map<Integer, BigDecimal> projecaoFuturaAportes = new HashMap<>();
 }
