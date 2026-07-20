@@ -24,6 +24,10 @@ import static br.com.lunacom.portal.util.MonitorConstants.META_NAO_ENCONTRADA;
 @Service
 public class MetaService {
     public static final String MSG_VALOR_META_ATUALIZADO = "O valor da meta {} para o ano {} foi atualizada para {}.";
+    public static final String NENHUM_APORTE_ENCONTRADO_PARA_O_ANO = "Nenhum aporte encontrado para o ano {}.";
+    public static final String TOTAL_DE_APORTES_PARA_O_ANO = "Total de aportes para o ano {}: {}";
+    public static final String RENDA_FIXA = "Renda Fixa";
+    public static final String O_ANO_NAO_PODE_SER_NULO = "O ano não pode ser nulo";
     private final MetaRepository repository;
     private final AporteRepository aporteRepository;
     private final AporteService aporteService;
@@ -79,10 +83,10 @@ public class MetaService {
         final List<Aporte> resultado = aporteRepository.findByDataAporteBetweenOrderByDataAporteDesc(
                 periodo.primeiroDia(), periodo.ultimoDia());
         if (resultado.isEmpty()) {
-            log.info("Nenhum aporte encontrado para o ano {}.", ano);
+            log.info(NENHUM_APORTE_ENCONTRADO_PARA_O_ANO, ano);
         } else {
             final BigDecimal totalAportes = aporteService.calcularTotalAportes(ano);
-            log.info("Total de aportes para o ano {}: {}", ano, totalAportes);
+            log.info(TOTAL_DE_APORTES_PARA_O_ANO, ano, totalAportes);
         }
         return resultado;
     }
@@ -98,7 +102,7 @@ public class MetaService {
                 ));
 
         resultado.stream()
-                .filter(a -> a.getOrigem() != null && a.getOrigem().startsWith("Renda Fixa"))
+                .filter(a -> a.getOrigem() != null && a.getOrigem().startsWith(RENDA_FIXA))
                 .forEach(a -> response.getRendaFixaMensalMap().merge(
                         a.getDataAporte().getMonthValue(),
                         a.getValor(),
@@ -120,7 +124,7 @@ public class MetaService {
 
     private PeriodoAnual obterPeriodoPorAno(Integer ano) {
         if (ano == null) {
-            throw new IllegalArgumentException("O ano não pode ser nulo.");
+            throw new IllegalArgumentException(O_ANO_NAO_PODE_SER_NULO);
         }
 
         Year anoObjeto = Year.of(ano);
