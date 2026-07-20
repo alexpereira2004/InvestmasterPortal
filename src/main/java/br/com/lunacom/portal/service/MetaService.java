@@ -64,10 +64,12 @@ public class MetaService {
 
         preencherComZeros(response);
 
+        response.setTotalRendaFixa(calcularTotalRendaFixa(response));
+        response.setTotalAporteProprio(calcularTotalAporteProprio(response));
+
         return response;
 
     }
-
 
     private List<Aporte> buscarAportes(Integer ano, PeriodoAnual periodo) {
         final List<Aporte> resultado = aporteRepository.findByDataAporteBetweenOrderByDataAporteDesc(
@@ -122,5 +124,15 @@ public class MetaService {
         LocalDate ultimoDia = anoObjeto.atDay(anoObjeto.length());
 
         return new PeriodoAnual(primeiroDia, ultimoDia);
+    }
+
+    private BigDecimal calcularTotalRendaFixa(DetalheInvestimentoAnualResponse response) {
+        return response.getRendaFixaMensalMap().values().stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private BigDecimal calcularTotalAporteProprio(DetalheInvestimentoAnualResponse response) {
+        return response.getAporteProprioMensalMap().values().stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

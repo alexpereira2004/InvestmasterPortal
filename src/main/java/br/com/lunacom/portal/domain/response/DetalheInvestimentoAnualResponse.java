@@ -15,6 +15,8 @@ import java.util.Map;
 @AllArgsConstructor
 public class DetalheInvestimentoAnualResponse extends GenericResponse {
     private Map<Integer, BigDecimal> rendaFixaMensalMap = new HashMap<>();
+    private BigDecimal totalRendaFixa;
     private Map<Integer, BigDecimal> aporteProprioMensalMap = new HashMap<>();
+    private BigDecimal totalAporteProprio;
 
 }
