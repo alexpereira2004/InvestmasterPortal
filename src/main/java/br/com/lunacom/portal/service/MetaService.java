@@ -55,7 +55,21 @@ public class MetaService {
 
 
     public DetalheInvestimentoAnualResponse pesquisarDetalhesInvestimentoAnualBruto(Integer ano) {
+        DetalheInvestimentoAnualResponse response = new DetalheInvestimentoAnualResponse();
         PeriodoAnual periodo = obterPeriodoPorAno(ano);
+
+        final List<Aporte> resultado = buscarAportes(ano, periodo);
+
+        separarAportesPorTipo(resultado, response);
+
+        preencherComZeros(response);
+
+        return response;
+
+    }
+
+
+    private List<Aporte> buscarAportes(Integer ano, PeriodoAnual periodo) {
         final List<Aporte> resultado = aporteRepository.findByDataAporteBetweenOrderByDataAporteDesc(
                 periodo.primeiroDia(), periodo.ultimoDia());
         if (resultado.isEmpty()) {
@@ -64,9 +78,10 @@ public class MetaService {
             final BigDecimal totalAportes = aporteService.calcularTotalAportes(ano);
             log.info("Total de aportes para o ano {}: {}", ano, totalAportes);
         }
+        return resultado;
+    }
 
-        DetalheInvestimentoAnualResponse response = new DetalheInvestimentoAnualResponse();
-
+    private void separarAportesPorTipo(List<Aporte> resultado, DetalheInvestimentoAnualResponse response) {
         resultado.stream()
                 .filter(a -> a.getOrigem() != null &&
                         (a.getOrigem().startsWith("CC") || a.getOrigem().startsWith("Ajuste")))
@@ -83,7 +98,10 @@ public class MetaService {
                         a.getValor(),
                         BigDecimal::add
                 ));
+    }
 
+
+    private void preencherComZeros(DetalheInvestimentoAnualResponse response) {
         for (int mes = 1; mes <= 12; mes++) {
             if (!response.getAporteProprioMensalMap().containsKey(mes)) {
                 response.getAporteProprioMensalMap().put(mes, BigDecimal.ZERO);
@@ -92,9 +110,6 @@ public class MetaService {
                 response.getRendaFixaMensalMap().put(mes, BigDecimal.ZERO);
             }
         }
-
-        return response;
-
     }
 
     private PeriodoAnual obterPeriodoPorAno(Integer ano) {
