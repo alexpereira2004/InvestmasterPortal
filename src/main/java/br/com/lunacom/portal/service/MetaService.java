@@ -69,6 +69,7 @@ public class MetaService {
         final BigDecimal totalAporteProprio = calcularTotalAporteProprio(response);
         response.setTotalAporteProprio(totalAporteProprio);
 
+        calcularProjecaoFutura(response, totalAporteProprio);
         return response;
 
     }
