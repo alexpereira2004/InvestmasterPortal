@@ -143,12 +143,17 @@ public class MetaService {
     private void calcularProjecaoFutura(DetalheInvestimentoAnualResponse response, BigDecimal totalAporteProprio) {
         final int mesAtual = LocalDate.now().getMonthValue();
 
-        final int mesesPassados = mesAtual > 0 ? mesAtual : 1;
+        final int mesesFechados = Math.max(mesAtual - 1, 1);
 
-        final BigDecimal projecaoMensal = totalAporteProprio.divide(BigDecimal.valueOf(mesesPassados), 2, RoundingMode.HALF_UP);
+        final BigDecimal totalAportesCompletos = totalAporteProprio.subtract(
+                response.getAporteProprioMensalMap().getOrDefault(mesAtual, BigDecimal.ZERO)
+        );
+
+        final BigDecimal projecaoMensal = totalAportesCompletos
+                .divide(BigDecimal.valueOf(mesesFechados), 2, RoundingMode.HALF_UP);
 
         for (int mes = 1; mes <= 12; mes++) {
-            if (mes <= mesAtual) {
+            if (mes < mesAtual) {
                 response.getProjecaoFuturaAportes().put(mes, BigDecimal.ZERO);
             } else {
                 response.getProjecaoFuturaAportes().put(mes, projecaoMensal);
