@@ -64,15 +64,13 @@ public class MetaService {
         DetalheInvestimentoAnualResponse response = new DetalheInvestimentoAnualResponse();
         PeriodoAnual periodo = obterPeriodoPorAno(ano);
 
-        final List<Aporte> resultado = buscarAportes(ano, periodo);
+        final List<Aporte> listaApostes = buscarAportes(ano, periodo);
 
-        separarAportesPorTipo(resultado, response);
+        definirAportesRealizados(listaApostes, response);
 
-        preencherComZeros(response);
-        
-        response.setTotalRendaFixa(calcularTotalRendaFixa(response));
-        final BigDecimal totalAporteProprio = calcularTotalAporteProprio(response);
-        response.setTotalAporteProprio(totalAporteProprio);
+        definirTotalRendaFixa(response);
+
+        final BigDecimal totalAporteProprio = definirTotalAporteProprio(response);
         
         definirProjecaoInicial(ano, response);
 
@@ -94,7 +92,7 @@ public class MetaService {
         return resultado;
     }
 
-    private void separarAportesPorTipo(List<Aporte> resultado, DetalheInvestimentoAnualResponse response) {
+    private void definirAportesRealizados(List<Aporte> resultado, DetalheInvestimentoAnualResponse response) {
         resultado.stream()
                 .filter(a -> a.getOrigem() != null &&
                         (a.getOrigem().startsWith("CC") || a.getOrigem().startsWith("Ajuste")))
@@ -111,6 +109,7 @@ public class MetaService {
                         a.getValor(),
                         BigDecimal::add
                 ));
+        preencherComZeros(response);
     }
 
 
@@ -137,14 +136,18 @@ public class MetaService {
         return new PeriodoAnual(primeiroDia, ultimoDia);
     }
 
-    private BigDecimal calcularTotalRendaFixa(DetalheInvestimentoAnualResponse response) {
-        return response.getRendaFixaMensalMap().values().stream()
+    private BigDecimal definirTotalRendaFixa(DetalheInvestimentoAnualResponse response) {
+        final BigDecimal totalRendaFixa = response.getRendaFixaMensalMap().values().stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+        response.setTotalRendaFixa(totalRendaFixa);
+        return totalRendaFixa;
     }
 
-    private BigDecimal calcularTotalAporteProprio(DetalheInvestimentoAnualResponse response) {
-        return response.getAporteProprioMensalMap().values().stream()
+    private BigDecimal definirTotalAporteProprio(DetalheInvestimentoAnualResponse response) {
+        final BigDecimal totalAporteProprio = response.getAporteProprioMensalMap().values().stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+        response.setTotalAporteProprio(totalAporteProprio);
+        return totalAporteProprio;
     }
 
     private void definirProjecaoInicial(Integer ano, DetalheInvestimentoAnualResponse response) {
