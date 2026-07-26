@@ -76,7 +76,7 @@ public class MetaService {
         
         definirProjecaoInicial(ano, response);
 
-        calcularProjecaoFutura(response, totalAporteProprio);
+        definirProjecaoFutura(response, totalAporteProprio);
         return response;
 
     }
@@ -157,7 +157,7 @@ public class MetaService {
         }
     }
     
-    private void calcularProjecaoFutura(DetalheInvestimentoAnualResponse response, BigDecimal totalAporteProprio) {
+    private void definirProjecaoFutura(DetalheInvestimentoAnualResponse response, BigDecimal totalAporteProprio) {
         final int mesAtual = LocalDate.now().getMonthValue();
 
         final int mesesFechados = Math.max(mesAtual - 1, 1);
