@@ -37,7 +37,7 @@ public class MetaService {
         return repository.findById(id);
     }
 
-    public Meta pesquisarUnicoPorCategoriaEAno(
+    public Meta pesquisarUmaMetaPorCategoriaEAno(
             String categoria, Integer ano) {
         final Optional<Meta> optional = repository
                 .findAllByCategoriaAndAno(categoria, ano);

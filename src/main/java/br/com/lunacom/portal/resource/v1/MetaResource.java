@@ -37,7 +37,7 @@ public class MetaResource {
             @PathVariable String categoria,
             @PathVariable Integer ano
     ) {
-        final Meta meta = this.service.pesquisarUnicoPorCategoriaEAno(categoria, ano);
+        final Meta meta = this.service.pesquisarUmaMetaPorCategoriaEAno(categoria, ano);
         return meta;
     }
 
