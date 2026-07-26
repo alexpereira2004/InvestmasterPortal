@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Year;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,10 +69,12 @@ public class MetaService {
         separarAportesPorTipo(resultado, response);
 
         preencherComZeros(response);
-
+        
         response.setTotalRendaFixa(calcularTotalRendaFixa(response));
         final BigDecimal totalAporteProprio = calcularTotalAporteProprio(response);
         response.setTotalAporteProprio(totalAporteProprio);
+        
+        definirProjecaoInicial(ano, response);
 
         calcularProjecaoFutura(response, totalAporteProprio);
         return response;
@@ -144,6 +147,16 @@ public class MetaService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    private void definirProjecaoInicial(Integer ano, DetalheInvestimentoAnualResponse response) {
+        final List<Meta> metas = this.pesquisarMetaAporteMensal(ano);
+        metas.sort(Comparator.comparing(Meta::getCategoria));
+        for (int i = 0; i < metas.size(); i++) {
+            int mes = i + 1;
+            BigDecimal valorMeta = metas.get(i).getValorMeta();
+            response.getProjecaoInicialAportes().put(mes, valorMeta);
+        }
+    }
+    
     private void calcularProjecaoFutura(DetalheInvestimentoAnualResponse response, BigDecimal totalAporteProprio) {
         final int mesAtual = LocalDate.now().getMonthValue();
 
@@ -163,5 +176,17 @@ public class MetaService {
                 response.getProjecaoFuturaAportes().put(mes, projecaoMensal);
             }
         }
+    }
+
+
+    private List<Meta> pesquisarMetaAporteMensal(Integer ano) {
+
+        final List<Meta> listaMetas = repository
+                .buscarPorAnoECategoriaLike(ano, "META_APORTE_MENSAL_");
+        if(listaMetas.isEmpty()) {
+            log.info(META_NAO_ENCONTRADA);
+            log.info(ano.toString());
+        }
+        return listaMetas;
     }
 }
