@@ -21,6 +21,14 @@ public interface AporteRepository extends GenericRepository<Aporte> {
     @Transactional
     void deleteByDataAporteGreaterThanEqual(LocalDate ultimoAporte);
 
+    @Query("SELECT COALESCE(SUM(a.valor), 0) " +
+            " FROM Aporte a " +
+            "WHERE YEAR(a.dataAporte) = :ano " +
+            "AND (a.origem LIKE ('CC%') OR a.origem LIKE ('Ajuste%'))")
+    BigDecimal sumValorAporteProprioByAno(
+            @Param("ano") Integer ano
+    );
+
     @Query("SELECT COALESCE(SUM(a.valor), 0) FROM Aporte a WHERE YEAR(a.dataAporte) = :ano")
     BigDecimal sumValorByAno(
             @Param("ano") Integer ano

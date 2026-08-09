@@ -28,6 +28,10 @@ public class AporteService {
         return repository.save(i);
     }
 
+    public BigDecimal calcularTotalAportesProprios(Integer ano) {
+        return repository.sumValorAporteProprioByAno(ano);
+    }
+
     public BigDecimal calcularTotalAportes(Integer ano) {
         return repository.sumValorByAno(ano);
     }

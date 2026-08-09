@@ -50,7 +50,7 @@ public class MetaService {
         return repository.findAllByCategoriaAndAno(categoria, ano)
                 .map(meta -> {
                     final BigDecimal totalAportes = aporteService
-                            .calcularTotalAportes(ano);
+                            .calcularTotalAportesProprios(ano);
                     meta.setValorMeta(totalAportes);
                     repository.save(meta);
                     log.info(MSG_VALOR_META_ATUALIZADO, categoria, ano, totalAportes);
