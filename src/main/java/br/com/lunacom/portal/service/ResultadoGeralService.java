@@ -65,45 +65,38 @@ public class ResultadoGeralService {
 
         if (carteira != null && carteira.getAtivo() != null) {
 
-        final BigDecimal totalAtualizadoComDividendos = carteira
-                .getTotalAtualizado()
-                .add(totalDividendos);
+            final BigDecimal totalAtualizadoComDividendos = carteira
+                    .getTotalAtualizado()
+                    .add(totalDividendos);
 
-        final BigDecimal proporcaoTotalInvestido
-                = calcularProporcaoDoTotalInvestido(carteiraList, carteira);
+            final BigDecimal proporcaoTotalInvestido
+                    = calcularProporcaoDoTotalInvestido(carteiraList, carteira);
 
-        final BigDecimal proporcaoTipoAtivoInvestido
-                = calcularProporcaoPorTipoInvestido(carteiraList, carteira);
+            final BigDecimal proporcaoTipoAtivoInvestido
+                    = calcularProporcaoPorTipoInvestido(carteiraList, carteira);
 
-        final BigDecimal resultado = calcularResultado(carteira);
+            final BigDecimal resultado = calcularResultado(carteira);
 
-        final BigDecimal resultadoPercentual = calcularResultadoPercentual(carteira, resultado);
+            final BigDecimal resultadoPercentual = calcularResultadoPercentual(carteira, resultado);
 
-        final BigDecimal resultadoComDividendo = calcularResultadoComDividendos(totalDividendos, resultado);
+            final BigDecimal resultadoComDividendo = calcularResultadoComDividendos(totalDividendos, resultado);
 
-        final BigDecimal resultadoComDividendoPercentual
-                = calcularResultadoComDividendosPercentual(carteira, resultadoComDividendo);
+            final BigDecimal resultadoComDividendoPercentual
+                    = calcularResultadoComDividendosPercentual(carteira, resultadoComDividendo);
 
-        final BigDecimal dividendYeld = calcularDividendYeld(carteira, totalDividendos);
+            final BigDecimal dividendYeld = calcularDividendYeld(carteira, totalDividendos);
 
-        return ResultadoGeralResponse.builder()
-                .codigoAtivo(ativo)
-                .precoMedio(carteira.getPrecoPago())
-                .cotacaoAtual(cotacaoAgoraDto.getCotacaoAtual())
-                .quantidadeCotas(carteira.getQuantidade())
-                .investimentoTotal(carteira.getTotalInvestido())
-                .investimentoTotalAtualizado(carteira.getTotalAtualizado())
-                .investimentoTotalAtualizadoComDividendos(totalAtualizadoComDividendos)
-                .proporcaoTotalInvestido(proporcaoTotalInvestido)
-                .proporcaoTipoAtivoInvestido(proporcaoTipoAtivoInvestido)
-                .resultado(resultado)
-                .resultadoPercentual(resultadoPercentual)
-                .resultadoComDividendo(resultadoComDividendo)
-                .resultadoComDividendoPercentual(resultadoComDividendoPercentual)
-                .dividendYeld(dividendYeld)
-                .totalDividendos(totalDividendos)
-                .dividendos(dividendoAnualList)
-                .build();
+            response.setInvestimentoTotalAtualizadoComDividendos(totalAtualizadoComDividendos);
+            response.setProporcaoTotalInvestido(proporcaoTotalInvestido);
+            response.setProporcaoTipoAtivoInvestido(proporcaoTipoAtivoInvestido);
+            response.setResultado(resultado);
+            response.setResultadoPercentual(resultadoPercentual);
+            response.setResultadoComDividendo(resultadoComDividendo);
+            response.setResultadoComDividendoPercentual(resultadoComDividendoPercentual);
+            response.setDividendYeld(dividendYeld);
+        }
+
+        return response;
     }
 
     private BigDecimal calcularDividendYeld(Carteira carteira, BigDecimal totalDividendos) {
