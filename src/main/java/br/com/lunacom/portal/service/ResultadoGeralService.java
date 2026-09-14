@@ -163,13 +163,14 @@ public class ResultadoGeralService {
     }
 
 
-    private Carteira getCarteira(String ativo, List<Carteira> carteiraList) {
+    private Optional<Carteira> getCarteira(String ativo, List<Carteira> carteiraList) {
         final Optional<Carteira> optional = carteiraList.stream()
                 .filter(c -> c.getAtivo().getCodigo().equals(ativo)).findFirst();
 
-        final Carteira carteira = optional.orElseThrow(
-                () -> new NoSuchElementException(format(MSG_ATIVO_NAO_EXISTE, ativo)));
-        return carteira;
+        if(optional.isEmpty()) {
+            log.info(format(MSG_ATIVO_NAO_EXISTE, ativo));
+        }
+        return optional;
     }
 
     private BigDecimal calcularTotalDividendos(List<DividendoAnual> dividendoAnualList) {
