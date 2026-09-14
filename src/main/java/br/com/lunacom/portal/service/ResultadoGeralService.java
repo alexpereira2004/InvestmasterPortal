@@ -42,13 +42,28 @@ public class ResultadoGeralService {
 
         final List<Carteira> carteiraList = carteiraService.pesquisar();
 
-        final Carteira carteira = getCarteira(ativo, carteiraList);
+        final Optional<Carteira> optional = getCarteira(ativo, carteiraList);
+
+        final Carteira carteira = optional.orElse(new Carteira());
 
         final CotacaoAgoraDto cotacaoAgoraDto = getCotacaoAgora(ativo);
 
         final List<DividendoAnual> dividendoAnualList = getDividendoAnualList(ativo, cotacaoAgoraDto);
 
         BigDecimal totalDividendos = calcularTotalDividendos(dividendoAnualList);
+
+        final ResultadoGeralResponse response = ResultadoGeralResponse.builder()
+                .codigoAtivo(ativo)
+                .precoMedio(carteira.getPrecoPago())
+                .cotacaoAtual(cotacaoAgoraDto.getCotacaoAtual())
+                .quantidadeCotas(carteira.getQuantidade())
+                .investimentoTotal(carteira.getTotalInvestido())
+                .investimentoTotalAtualizado(carteira.getTotalAtualizado())
+                .totalDividendos(totalDividendos)
+                .dividendos(dividendoAnualList)
+                .build();
+
+        if (carteira != null && carteira.getAtivo() != null) {
 
         final BigDecimal totalAtualizadoComDividendos = carteira
                 .getTotalAtualizado()
@@ -189,6 +204,10 @@ public class ResultadoGeralService {
     }
 
     private BigDecimal calcularDyAtualizado(AtivoDividendoDto r, BigDecimal cotacaoAtual) {
+        if (cotacaoAtual == null) {
+            log.warn(format("O ativo %s não possui cotação agora", r.getCodigo()));
+            return BigDecimal.ZERO;
+        }
         final BigDecimal totalInvestido = cotacaoAtual.multiply(BigDecimal.valueOf(r.getQuantidadeMaxima()));
         BigDecimal resultado = r.getValorTotal()
                 .divide(totalInvestido, 4, RoundingMode.HALF_UP)
