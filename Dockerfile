@@ -1,12 +1,27 @@
 # Etapa 1: Build da aplicação usando Maven com Java 8
 FROM maven:3.9.6-eclipse-temurin-8 AS builder
 
+# Recebe o token enviado pelo Render durante o build
+ARG GH_TOKEN
+
 # Definir diretório de trabalho
 WORKDIR /app
 
 # Copiar arquivos do projeto para dentro do container
 COPY pom.xml .
 COPY src ./src
+
+# Configurar as credenciais do GitHub Packages para o Maven
+RUN mkdir -p ~/.m2 && echo "\
+<settings xmlns='http://maven.apache.org/SETTINGS/1.0.0'>\
+  <servers>\
+    <server>\
+      <id>github</id>\
+      <username>alexpereira2004</username>\
+      <password>${GH_TOKEN}</password>\
+    </server>\
+  </servers>\
+</settings>" > ~/.m2/settings.xml
 
 # Rodar o build e gerar o .jar
 RUN mvn clean package -DskipTests
