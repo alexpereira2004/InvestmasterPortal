@@ -1,5 +1,5 @@
-# Etapa 1: Build da aplicação usando Maven com Java 8
-FROM maven:3.9.6-eclipse-temurin-8 AS builder
+# Etapa 1: Build da aplicação usando Maven com Java 17
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
 
 # Recebe o token enviado pelo Render durante o build
 ARG GH_TOKEN
@@ -26,8 +26,8 @@ RUN mkdir -p ~/.m2 && echo "\
 # Rodar o build e gerar o .jar
 RUN mvn clean package -DskipTests
 
-# Etapa 2: Executar a aplicação com JRE 8
-FROM eclipse-temurin:8-jre-alpine
+# Etapa 2: Executar a aplicação com JRE 17
+FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
