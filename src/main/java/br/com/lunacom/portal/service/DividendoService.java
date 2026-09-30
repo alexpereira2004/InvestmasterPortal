@@ -34,14 +34,29 @@ public class DividendoService {
     private final ResultadoGeralService resultadoGeralService;
 
     private Set<Ativo> ativoSet = new HashSet<>();
-//    public static final String REGEX = "<div class=\"table-content__item pointer\" role=\"button\" tabindex=\"0\">.+<soma-caption class=\"date soma-caption hydrated\">(.*)<\\/soma-caption>(?:.*\\s\\n){4}.*<soma-caption class=\"value soma-caption hydrated\">R\\$&nbsp;([\\.|\\d{1,3}]+,\\d{2}).*(CRÉDITO FRAÇÕES|JUROS S\\/CAPITAL|DIVIDENDOS|RENDIMENTO|\\* PROV \\* RENDIMENTO)\\s+([\\d*,]*\\d*)(?:\\s*PAPEL\\s|\\s*|)(\\w*)";
-    public static final String REGEX = "(\\d{1,2} DE .+ DE \\d{4})|(?:Entrada|ENTRADA)\\t(Juros Sobre Capital Próprio|Dividendo|Rendimento|Restituição de Capital|Reembolso|Amortização)\\t(\\w{4}\\d{1,2}).*\\s\\n.*\\s.*\\n((\\d\\.*\\d+))\\tR\\$ ([\\.|\\d{1,3}]+,\\d{2})\\tR\\$ ([\\.|\\d{1,3}]+,\\d{2})";
+
+    private static final String DATA = "\\d{1,2} DE .+ DE \\d{4}";
+    private static final String EVENTO = "Entrada|ENTRADA";
+    private static final String TIPO_PROVENTO = "Juros Sobre Capital Próprio|Dividendo|Rendimento|Restituição de Capital|Reembolso|Amortização";
+    private static final String TICKER = "\\w{4}\\d{1,2}";
+    private static final String VALOR_BR = "[\\.|\\d{1,3}]+,\\d{2}";
+
+    public static final Pattern PATTERN_PROVENTO = Pattern.compile(
+               "(" + DATA + ")" +
+                    "|" +
+                    "(?:" + EVENTO + ")\\t" +
+                    "(" + TIPO_PROVENTO + ")\\t" +
+                    "(" + TICKER + ").*\\s\\n.*\\s.*\\n" +
+                    "((\\d\\.*\\d+))\\tR\\$" +
+                    "\\s(" + VALOR_BR + ")\\tR\\$" +
+                    "\\s(" + VALOR_BR + ")",
+            Pattern.CASE_INSENSITIVE
+    );
 
     public void salvarHtml(String request) {
         List<Dividendo> dividendoList = new ArrayList<>();
         LocalDate dataRecebimento = null;
-        Pattern pattern = Pattern.compile(REGEX);
-        Matcher matcher = pattern.matcher(request);
+        Matcher matcher = PATTERN_PROVENTO.matcher(request);
 
         while (matcher.find()) {
             if (Objects.nonNull(matcher.group(1))) {
