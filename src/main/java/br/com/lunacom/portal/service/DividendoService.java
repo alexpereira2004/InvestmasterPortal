@@ -37,7 +37,7 @@ public class DividendoService {
 
     private static final String DATA = "\\d{1,2} DE .+ DE \\d{4}";
     private static final String EVENTO = "Entrada|ENTRADA";
-    private static final String TIPO_PROVENTO = "Juros Sobre Capital Próprio|Dividendo|Rendimento|Restituição de Capital|Reembolso|Amortização";
+    private static final String MOVIMENTACAO = "Juros Sobre Capital Próprio|Dividendo|Rendimento|Restituição de Capital|Reembolso|Amortização";
     private static final String TICKER = "\\w{4}\\d{1,2}";
     private static final String VALOR_BR = "[\\.|\\d{1,3}]+,\\d{2}";
 
@@ -45,11 +45,11 @@ public class DividendoService {
                "(" + DATA + ")" +
                     "|" +
                     "(?:" + EVENTO + ")\\t" +
-                    "(" + TIPO_PROVENTO + ")\\t" +
+                    "(" + MOVIMENTACAO + ")\\t" +
                     "(" + TICKER + ").*\\s\\n.*\\s.*\\n" +
-                    "((\\d\\.*\\d+))\\tR\\$" +
-                    "\\s(" + VALOR_BR + ")\\tR\\$" +
-                    "\\s(" + VALOR_BR + ")",
+                    "((\\d\\.*\\d+))\\t" +
+                    "R\\$\\s(" + VALOR_BR + ")\\t" +
+                    "R\\$\\s(" + VALOR_BR + ")",
             Pattern.CASE_INSENSITIVE
     );
 
