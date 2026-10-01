@@ -28,6 +28,7 @@ import java.util.regex.Pattern;
 @Log4j2
 public class DividendoService {
 
+    public static final String HIFEN = "-";
     private final DataUtil dataUtil;
     private final DividendoRepository repository;
     private final AtivoService ativoService;
@@ -37,7 +38,7 @@ public class DividendoService {
 
     private static final String DATA = "\\d{1,2} DE .+ DE \\d{4}";
     private static final String EVENTO = "Entrada|ENTRADA";
-    private static final String MOVIMENTACAO = "Juros Sobre Capital Próprio|Dividendo|Rendimento|Restituição de Capital|Reembolso|Amortização";
+    private static final String MOVIMENTACAO = "Juros Sobre Capital Próprio|Dividendo|Rendimento|Restituição de Capital|Reembolso|Amortização|Reembolso - Reembolso - Doador";
     private static final String TICKER = "\\w{4}\\d{1,2}";
     private static final String VALOR_BR = "[\\.|\\d{1,3}]+,\\d{2}";
 
@@ -47,8 +48,8 @@ public class DividendoService {
                     "(?:" + EVENTO + ")\\t" +
                     "(" + MOVIMENTACAO + ")\\t" +
                     "(" + TICKER + ").*\\s\\n.*\\s.*\\n" +
-                    "((\\d\\.*\\d+))\\t" +
-                    "R\\$\\s(" + VALOR_BR + ")\\t" +
+                    "((?:\\d\\.*\\d+|-))\\t" +
+                    "(R\\$\\s(" + VALOR_BR + ")|-)\\t" +
                     "R\\$\\s(" + VALOR_BR + ")",
             Pattern.CASE_INSENSITIVE
     );
@@ -65,11 +66,11 @@ public class DividendoService {
                 String tipo = matcher.group(2);
                 Ativo ativo = getAtivo(matcher.group(3));
                 final Integer quantidade = matcher.group(4).isEmpty() ? 1 : getInteger(matcher);
-                final Double dividendoCalculado = StringParser.toDouble(matcher.group(6));
+                final Double precoUnitario = StringParser.toDouble(matcher.group(6));
                 final Double valorTotal = StringParser.toDouble(matcher.group(7));
 
                 final Dividendo dividendo = Dividendo.builder()
-                        .dividendo(dividendoCalculado)
+                        .dividendo(precoUnitario)
                         .dataRecebimento(dataRecebimento)
                         .tipo(tipo)
                         .quantidade(quantidade)
@@ -87,6 +88,9 @@ public class DividendoService {
 
     private Integer getInteger(Matcher matcher) {
         final String replace = matcher.group(4).replace(".", "");
+        if (HIFEN.equals(replace)) {
+            return 1;
+        }
         return Integer.valueOf(replace);
     }
 
