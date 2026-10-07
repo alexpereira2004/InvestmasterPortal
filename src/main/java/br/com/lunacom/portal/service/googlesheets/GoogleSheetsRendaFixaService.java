@@ -42,6 +42,9 @@ public class GoogleSheetsRendaFixaService implements GoogleSheetsDataServiceInte
         if (Objects.isNull(dto.getSpreadsheetId())) {
             dto.setSpreadsheetId(this.spreadsheetId);
         }
+        if (Objects.isNull((dto.getRange()))) {
+            dto.setRange(this.range);
+        }
         final ValueRange valueRange = this.obterDados(dto);
         final List<RendaFixaDto> novosDados = convertAll(valueRange.getValues());
 
